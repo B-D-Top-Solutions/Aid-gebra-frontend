@@ -2,7 +2,7 @@
     <Navigation/>
     <br/>
     <div class="container py-5">
-        <h1>Student Profile</h1>
+        <h1>Admin Profile</h1>
         <div class="d-flex mt-3 justify-content-between">
             <section class="flex-fill me-3" style="max-width:500px">
                 <div class="form-floating mb-3">
@@ -25,22 +25,15 @@
                 </div>
                 <button class="d-block btn bg-main text-white mt-4">Change password</button>
             </section>
-            
-            <section class="flex-fill" style="max-width:350px">
-                <div class="border rounded d-flex justify-content-center align-items-center" style="height:350px;width:100%;">
-                    <span class="text-muted">IMAGE</span>
-                </div>
-                <input class="form-control mt-3" type="file"/>
-            </section>
         </div>
     </div>
 </template>
 
 <script>
-import Navigation from '../../components/students/navigation.vue'
+import Navigation from '../../components/admin/navigation.vue'
 
 export default {
-    name : 'student-profile',
+    name : 'admin-profile',
     components : {
         Navigation,
     },
