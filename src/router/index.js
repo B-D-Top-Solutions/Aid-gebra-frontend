@@ -22,7 +22,27 @@ const router = createRouter({
       path: '/student/profile',
       name: 'student-profile',
       component: () => import('../views/student/profile.vue')
-    }
+    },
+    {
+      path : '/admin',
+      name : 'admin-index',
+      component : () => import('../views/admin/index.vue')
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'admin-dashboard',
+      component: () => import('../views/admin/dashboard.vue')
+    },
+    {
+      path: '/admin/profile',
+      name: 'admin-profile',
+      component: () => import('../views/admin/profile.vue')
+    },
+    {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: () => import('../views/admin/users.vue')
+    },
   ]
 })
 
