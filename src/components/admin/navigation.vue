@@ -21,7 +21,7 @@
                                 <RouterLink to="/admin/profile" class="dropdown-item btn btn-outline-danger">Profile</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin" class="dropdown-item btn btn-outline-danger">Sign out</RouterLink>
+                                <a href="#" @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</a>
                             </li>
                         </ul>
                     </div>
@@ -31,5 +31,16 @@
     </div>
 </template>
 <script>
+import auth from '../../utils/authHeader'
 
+export default {
+    name : 'admin-header',
+    methods : {
+        logout () {
+            localStorage.removeItem("admin-token")
+            auth("admin")
+            this.$router.push("/admin")
+        }
+    }
+}
 </script>
