@@ -7,8 +7,6 @@
                 <input type="text" class="form-control" v-model="search" placeholder="What are you looking for ?">
                 <button class="btn btn-outline-secondary" type="button" @click="loadData()"><i class="bi bi-search text-maincolor"></i></button>
             </div>
-
-            <button class="btn btn-light border shadow-sm" @click="clearModal()" data-bs-toggle="modal" data-bs-target="#user_modal"><i class="bi bi-plus"></i>&nbsp;Create users</button>
         </div>
         <br/>
         <div class="p-2 rounded bg-light">
@@ -17,7 +15,7 @@
                     <tr class="">
                         <th class="text-maincolor">Fullname</th>
                         <th class="text-maincolor">Email</th>
-                        <th class="text-maincolor">Role</th>
+                        <th class="text-maincolor">Contact</th>
                         <th class="text-maincolor" style="max-width:150px">Status</th>
                         <th class="text-maincolor" style="max-width:150px">-</th>
                     </tr>
@@ -26,7 +24,7 @@
                     <tr v-for="e in list" v-bind:key="e._id">
                         <td><small>{{e.fullname}}</small></td>
                         <td><small>{{e.email}}</small></td>
-                        <td><small>{{e.role}}</small></td>
+                        <td><small>{{e.contact || "-"}}</small></td>
                         <td><span :class="`badge bg-${e.status.toUpperCase() == 'ACTIVE' ? 'success' : 'danger'}`">{{e.status.toUpperCase()}}</span></td>
                         <td><button class="shadow-sm btn btn-sm bg-main text-light" @click="loadUser(e._id)" data-bs-toggle="modal" data-bs-target="#user_modal">Modify</button></td>
                     </tr>
@@ -55,24 +53,21 @@
                         <label for="floatingInput1">Fullname</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <input type="text" v-model.trim="model.contact" class="form-control" id="floatingInput2" placeholder="Fullname">
+                        <label for="floatingInput2">Contact</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <select v-model.trim="model.status" class="form-select" id="floatingSelect">
                             <option value="ACTIVE">Active</option>
                             <option value="INACTIVE">Inactive</option>
+                            <option value="PENDING">Pending</option>
                         </select>
                         <label for="floatingSelect">Status</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <select v-model.trim="model.role" class="form-select" id="floatingSelect1">
-                            <option value="ADMIN">Admin</option>
-                            <option value="STAFF">Staff</option>
-                        </select>
-                        <label for="floatingSelect1">Role</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" v-if="isUpdate" @click="updateUser()" class="btn text-light bg-main">Save changes</button>
-                    <button type="button" v-if="!isUpdate" @click="createUser()" class="btn text-light bg-main">Create</button>
+                    <button type="button" @click="updateUser()" class="btn text-light bg-main">Save changes</button>
                 </div>
             </div>
         </div>
@@ -85,7 +80,7 @@ import Navigation from '../../components/admin/navigation.vue'
 import auth from '../../utils/authHeader'
 
 export default {
-    name : 'admin-users',
+    name : 'admin-teachers',
     components : {
         Navigation,
     },
@@ -94,16 +89,15 @@ export default {
             model : {
                 email : null,
                 fullname : null,
-                status : "ACTIVE",
-                role : "ADMIN",
-                id : null
+                status : "PENDING",
+                id : null,
+                contact : null
             },
             list : [],
             hasPrevPage : false,
             hasNextPage : false,
             page : 1,
             search : null,
-            isUpdate : false
         }
     },
     mounted () {
@@ -118,7 +112,7 @@ export default {
                 const entry = await axios
                 .get(
                     import.meta.env.VITE_SERVER+
-                    import.meta.env.VITE_API_ADMIN_USERLIST+params
+                    import.meta.env.VITE_API_ADMIN_TEACHERLIST+params
                 )
 
                 const res = entry.data
@@ -130,7 +124,7 @@ export default {
                         _id : e._id,
                         email : e.email,
                         fullname : e.fullname,
-                        role : e.role,
+                        contact : e.contact,
                         status : e.status,
                     })
                 })
@@ -145,22 +139,12 @@ export default {
                 alert(error)
             }
         },
-        clearModal() {
-            this.model.email = ""
-            this.model.fullname = ""
-            this.model.role = "ADMIN"
-            this.model.id = ""
-            this.model.status = "ACTIVE"
-            this.isUpdate =false
-        },
         async loadUser (id) {
             try{
-                this.clearModal()
-                this.isUpdate =true 
                 const entry = await axios
                 .get(
                     import.meta.env.VITE_SERVER+
-                    import.meta.env.VITE_API_ADMIN_USER+"/"+id
+                    import.meta.env.VITE_API_ADMIN_TEACHER+"/"+id
                 )
 
                 const res = entry.data
@@ -169,7 +153,7 @@ export default {
 
                 this.model.email = res.data.email
                 this.model.fullname = res.data.fullname
-                this.model.role = res.data.role
+                this.model.contact = res.data.contact
                 this.model.id = res.data._id
                 this.model.status = res.data.status
             }
@@ -178,56 +162,23 @@ export default {
                 alert(error)
             }
         },
-        async createUser () {
-            try{
-                if(this.isUpdate) throw "Invalid action"
-
-                const entry = await axios
-                .post(
-                    import.meta.env.VITE_SERVER+
-                    import.meta.env.VITE_API_ADMIN_USERCREATE,
-                    {
-                        email : this.model.email,
-                        fullname : this.model.fullname,
-                        role : this.model.role,
-                        status : this.model.status,
-                        password: "password",
-                        confirm_password : "password"
-                    }
-                )
-
-                const res = entry.data
-
-                if(!res.status) throw res.error
-
-                alert("User created")
-                this.clearModal()
-                this.loadData()
-            }
-            catch(error){
-                console.log(error)
-                alert(error)
-            }
-        },
         async updateUser () {
             try{
-                if(!this.isUpdate) throw "Invalid action"
-                
                 const entry = await axios
                 .put(
                     import.meta.env.VITE_SERVER+
-                    import.meta.env.VITE_API_ADMIN_USERUPDATE,
+                    import.meta.env.VITE_API_ADMIN_TEACHERUPDATE,
                     {
                         email : this.model.email,
                         fullname : this.model.fullname,
-                        role : this.model.role,
+                        contact : this.model.contact,
                         status : this.model.status,
                         id: this.model.id
                     }
                 )
 
                 const res = entry.data
-
+                console.log(res)
                 if(!res.status) throw res.error
 
                 alert(this.model.fullname+" updated")
