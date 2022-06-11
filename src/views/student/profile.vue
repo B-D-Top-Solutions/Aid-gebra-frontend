@@ -89,7 +89,7 @@ export default {
 
                 this.model.email = res1.data.email
                 this.model.fullname = res1.data.fullname
-                this.image_url = import.meta.env.VITE_SERVER+"/"+res1.data.avatar[0].path
+                this.image_url = import.meta.env.VITE_SERVER+"/"+res1.data.avatar[0]?.path
             }
             catch(error){
                 console.log(error)
