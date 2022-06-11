@@ -20,7 +20,7 @@
                                 <RouterLink to="/teacher/profile" class="dropdown-item btn btn-outline-danger">Profile</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/teacher" class="dropdown-item btn btn-outline-danger">Sign out</RouterLink>
+                                <button class="dropdown-item btn btn-outline-danger" @click="logout()">Sign out</button>
                             </li>
                         </ul>
                     </div>
@@ -30,5 +30,16 @@
     </div>
 </template>
 <script>
+import auth from '../../utils/authHeader'
 
+export default {
+    name : 'teacher-header',
+    methods : {
+        logout () {
+            localStorage.removeItem("teacher-token")
+            auth("teacher")
+            this.$router.push("/teacher")
+        }
+    }
+}
 </script>

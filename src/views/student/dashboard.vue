@@ -32,11 +32,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <input type="text" class="form-control" placeholder="Classroom code :"/>
+                    <input type="text" v-model.trim="code" class="form-control" placeholder="Classroom code :"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn text-light bg-main">JOIN</button>
+                    <button type="button" class="btn text-light bg-main" @click="joinClass()">JOIN</button>
                 </div>
             </div>
         </div>
@@ -44,12 +44,43 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Navigation from '../../components/students/navigation.vue'
+import auth from '../../utils/authHeader'
 
 export default {
     name : 'Dashboard',
     components : {
         Navigation,
     },
+    data () {
+        return {
+            code : null
+        }
+    },
+    mounted () {
+        auth("student")
+    },
+    methods : {
+        async joinClass(){
+            try{
+                const entry =  await axios
+                .post(
+                    import.meta.env.VITE_SERVER+
+                    import.meta.env.VITE_API_STUDENT_JOINCLASS+"/"+this.code
+                )
+
+                const res = entry.data
+                console.log(res)
+                if(!res.status) throw res.error
+
+                alert("JOINED!")
+            }
+            catch(error){
+                console.log(error)
+                alert(error)
+            }
+        }
+    }
 }
 </script>
