@@ -21,7 +21,7 @@
                                 <RouterLink to="/admin/profile" class="dropdown-item btn btn-outline-danger">Profile</RouterLink>
                             </li>
                             <li>
-                                <a href="#" @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</a>
+                                <button @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</button>
                             </li>
                         </ul>
                     </div>

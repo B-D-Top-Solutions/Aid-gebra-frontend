@@ -3,7 +3,7 @@
         <div class="container d-flex justify-content-between align-items-center">
             <section>
                 <RouterLink to="/student/dashboard" class="text-decoration-none text-white border-bottom">Classrooms</RouterLink>&nbsp;
-                <RouterLink to="/student/scores" class="text-decoration-none text-white border-bottom">Scores</RouterLink>
+                <!-- <RouterLink to="/student/scores" class="text-decoration-none text-white border-bottom">Scores</RouterLink> -->
             </section>
 
             <section>
@@ -20,7 +20,7 @@
                                 <RouterLink to="/student/profile" class="dropdown-item btn btn-outline-danger">Profile</RouterLink>
                             </li>
                             <li>
-                                <a href="#" @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</a>
+                                <button @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</button>
                             </li>
                         </ul>
                     </div>

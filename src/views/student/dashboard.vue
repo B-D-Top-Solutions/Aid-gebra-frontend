@@ -8,22 +8,12 @@
 
         <div class="d-grid grid-gap2 grid-item-card">
             <!-- cards -->
-            
-            <RouterLink to="/student/classroom" class="text-decoration-none border rounded p-3 align-items-center bg-light">
-                <h3 class="text-muted text-center my-5">Class #1323</h3>
-                <small class="d-block text-center">Anna marie</small>
-            </RouterLink>
-            <RouterLink to="/student/classroom" class="text-decoration-none border rounded p-3 align-items-center bg-light">
-                <h3 class="text-muted text-center my-5">Class #1323</h3>
-                <small class="d-block text-center">Anna marie</small>
-            </RouterLink>
-            <RouterLink to="/student/classroom" class="text-decoration-none border rounded p-3 align-items-center bg-light">
-                <h3 class="text-muted text-center my-5">Class #1323</h3>
-                <small class="d-block text-center">Anna marie</small>
-            </RouterLink>
-            <RouterLink to="/student/classroom" class="text-decoration-none border rounded p-3 align-items-center bg-light">
-                <h3 class="text-muted text-center my-5">Class #1323</h3>
-                <small class="d-block text-center">Anna marie</small>
+            <RouterLink v-for="e in list" v-bind:key="e._id" :to="`/student/classroom/${e._id}`" class="main-hover border-hover text-decoration-none border rounded p-3 align-items-center bg-light">
+                <span>
+                    <small class="text-muted d-block text-center mt-5">Code : {{e.code}}</small>
+                    <h3 class="text-muted text-center mb-5">{{e.name}}</h3>
+                </span>
+                <small class="d-block text-center">{{e.teacher.fullname}}</small>
             </RouterLink>
         </div>
     </div>
@@ -55,11 +45,13 @@ export default {
     },
     data () {
         return {
-            code : null
+            code : null,
+            list : []
         }
     },
     mounted () {
         auth("student")
+        this.myClass()
     },
     methods : {
         async joinClass(){
@@ -75,12 +67,31 @@ export default {
                 if(!res.status) throw res.error
 
                 alert("JOINED!")
+                this.myClass()
             }
             catch(error){
                 console.log(error)
                 alert(error)
             }
-        }
+        },
+        async myClass(){
+            try{
+                const entry =  await axios
+                .get(
+                    import.meta.env.VITE_SERVER+
+                    import.meta.env.VITE_API_STUDENT_CLASS
+                )
+
+                const res = entry.data
+                console.log(res)
+                if(!res.status) throw res.error
+                this.list = res.data
+            }
+            catch(error){
+                console.log(error)
+                alert(error)
+            }
+        },
     }
 }
 </script>
