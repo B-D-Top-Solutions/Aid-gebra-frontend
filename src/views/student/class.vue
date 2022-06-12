@@ -22,11 +22,14 @@
             </div>
             <div class="flex-fill pt-2 ps-2">
                 <Pretest v-if="pretest_done == false" :pretest="pretest"/>
+                
                 <div v-if="(content_type == 'concept') && (pretest_done == true)">
                     <span class="badge bg-success mb-3">Concepts</span>
                     <ul class="list-group">
-                        <li class="list-group-item" style="cursor:pointer" v-for="e in concept_list" v-bind:key="e._id" @click="loadLecture(e._id)">
-                            {{e.name}}
+                        <li class="list-group-item d-flex justify-content-between" style="cursor:pointer" v-for="e in concept_list" v-bind:key="e._id" @click="loadLecture(e._id)">
+                            <span>{{e.name}}</span>
+
+                            <span v-if="e.mastery" :class="`badge bg-${(e.mastery == 'UNMASTERED') ? 'danger' : 'success'} mb-3`">{{e.mastery}}</span>
                         </li>
                     </ul>
                 </div>
@@ -118,7 +121,7 @@ export default {
             prevAssessmentQuestion : [],
             assessmentCorrectAnswer : 0,
             assessmentQuestion : null,
-            assessmentAnswer : null
+            assessmentAnswer : null,
         }
     },
     mounted () {
@@ -183,7 +186,30 @@ export default {
                 }
 
                 this.lesson_list.forEach( e => {
-                    if(e._id == this.$route.params.lesson) this.concept_list = e.concepts
+                    if(e._id == this.$route.params.lesson) {
+
+                        this.concept_list = e.concepts.map(e => {
+                            if(this.stats.studentInfo.lessons[0]?.pretest_score?.concept_mastery){
+                                let a = null
+
+                                const _ = this.stats.studentInfo.lessons[0]?.pretest_score.concept_mastery
+                                _.forEach(x => {
+                                    if(x.concept._id == e._id) {
+                                        a = {
+                                            ...e,
+                                            mastery : x.mastery
+                                        }
+                                    }
+                                })
+                                
+                                if(a) return a
+
+                                return e
+                            }
+                            return e
+                        })
+
+                    }
                 })
 
                 this.content_type = "concept"
@@ -240,6 +266,8 @@ export default {
         },
         async submitAssessment (question_id) {
             try{
+                if(!this.assessmentAnswer) return 
+
                 const entry = await axios
                 .post(
                     import.meta.env.VITE_SERVER+
@@ -259,7 +287,9 @@ export default {
                     this.mastery.shift()
                     this.assessmentCorrectAnswer += 1
 
-                    if(this.mastery.length) this.loadAssessment()
+                    if(this.mastery.length) return this.loadAssessment()
+                    alert("Assessment completed!")
+                    this.content_type = 'concept'
                 }
                 else{
                     this.loadAssessment()
