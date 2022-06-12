@@ -1,5 +1,5 @@
 <template>
-    <div class="p-3 bg-main position-sticky shadow top-0">
+    <div class="p-3 bg-main position-sticky shadow top-0" style="z-index:10">
         <div class="container d-flex justify-content-between align-items-center">
             <section>
                 <RouterLink to="/student/dashboard" class="text-decoration-none text-white border-bottom">Classrooms</RouterLink>&nbsp;
