@@ -199,7 +199,7 @@ export default {
                 console.log(error)
                 alert(error)
             }
-        }
+        },
         async loadLecture(concept_id){
             try{
                 this.$router.push({ name: 'student-class', 
