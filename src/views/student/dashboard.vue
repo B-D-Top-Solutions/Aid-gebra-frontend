@@ -66,7 +66,7 @@ export default {
                 console.log(res)
                 if(!res.status) throw res.error
 
-                alert("JOINED!")
+                alert("Your request to join this class is sent!")
                 this.myClass()
             }
             catch(error){
@@ -79,7 +79,7 @@ export default {
                 const entry =  await axios
                 .get(
                     import.meta.env.VITE_SERVER+
-                    import.meta.env.VITE_API_STUDENT_CLASS
+                    import.meta.env.VITE_API_STUDENT_CLASS+"?enrolledOnly=true"
                 )
 
                 const res = entry.data
