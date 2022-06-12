@@ -3,7 +3,8 @@
         <div class="container d-flex justify-content-between align-items-center">
             <section>
                 <RouterLink to="/teacher/dashboard" class="text-decoration-none text-white border-bottom">Dashboard</RouterLink>&nbsp;
-                <RouterLink to="/teacher/classes" class="text-decoration-none text-white border-bottom">Classes</RouterLink>
+                <RouterLink to="/teacher/classes" class="text-decoration-none text-white border-bottom">Classes</RouterLink>&nbsp;
+                <RouterLink to="/teacher/monitoring" class="text-decoration-none text-white border-bottom">Monitoring</RouterLink>
             </section>
 
             <section>
