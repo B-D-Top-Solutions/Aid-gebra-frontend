@@ -44,6 +44,24 @@
                         <button class="btn btn-primary btn-sm" @click="startAssessment()">Start Assessment</button>
                     </section>
                 </div>
+
+                <div v-if="(pretest_done == true) && (content_type == 'assessment')">
+                    <span class="badge bg-success mb-3">Concept</span>&nbsp;
+                    <span class="badge bg-success mb-3">Lectures</span>&nbsp;
+                    <span class="badge bg-success mb-3">Assessment</span>
+                    <p class="text-maincolor">{{assessmentCorrectAnswer}} / 5</p>
+                    <div class="mb-2 border-bottom" v-if="assessmentQuestion">
+                        <p class="text-dark text-boldcolor d-block mb-2">Question : {{assessmentQuestion.question}}</p>
+                        <input type="text" class="form-control form-control-sm border-maincolor mb-3" v-model="assessmentAnswer" placeholder="Your answer.."/>
+                        <small class="d-block border rounded fw-bold p-2 mb-1">A. {{assessmentQuestion?.choiceA.text}}</small>
+                        <small class="d-block border rounded fw-bold p-2 mb-1">B. {{assessmentQuestion?.choiceB.text}}</small>
+                        <small class="d-block border rounded fw-bold p-2 mb-1">C. {{assessmentQuestion?.choiceC.text}}</small>
+                        <small class="d-block border rounded fw-bold p-2 mb-1">D. {{assessmentQuestion?.choiceD.text}}</small>
+                    </div>
+
+                    <small class="text-muted d-block mt-4 mb-2">Please review your answer before you submit.</small>
+                    <button class="btn d-block w-100 bg-main text-bolder text-light btn-lg" @click="submitAssessment(assessmentQuestion._id)">Submit</button>
+                </div>
             </div>
         </section>
     </div>
@@ -95,7 +113,12 @@ export default {
                 "difficult",
                 "difficult",
             ],
-            assessment : null
+            assessment : null,
+            mastery : [],
+            prevAssessmentQuestion : [],
+            assessmentCorrectAnswer : 0,
+            assessmentQuestion : null,
+            assessmentAnswer : null
         }
     },
     mounted () {
@@ -183,8 +206,11 @@ export default {
                 const res = entry.data
                 console.log(res)
                 if(!res.status) throw res.error
-
+                // if(res.data.status == "COMPLETE") throw "You already completed"
                 this.assessment = res.data
+                this.mastery = (this.assessment.pretest_concept_mastery == "UNMASTERED") ? this.unmastered : this.mastered
+                this.assessmentCorrectAnswer = 0
+                this.loadAssessment()
             }
             catch(error){
                 console.log(error)
@@ -193,13 +219,57 @@ export default {
         },
         async loadAssessment(){
             try{
+                const entry = await axios
+                .get(
+                    import.meta.env.VITE_SERVER+
+                    "/api/classroom/class/"+ this.$route.params.id+"/lesson/"+this.$route.params.lesson+"/concept/"+this.$route.params.concept+"/assesment/?difficulty="+this.mastery[0]+"&prev="+this.prevAssessmentQuestion.join(",")
+                )
+                
+                const res = entry.data
+                console.log(res)
+                if(!res.status) throw res.error
 
+                this.content_type = "assessment"
+                this.assessmentAnswer = null
+                this.assessmentQuestion = res.data
             }
             catch(error){
                 console.log(error)
                 alert(error)
             }
-        }
+        },
+        async submitAssessment (question_id) {
+            try{
+                const entry = await axios
+                .post(
+                    import.meta.env.VITE_SERVER+
+                    "/api/classroom/class/"+ this.$route.params.id+"/lesson/"+this.$route.params.lesson+"/concept/"+this.$route.params.concept+"/assesment/"+this.assessment.assessment_uuid+"/submit",
+                    {
+                        question : question_id,
+                        answer : this.assessmentAnswer
+                    }
+                )
+                const res = entry.data
+                console.log(res)
+                if(!res.status) throw res.error
+
+                this.prevAssessmentQuestion.push(question_id)
+                console.log(this.mastery)
+                if(res.data == "CORRECT"){
+                    this.mastery.shift()
+                    this.assessmentCorrectAnswer += 1
+
+                    if(this.mastery.length) this.loadAssessment()
+                }
+                else{
+                    this.loadAssessment()
+                }
+            }
+            catch(error){
+                console.log(error)
+                alert(error)
+            }
+        },
         async loadLecture(concept_id){
             try{
                 this.$router.push({ name: 'student-class', 
