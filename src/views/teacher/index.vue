@@ -1,10 +1,11 @@
 <template>
     <div class="container py-5">
+        <img class="img-fluid mb-4" src="/logo.png" />
         <h1 class="text-maincolor text-center mb-5">Welcome Teacher!</h1>
         <center>
             <div style="max-width:450px">
                 <div class="rounded border p-4">
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-13">
                         <input type="email" v-model.trim="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Email address</label>
                     </div>

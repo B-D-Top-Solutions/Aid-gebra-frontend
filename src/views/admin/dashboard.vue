@@ -3,6 +3,7 @@
     <br/>
     <div class="container py-5">
 
+        <img class="img-fluid mb-4" src="/logo.png" />
         <div class="d-grid grid-gap2 grid-item-card">
             <RouterLink to="/admin/dashboard" class="text-decoration-none border rounded p-3 bg-light">
                 <p class="border-bottom text-maincolor">Total Classrooms</p>

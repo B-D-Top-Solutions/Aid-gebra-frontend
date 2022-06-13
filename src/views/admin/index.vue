@@ -1,5 +1,6 @@
 <template>
     <div class="container py-5">
+        <img class="img-fluid mb-4" src="/logo.png" />
         <h1 class="text-maincolor text-center mb-5">Welcome Admin!</h1>
         <center>
             <div style="max-width:450px">
