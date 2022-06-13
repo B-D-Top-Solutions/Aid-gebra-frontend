@@ -2,6 +2,8 @@
     <Navigation/>
     <br/>
     <div class="container py-5">
+        <img class="img-fluid mb-4" src="/logo.png" />
+
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#code">
             Join classroom
         </button>
