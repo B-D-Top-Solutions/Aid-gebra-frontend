@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: "/student/classroom/:id/:lesson?/:concept?",
       name: "student-class",
-      component: () => import("../views/student/class.vue")
+      component: () => import("../views/student/class.vue"),
     },
     {
       path: "/admin",
@@ -87,6 +87,40 @@ const router = createRouter({
       path: "/teacher/classes",
       name: "teacher-classes",
       component: () => import("../views/teacher/classes.vue"),
+    },
+    {
+      path: "/admin/monitoring",
+      name: "admin-monitoring-dashboard",
+      component: () => import("../views/monitoring/admin/dashboard.vue"),
+    },
+    {
+      path: "/admin/monitoring/class/:id",
+      name: "admin-monitoring-class",
+      props: true,
+      component: () => import("../views/monitoring/admin/class.vue"),
+    },
+    {
+      path: "/admin/monitoring/student/:studentId/class/:classId",
+      name: "admin-monitoring-student",
+      props: true,
+      component: () => import("../views/monitoring/admin/student.vue"),
+    },
+    {
+      path: "/teacher/monitoring",
+      name: "teacher-monitoring-dashboard",
+      component: () => import("../views/monitoring/teacher/dashboard.vue"),
+    },
+    {
+      path: "/teacher/monitoring/class/:id",
+      name: "teacher-monitoring-class",
+      props: true,
+      component: () => import("../views/monitoring/teacher/class.vue"),
+    },
+    {
+      path: "/teacher/monitoring/student/:studentId/class/:classId",
+      name: "teacher-monitoring-student",
+      props: true,
+      component: () => import("../views/monitoring/teacher/student.vue"),
     },
   ],
 });

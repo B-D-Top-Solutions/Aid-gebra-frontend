@@ -5,7 +5,8 @@
                 <RouterLink to="/admin/dashboard" class="text-decoration-none text-white border-bottom">Dashboard</RouterLink>&nbsp;
                 <RouterLink to="/admin/users" class="text-decoration-none text-white border-bottom">Users</RouterLink>&nbsp;
                 <RouterLink to="/admin/class" class="text-decoration-none text-white border-bottom">Classrooms</RouterLink>&nbsp;
-                <RouterLink to="/admin/teachers" class="text-decoration-none text-white border-bottom">Teachers</RouterLink>
+                <RouterLink to="/admin/teachers" class="text-decoration-none text-white border-bottom">Teachers</RouterLink>&nbsp;
+                <RouterLink to="/admin/monitoring" class="text-decoration-none text-white border-bottom">Monitoring</RouterLink>
             </section>
 
             <section>
