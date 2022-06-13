@@ -140,7 +140,7 @@ export default {
         );
 
         const res = entry.data;
-
+        console.log(res);
         if (!res.status) throw res.error;
 
         alert("student is now dropped from the class");
