@@ -11,8 +11,13 @@
         v-for="classes in studentInfo"
         class="accordion accordion-flush"
         :id="'accordionFlush-' + classes.classId._id"
+        :key="classes.classId._id"
       >
-        <div v-for="info in classes.lessons" class="accordion-item">
+        <div
+          v-for="info in classes.lessons"
+          class="accordion-item"
+          :key="info.lessonId._id"
+        >
           <h2 class="accordion-header" :id="'flush-' + info.lessonId._id">
             <button
               class="accordion-button collapsed"
@@ -51,6 +56,7 @@
                   <tbody>
                     <tr
                       v-for="e in displayPretestResults(info.pretest_results)"
+                      :key="e.conceptName"
                     >
                       <td>{{ e.conceptName }}</td>
                       <td>{{ e.conceptMastery }}</td>
