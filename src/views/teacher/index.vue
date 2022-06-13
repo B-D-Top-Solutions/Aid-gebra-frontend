@@ -1,6 +1,7 @@
 <template>
     <div class="container py-5">
-        <img class="img-fluid mb-4" src="/logo.png" />
+        <img class="mb-4 d-block w-100 mx-auto" src="/logo.png"  style="max-width:450px;"/>
+
         <h1 class="text-maincolor text-center mb-5">Welcome Teacher!</h1>
         <center>
             <div style="max-width:450px">
