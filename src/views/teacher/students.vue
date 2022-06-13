@@ -54,7 +54,7 @@
 
 <script>
 import axios from "axios";
-import Navigation from "../../components/admin/navigation.vue";
+import Navigation from "../../components/teacher/navigation.vue";
 import auth from "../../utils/authHeader";
 
 export default {
