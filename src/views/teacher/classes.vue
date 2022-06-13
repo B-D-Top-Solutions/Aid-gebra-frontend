@@ -17,6 +17,7 @@
                     <tr class="">
                         <th class="text-maincolor">Code</th>
                         <th class="text-maincolor">Name</th>
+                        <th class="text-maincolor">Students</th>
                         <th class="text-maincolor" style="max-width:150px">Status</th>
                         <th class="text-maincolor" style="max-width:150px">-</th>
                     </tr>
@@ -25,6 +26,16 @@
                     <tr v-for="e in list" v-bind:key="e._id">
                         <td><small>{{e.code}}</small></td>
                         <td><small>{{e.name}}</small></td>
+                        <td>
+                            <router-link
+                                :to="{
+                                name: 'teacher-students',
+                                params: { classId: e._id, classCode: e.code  },
+                                }"
+                            >
+                                <small>{{e.students}}</small>
+                            </router-link>
+                        </td>
                         <td><span :class="`badge bg-${e.status.toUpperCase() == 'ACTIVE' ? 'success' : 'danger'}`">{{e.status.toUpperCase()}}</span></td>
                         <td><button class="shadow-sm btn btn-sm bg-main text-light" @click="loadClass(e._id)" data-bs-toggle="modal" data-bs-target="#user_modal">Modify</button></td>
                     </tr>
@@ -120,6 +131,7 @@ export default {
                         _id : e._id,
                         code : e.code,
                         name : e.name,
+                        students: e.students.length,
                         status : e.status,
                     })
                 })
