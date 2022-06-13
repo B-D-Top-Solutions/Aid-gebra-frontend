@@ -84,6 +84,12 @@ const router = createRouter({
       component: () => import("../views/teacher/classes.vue"),
     },
     {
+      path: "/teacher/students/:classId/:classCode",
+      name: "teacher-students",
+      props: true,
+      component: () => import("../views/teacher/students.vue"),
+    },
+    {
       path: "/admin/monitoring",
       name: "admin-monitoring-dashboard",
       component: () => import("../views/monitoring/admin/dashboard.vue"),
