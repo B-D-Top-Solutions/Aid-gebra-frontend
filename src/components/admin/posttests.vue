@@ -154,7 +154,7 @@ export default {
                 const entry = await axios
                 .post(
                     import.meta.env.VITE_SERVER+
-                    "/api/pretest",
+                    "/api/posttest",
                     set
                 )
 
@@ -176,7 +176,7 @@ export default {
                 const entry =  await axios
                 .get(
                     import.meta.env.VITE_SERVER+
-                    "/api/pretest?lesson="+this.selectedLesson,
+                    "/api/posttest?lesson="+this.selectedLesson,
                 )
 
                 const res = entry.data

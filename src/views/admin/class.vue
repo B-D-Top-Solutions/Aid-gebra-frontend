@@ -33,7 +33,7 @@
                 <label class="btn btn-outline-success btn-sm w-100 d-block" for="success5">Pre test</label>
             </span>
             <span class="flex-fill pe-3">
-                <input :key="key" type="radio" class="btn-check" name="options-outlined" id="success6" value="posttest">
+                <input :key="key" @click="content_type='posttest'" type="radio" class="btn-check" name="options-outlined" id="success6" value="posttest">
                 <label class="btn btn-outline-success btn-sm w-100 d-block" for="success6">Post test</label>
             </span>
         </div>
@@ -43,6 +43,7 @@
         <Lectures v-if="content_type == 'lecture'"/>
         <Questions v-if="content_type == 'question'"/>
         <Pretests v-if="content_type == 'pretest'"/>
+        <Posttests v-if="content_type == 'posttest'"/>
     </div>
 </template>
 
@@ -54,6 +55,7 @@ import Lectures from '../../components/admin/lectures.vue'
 import Concepts from '../../components/admin/concepts.vue'
 import Questions from '../../components/admin/questions.vue'
 import Pretests from '../../components/admin/pretests.vue'
+import Posttests from '../../components/admin/posttests.vue'
 import auth from '../../utils/authHeader'
 
 export default {
@@ -61,7 +63,7 @@ export default {
     components : {
         Navigation,Lessons,
         Concepts,Lectures,Questions,
-        Pretests
+        Pretests,Posttests
     },
     data() {
         return {
