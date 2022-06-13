@@ -240,6 +240,8 @@ export default {
         },
         async submitAssessment (question_id) {
             try{
+                if(!this.assessmentAnswer) return 
+
                 const entry = await axios
                 .post(
                     import.meta.env.VITE_SERVER+
@@ -259,7 +261,9 @@ export default {
                     this.mastery.shift()
                     this.assessmentCorrectAnswer += 1
 
-                    if(this.mastery.length) this.loadAssessment()
+                    if(this.mastery.length) return this.loadAssessment()
+                    alert("Assessment completed!")
+                    this.content_type = 'concept'
                 }
                 else{
                     this.loadAssessment()
