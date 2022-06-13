@@ -44,6 +44,11 @@ const router = createRouter({
       component: () => import("../views/admin/dashboard.vue"),
     },
     {
+      path: "/admin/class/:class?",
+      name: "admin-class",
+      component: () => import("../views/admin/class.vue"),
+    },
+    {
       path: "/admin/profile",
       name: "admin-profile",
       component: () => import("../views/admin/profile.vue"),
