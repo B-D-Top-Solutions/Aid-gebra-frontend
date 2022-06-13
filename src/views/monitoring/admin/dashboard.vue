@@ -2,7 +2,7 @@
   <Navigation />
   <br />
   <div class="container py-5">
-    <img class="img-fluid mb-4" src="/logo.png" />
+    <img class="img-fluid mb-4" src="/src/assets/images/logo.png" />
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="input-group" style="width: 300px">
         <input
