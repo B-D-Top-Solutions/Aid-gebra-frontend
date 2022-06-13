@@ -32,6 +32,33 @@
                 Concept Progress:
                 {{ countCompletedConcepts(info.lessonId._id) * 20 }} %
               </div>
+              <div class="row my-4">
+                Pretest Result:
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>
+                        <small>Concept</small>
+                      </td>
+                      <td>
+                        <small>Mastery</small>
+                      </td>
+                      <td>
+                        <small>Incorectly Answered</small>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="e in displayPretestResults(info.pretest_results)"
+                    >
+                      <td>{{ e.conceptName }}</td>
+                      <td>{{ e.conceptMastery }}</td>
+                      <td>{{ e.incorrectlyAnswered }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -56,6 +83,7 @@ export default {
   data() {
     return {
       studentInfo: null,
+      pretestResults: null,
     };
   },
   mounted() {
@@ -94,6 +122,20 @@ export default {
         });
       });
       return count;
+    },
+
+    displayPretestResults(pretestResult) {
+      const result = [];
+      let count = 0;
+      while (count < 5) {
+        result.push({
+          conceptName: pretestResult.concepts[count].name,
+          conceptMastery: pretestResult.concepts[count].mastery,
+          incorrectlyAnswered: pretestResult.results[count].incorrectlyAnswered,
+        });
+        count++;
+      }
+      return result;
     },
   },
 };
