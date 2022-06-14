@@ -85,6 +85,21 @@ const routes = [
         name: "admin-dashboard",
         component: () => import("../views/admin/dashboard.vue"),
       },
+      {
+        path: "/admin/users/admin",
+        name: "admin-users",
+        component: () => import("../views/admin/adminUsers.vue"),
+      },
+      {
+        path: "/admin/users/teachers",
+        name: "admin-teachers",
+        component: () => import("../views/admin/teacherUsers.vue"),
+      },
+      {
+        path: "/admin/users/students",
+        name: "admin-students",
+        component: () => import("../views/admin/studentUsers.vue"),
+      },
     ],
   },
   // Teacher Routes

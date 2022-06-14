@@ -88,10 +88,12 @@ const student = {
 
 function register(ev) {
   ev.preventDefault();
-  store.dispatch("register", student).then(() =>
-    router.push({
-      name: "student-dashboard",
-    })
-  );
+  store.dispatch("register", student).then((data) => {
+    if (data.status == true) {
+      router.push({ name: "student-dashboard" });
+    } else {
+      alert(data.error);
+    }
+  });
 }
 </script>

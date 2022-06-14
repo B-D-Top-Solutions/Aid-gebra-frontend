@@ -15,7 +15,7 @@ const store = createStore({
       return axiosClient
         .post("/api/v2/auth/register", user)
         .then(({ data }) => {
-          if (data.success) {
+          if (data.status == true) {
             commit("setUser", data);
           }
           return data;

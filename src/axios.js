@@ -1,6 +1,11 @@
 import axios from "axios";
 import store from "./store";
 
+axios.defaults.headers = {
+  token: sessionStorage.getItem("token"),
+  "Content-Type": "Application/json",
+};
+
 const axiosClient = axios.create({
   baseURL: "http://localhost:3001",
 });
