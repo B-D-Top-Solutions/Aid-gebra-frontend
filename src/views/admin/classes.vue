@@ -244,7 +244,6 @@ export default {
     },
     async loadClass(id) {
       try {
-        console.log("id is --------------------" + id);
         this.clearModal();
         this.isUpdate = true;
         const entry = await axiosClient.get(
