@@ -1,9 +1,9 @@
 <template>
-  <h1 class="text-maincolor text-center mb-5">Welcome students!</h1>
+  <h1 class="text-maincolor text-center mb-5">Welcome Teacher!</h1>
   <center>
     <div style="max-width: 450px">
       <div class="rounded border p-4">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-13">
           <input
             type="email"
             v-model.trim="email"
@@ -13,17 +13,7 @@
           />
           <label for="floatingInput">Email address</label>
         </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            v-model.trim="fullname"
-            class="form-control"
-            id="floatingInput1"
-            placeholder="Fullname"
-          />
-          <label for="floatingInput1">Fullname</label>
-        </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating">
           <input
             type="password"
             v-model.trim="password"
@@ -33,31 +23,21 @@
           />
           <label for="floatingPassword">Password</label>
         </div>
-        <div class="form-floating">
-          <input
-            type="password"
-            v-model.trim="confirm_password"
-            class="form-control"
-            id="floatingPassword1"
-            placeholder="Confirm Password"
-          />
-          <label for="floatingPassword1">Confirm Password</label>
-        </div>
         <button
-          @click="create()"
           class="d-block w-100 btn bg-main text-white mt-4"
+          @click="login()"
         >
-          REGISTER
+          SIGN IN
         </button>
       </div>
       <br />
       <small class="d-flex">
-        <span class="text-muted">Already have an account ?</span> &nbsp;
+        <span class="text-muted">Don't have an account ? </span> &nbsp;
         <RouterLink
-          :to="{ name: 'student-login' }"
+          :to="{ name: 'teacher-register' }"
           class="text-decoration-none text-maincolor"
         >
-          Sign in here.
+          Register here.
         </RouterLink>
       </small>
     </div>
@@ -66,36 +46,40 @@
 
 <script>
 import axios from "axios";
+import auth from "../../utils/authHeader";
 
 export default {
-  name: "student-register",
+  name: "teacher-login",
   data() {
     return {
       email: null,
-      fullname: null,
       password: null,
-      confirm_password: null,
     };
   },
   mounted() {},
   methods: {
-    async create() {
+    async login() {
       try {
         const entry = await axios.post(
-          import.meta.env.VITE_SERVER + import.meta.env.VITE_API_STUDENT_CREATE,
+          import.meta.env.VITE_SERVER + import.meta.env.VITE_API_TEACHER_LOGIN,
           {
             email: this.email,
-            fullname: this.fullname,
             password: this.password,
-            confirm_password: this.confirm_password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         );
-        const res = entry.data;
 
+        const res = entry.data;
         if (!res.status) throw res.error;
 
-        alert("Student created");
-        setTimeout(() => this.$router.push("/student"), 1500);
+        localStorage.setItem("teacher-token", res.token);
+        auth("teacher");
+        alert("Logged!");
+        this.$router.push({ name: "teacher-dashboard" });
       } catch (error) {
         console.log(error);
         alert(error);

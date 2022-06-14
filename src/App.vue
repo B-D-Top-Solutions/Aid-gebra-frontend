@@ -1,11 +1,11 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <RouterView/>
+  <router-view></router-view>
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import "@/assets/base.css";
 </style>
