@@ -40,6 +40,12 @@
             <small>{{ e.name }}</small>
           </td>
           <td>
+            <RouterLink
+              class="shadow-sm btn btn-sm bg-main text-light mx-1"
+              :to="{ name: 'admin-lessons-view', params: { lessonId: e._id } }"
+            >
+              View
+            </RouterLink>
             <button
               class="shadow-sm btn btn-sm bg-main text-light mx-1"
               @click="loadLesson(e._id)"
@@ -48,12 +54,6 @@
             >
               Modify
             </button>
-            <RouterLink
-              class="shadow-sm btn btn-sm bg-main text-light mx-1"
-              :to="{ name: 'admin-lessons-view', params: { lessonId: e._id } }"
-            >
-              View
-            </RouterLink>
             <button
               class="shadow-sm btn btn-sm bg-danger text-light mx-1"
               @click="deleteLesson(e._id)"

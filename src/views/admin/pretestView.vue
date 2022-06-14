@@ -1,34 +1,14 @@
 <template>
-  <div class="row p-4">
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Lecture A</h5>
-          <p class="card-text">The Default Lecture</p>
-          <RouterLink :to="{ name: 'admin-lecture-view', params: { conceptId, setType: 'A' } }" class="card-link">View</RouterLink>
-        </div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Lecture B</h5>
-          <p class="card-text">The Special Lecture</p>
-          <RouterLink :to="{ name: 'admin-lecture-view', params: { conceptId, setType: 'B' } }" class="card-link">View</RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="row">
     <div class="card">
       <div class="card-header p-4">
-        <h2 class="m-auto">{{ concept.name }}</h2>
+        <h2 class="m-auto">Pre-test Questions</h2>
       </div>
       <div class="card-body">
-        <h5 class="card-title">Questions</h5>
-        <div class="card my-3" v-for="(question, index) in conceptQuestions"  v-bind:key="question._id">
+        <h5 class="card-title"><small>Max of 20 Questions, Every question must have an order between 1 to 20</small></h5>
+        <div class="card my-3" v-for="(question, index) in pretestQuestions"  v-bind:key="question._id">
           <div class="card-header d-flex justify-content-between">
-            <div class="">{{index + 1  }}.  Difficulty:  {{ question.difficulty }}</div>
+            <div class="">Question: {{ question.order  }}</div>
             <div class="">
 							<button
 								class="shadow-sm btn btn-sm bg-main text-light mx-1"
@@ -59,12 +39,12 @@
             </p>
           </div>
           <div class="card-footer">
-						Explaination:
-						<p class="card-text p-2">{{ question.explaination }}</p>
+						Tag:
+						<p class="card-text p-2">{{ question.tags }}</p>
 					</div>
         </div>
         <button
-          v-if="conceptQuestions.length < 50"
+          v-if="pretestQuestions.length < 20"
           href="#"
           class="btn btn-primary my-4"
           @click="clearModal()"
@@ -82,18 +62,11 @@
       <div class="modal-content">
         <div class="modal-body">
           <input type="hidden" v-model.trim=" questionModel.id " />
-          <div class="form-floating mb-3">
-            <select
-              v-model.trim="questionModel.difficulty"
-              class="form-select"
-              id="floatingSelect"
-            >
-              <option value="EASY">EASY</option>
-							<option value="AVERAGE">AVERAGE</option>
-							<option value="DIFFICULT">DIFFICULT</option>
-            </select>
-            <label for="floatingSelect">Difficulty</label>
-          </div>		
+					<div class="form-floating mb-3">
+            <input type="number" v-model.trim=" questionModel.order " class="form-control" id="floatingInput"
+              placeholder="Concept Order" min="1" max="20" />
+            <label for="floatingInput">Order</label>
+          </div>
           <div class="form-floating mb-3">
             <input type="text" v-model.trim=" questionModel.text " class="form-control" id="floatingInput"
               placeholder="Question" />
@@ -134,9 +107,9 @@
           </div>
 					<!-- add textarea -->
 					<div class="form-floating mb-3">
-						<textarea v-model.trim=" questionModel.explaination " class="form-control" id="floatingInput"
-							placeholder="Explaination"></textarea>
-						<label for="floatingInput">Explaination</label>
+            <input type="text" v-model.trim=" questionModel.tags " class="form-control" id="floatingInput"
+              placeholder="Tag" />
+            <label for="floatingInput">Tag</label>
 					</div>
         </div>
         <div class="modal-footer">
@@ -159,18 +132,20 @@
 import axiosClient from '../../axios';
 
 export default {
-  name: "admin-concepts-view",
-  props: ["conceptId"],
+  name: "admin-pretest-view",
+  props: ["lessonId"],
   data() {
-    return {
+		return {
+			pretestIdnum: null,
       isUpdate: false,
-      concept: {},
-			conceptQuestions: [],
+      pretest: {},
+			pretestQuestions: [],
 			questionModel: {
+				pretestId: this.pretestId,
 				_id: "",
-				explaination: "",
-				difficulty: "",
+				tags: "",
 				text: "",
+				order: "",
 				answer: '',
 				choiceA: '',
 				choiceB: '',
@@ -180,15 +155,13 @@ export default {
     };
 	},
 	mounted() {
-		this.getConcept();
-		this.getQuestions();
+		this.getPretest();
 	},
 	methods: {
 		clearModal() {
 			this.questionModel._id = "";
-			this.questionModel.concept = this.concept.id;
-			this.questionModel.explaination = "";
-			this.questionModel.difficulty = "";
+			this.questionModel.order = "";
+			this.questionModel.tags = "";
 			this.questionModel.text = "";
 			this.questionModel.answer = '';
 			this.questionModel.choiceA = '';
@@ -197,24 +170,28 @@ export default {
 			this.questionModel.choiceD = '';
       this.isUpdate = false;
     },
-		async getConcept () {
+		async getPretest () {
 			try
       {
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_CONCEPT_SHOW_V2 +
-          "/" +
-          this.conceptId
+          import.meta.env.VITE_API_PRETEST_ALL_V2 +
+          "?lesson=" +
+          this.lessonId
         );
 
         const res = entry.data;
         if ( !res.status ) throw res.error;
 
-        this.concept = res.data;
+				console.log(res.data);
+				this.pretestIdnum = res.data[ 0 ]._id;
+				this.pretest = res.data[ 0 ];
+
+				await this.getQuestions()
       } catch ( error )
       {
         console.log( error );
-        alert( error.message );
+        alert( error );
       }
 		},
 		async getQuestions () {
@@ -222,20 +199,24 @@ export default {
       {
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_CONCEPT_QUESTIONS_ALL_V2 +
-          `?concept=${ this.conceptId }`
+          import.meta.env.VITE_API_PRETEST_QUESTIONS_ALL_V2 +
+          `?pretest=${ this.pretestIdnum }`
         );
 
         const res = entry.data;
         if ( !res.status ) throw res.error;
 
-				console.log(res.data)
+				console.log( res.data )
 
-        this.conceptQuestions = res.data;
+				const sortedData = res.data.sort( ( a, b ) => {
+					return a.order - b.order;
+				} );
+
+        this.pretestQuestions = sortedData;
       } catch ( error )
       {
         console.log( error );
-        alert( error.message );
+        alert( error );
       }
 		},
 		async loadQuestion ( id ) {
@@ -243,11 +224,11 @@ export default {
 			{
         this.clearModal();
         this.isUpdate = true;
-        const data = this.conceptQuestions.find( question => question._id === id );
-        this.questionModel._id = data._id;
+        const data = this.pretestQuestions.find( question => question._id === id );
+				this.questionModel._id = data._id;
+				this.questionModel.order = data.order;
 				this.questionModel.text = data.text;
-				this.questionModel.difficulty = data.difficulty;
-				this.questionModel.explaination = data.explaination;
+				this.questionModel.tags = data.tags;
 				this.questionModel.answer = data.answer;
 				this.questionModel.choiceA = data.choiceA.text;
 				this.questionModel.choiceB = data.choiceB.text;
@@ -263,10 +244,10 @@ export default {
       try
 			{
 				const inputData = {
-					concept: this.conceptId,
+					pretest: this.pretestIdnum,
+					order: this.questionModel.order,
 					text: this.questionModel.text,
-					difficulty: this.questionModel.difficulty,
-					explaination: this.questionModel.explaination,
+					tags: this.questionModel.tags,
 					answer: this.questionModel.answer,
 					choiceA: this.questionModel.choiceA,
 					choiceB: this.questionModel.choiceB,
@@ -276,25 +257,26 @@ export default {
 				
         const entry = await axiosClient.post(
           import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_CONCEPT_QUESTIONS_CREATE_V2,
+          import.meta.env.VITE_API_PRETEST_QUESTIONS_CREATE_V2,
           inputData
         );
 
         const res = entry.data;
         if (res.status == false) throw res.error;
-        console.log( res.data );
+				console.log( res.data );
+				const data = res.data[0];
 
-        this.conceptQuestions.push( {
-					_id: res.data._id,
-					text: res.data.text,
-					difficulty: res.data.difficulty,
-					explaination: res.data.explaination,
-					answer: res.data.answer,
-					choiceA: res.data.choiceA.text,
-					choiceB: res.data.choiceB.text,
-					choiceC: res.data.choiceC.text,
-					choiceD: res.data.choiceD.text,
-
+        this.pretestQuestions.push( {
+					_id: data._id,
+					order: data.order,
+					text: data.text,
+					pretestId: data.pretestId,
+					tags: data.tags,
+					answer: data.answer,
+					choiceA: data.choiceA,
+					choiceB: data.choiceB,
+					choiceC: data.choiceC,
+					choiceD: data.choiceD,
         });
 				alert("Question created successfully");
         this.clearModal();
@@ -308,10 +290,9 @@ export default {
 			try
 			{
 				const inputData = {
-					concept: this.conceptId,
 					text: this.questionModel.text,
-					difficulty: this.questionModel.difficulty,
-					explaination: this.questionModel.explaination,
+					order: this.questionModel.order,
+					tags: this.questionModel.tags,
 					answer: this.questionModel.answer,
 					choiceA: this.questionModel.choiceA,
 					choiceB: this.questionModel.choiceB,
@@ -321,7 +302,7 @@ export default {
 
         const entry = await axiosClient.put(
           import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_CONCEPT_QUESTIONS_UPDATE_V2 +
+          import.meta.env.VITE_API_PRETEST_QUESTIONS_UPDATE_V2 +
           "/" +
           this.questionModel._id,
 					inputData
@@ -330,18 +311,21 @@ export default {
         const res = entry.data;
         if ( !res.status ) throw res.error;
 
-        const index = this.conceptQuestions.findIndex( question => question._id === this.questionModel._id );
-        this.conceptQuestions[ index ] = { 
+        const index = this.pretestQuestions.findIndex( question => question._id === this.questionModel._id );
+        this.pretestQuestions[ index ] = { 
 					_id: res.data._id,
+					pretestId: res.data.pretestId,
+					order: res.data.order,
 					text: res.data.text,
-					difficulty: res.data.difficulty,
-					explaination: res.data.explaination,
+					tags: res.data.tags,
 					answer: res.data.answer,
-					choiceA: res.data.choiceA.text,
-					choiceB: res.data.choiceB.text,
-					choiceC: res.data.choiceC.text,
-					choiceD: res.data.choiceD.text,
+					choiceA: res.data.choiceA,
+					choiceB: res.data.choiceB,
+					choiceC: res.data.choiceC,
+					choiceD: res.data.choiceD,
 				};
+
+				this.pretestQuestions.sort( ( a, b ) => a.order - b.order );
 
 				alert("Question updated successfully");
         
@@ -363,7 +347,7 @@ export default {
 				{
 					const entry = await axiosClient.delete(
 						import.meta.env.VITE_SERVER +
-						import.meta.env.VITE_API_CONCEPT_QUESTIONS_DELETE_V2 +
+						import.meta.env.VITE_API_PRETEST_QUESTIONS_DELETE_V2 +
 						"/" +
 						id
 					);
@@ -371,7 +355,7 @@ export default {
 					const res = entry.data;
 					if ( !res.status ) throw res.error;
 
-					this.conceptQuestions = this.conceptQuestions.filter( question => question._id !== id );
+					this.pretestQuestions = this.pretestQuestions.filter( question => question._id !== id );
 					alert( "Question deleted successfully" );
 				}
 

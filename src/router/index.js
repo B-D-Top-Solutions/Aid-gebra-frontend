@@ -127,6 +127,24 @@ const routes = [
         props: true,
         component: () => import("../views/admin/conceptView.vue"),
       },
+      {
+        path: "/admin/lectures/:conceptId/:setType",
+        name: "admin-lecture-view",
+        props: true,
+        component: () => import("../views/admin/lectureView.vue"),
+      },
+      {
+        path: "/admin/pretests/:lessonId",
+        name: "admin-pretest-view",
+        props: true,
+        component: () => import("../views/admin/pretestView.vue"),
+      },
+      {
+        path: "/admin/posttest/:lessonId",
+        name: "admin-posttest-view",
+        props: true,
+        component: () => import("../views/admin/posttestView.vue"),
+      },
     ],
   },
   // Teacher Routes
