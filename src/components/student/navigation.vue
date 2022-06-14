@@ -1,45 +1,68 @@
 <template>
-    <div class="p-3 bg-main position-sticky shadow top-0" style="z-index:10">
-        <div class="container d-flex justify-content-between align-items-center">
-            <section>
-                <RouterLink to="/student/dashboard" class="text-decoration-none text-white border-bottom">Classrooms</RouterLink>&nbsp;
-                <!-- <RouterLink to="/student/scores" class="text-decoration-none text-white border-bottom">Scores</RouterLink> -->
-            </section>
+  <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 10">
+    <div class="container d-flex justify-content-between align-items-center">
+      <section>
+        <RouterLink
+          to="/student/dashboard"
+          class="text-decoration-none text-white border-bottom"
+          >Classrooms</RouterLink
+        >&nbsp;
+        <!-- <RouterLink to="/student/scores" class="text-decoration-none text-white border-bottom">Scores</RouterLink> -->
+      </section>
 
-            <section>
-                <div class="flex-fill d-flex justify-content-end align-items-center">
-                    <div class="rounded-circle overflow-hidden border me-3" style="height:50px;width:50px;">
-                        <!-- <img v-if="img" :src="`${img}`" class="d-block w-100"/> -->
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <small>My Account &nbsp;</small>
-                        </div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <RouterLink to="/student/profile" class="dropdown-item btn btn-outline-danger">Profile</RouterLink>
-                            </li>
-                            <li>
-                                <button @click="logout()" class="dropdown-item btn btn-outline-danger">Sign out</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+      <section>
+        <div class="flex-fill d-flex justify-content-end align-items-center">
+          <div
+            class="rounded-circle overflow-hidden border me-3"
+            style="height: 50px; width: 50px"
+          >
+            <img v-if="avatar" :src="`${avatar}`" class="d-block w-100" />
+          </div>
+          <div class="dropdown">
+            <div
+              class="dropdown-toggle text-light"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <small>My Account &nbsp;</small>
+            </div>
+            <ul class="dropdown-menu">
+              <li>
+                <RouterLink
+                  :to="{ name: 'student-profile' }"
+                  class="dropdown-item btn btn-outline-danger"
+                  >Profile</RouterLink
+                >
+              </li>
+              <li>
+                <button
+                  @click="logout()"
+                  class="dropdown-item btn btn-outline-danger"
+                >
+                  Sign out
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </template>
-<script>
-import auth from '../../utils/authHeader'
+<script setup>
+import store from "../../store";
+import { useRouter } from "vue-router";
 
-export default {
-    name : 'student-header',
-    methods : {
-        logout () {
-            localStorage.removeItem("student-token")
-            auth("student")
-            this.$router.push("/student")
-        }
-    }
+const router = useRouter();
+const avatar =
+  import.meta.env.VITE_SERVER + "/" + store.state.user.data.avatar[0]?.path;
+
+function logout() {
+  store.dispatch("logout").then((data) => {
+    router.push({
+      name: "index",
+    });
+  });
 }
 </script>

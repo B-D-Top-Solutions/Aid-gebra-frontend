@@ -20,9 +20,9 @@
       class="btn btn-light border shadow-sm"
       @click="clearModal()"
       data-bs-toggle="modal"
-      data-bs-target="#user_modal"
+      data-bs-target="#class_modal"
     >
-      <i class="bi bi-plus"></i>&nbsp;Create Admin
+      <i class="bi bi-plus"></i>&nbsp;Create Lesson
     </button>
   </div>
   <br />
@@ -30,44 +30,27 @@
     <table class="table">
       <thead style="border: none">
         <tr class="">
-          <th class="text-maincolor">Fullname</th>
-          <th class="text-maincolor">Email</th>
-          <th class="text-maincolor">Contact</th>
-          <th class="text-maincolor" style="max-width: 150px">Status</th>
+          <th class="text-maincolor">Name</th>
           <th class="text-maincolor" style="max-width: 150px">-</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="e in list" v-bind:key="e._id">
           <td>
-            <small>{{ e.fullname }}</small>
-          </td>
-          <td>
-            <small>{{ e.email }}</small>
-          </td>
-          <td>
-            <small>{{ e.contact }}</small>
-          </td>
-          <td>
-            <span
-              :class="`badge bg-${
-                e.status.toUpperCase() == 'ACTIVE' ? 'success' : 'danger'
-              }`"
-              >{{ e.status.toUpperCase() }}</span
-            >
+            <small>{{ e.name }}</small>
           </td>
           <td>
             <button
               class="shadow-sm btn btn-sm bg-main text-light"
-              @click="loadUser(e._id)"
+              @click="loadLesson(e._id)"
               data-bs-toggle="modal"
-              data-bs-target="#user_modal"
+              data-bs-target="#class_modal"
             >
               Modify
             </button>
             <button
               class="shadow-sm btn btn-sm bg-danger text-light"
-              @click="deleteUser(e._id)"
+              @click="deleteLesson(e._id)"
             >
               Delete
             </button>
@@ -99,51 +82,20 @@
     </div>
   </div>
 
-  <div class="modal fade" id="user_modal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="class_modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
           <input type="hidden" v-model.trim="model.id" />
           <div class="form-floating mb-3">
             <input
-              type="email"
-              v-model.trim="model.email"
+              type="text"
+              v-model.trim="model.name"
               class="form-control"
               id="floatingInput"
-              placeholder="name@example.com"
+              placeholder="Lesson name"
             />
-            <label for="floatingInput">Email address</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              v-model.trim="model.fullname"
-              class="form-control"
-              id="floatingInput1"
-              placeholder="Fullname"
-            />
-            <label for="floatingInput1">Fullname</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              v-model.trim="model.contact"
-              class="form-control"
-              id="floatingInput1"
-              placeholder="Contact Number"
-            />
-            <label for="floatingInput1">Contact Number</label>
-          </div>
-          <div class="form-floating mb-3">
-            <select
-              v-model.trim="model.status"
-              class="form-select"
-              id="floatingSelect"
-            >
-              <option value="ACTIVE">Active</option>
-              <option value="DEACTIVATED">Deactivate</option>
-            </select>
-            <label for="floatingSelect">Status</label>
+            <label for="floatingInput">Name</label>
           </div>
         </div>
         <div class="modal-footer">
@@ -157,7 +109,7 @@
           <button
             type="button"
             v-if="isUpdate"
-            @click="updateUser()"
+            @click="updateLesson()"
             class="btn text-light bg-main"
           >
             Save changes
@@ -165,7 +117,7 @@
           <button
             type="button"
             v-if="!isUpdate"
-            @click="createUser()"
+            @click="createLesson()"
             class="btn text-light bg-main"
           >
             Create
@@ -177,19 +129,15 @@
 </template>
 
 <script>
-import store from "../../store";
 import axiosClient from "../../axios";
 
 export default {
-  name: "admin-users",
+  name: "admin-classes",
   data() {
     return {
       model: {
-        email: null,
-        fullname: null,
-        status: "ACTIVE",
-        contact: null,
-        id: null,
+        id: "",
+        name: "",
       },
       list: [],
       hasPrevPage: false,
@@ -209,7 +157,7 @@ export default {
         let params = `?page=${page}&${this.search && "search=" + this.search}`;
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_PAGINATE_V2 +
+            import.meta.env.VITE_API_LESSON_PAGINATE_V2 +
             params
         );
 
@@ -219,10 +167,7 @@ export default {
         res.data.docs.forEach((e) => {
           list.push({
             _id: e._id,
-            email: e.email,
-            fullname: e.fullname,
-            contact: e.contact,
-            status: e.status,
+            name: e.name,
           });
         });
 
@@ -236,20 +181,16 @@ export default {
       }
     },
     clearModal() {
-      this.model.email = "";
-      this.model.fullname = "";
-      this.model.contact = "";
-      this.model.id = "";
-      this.model.status = "ACTIVE";
+      this.model.name = "";
       this.isUpdate = false;
     },
-    async loadUser(id) {
+    async loadLesson(id) {
       try {
         this.clearModal();
         this.isUpdate = true;
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_SHOW_V2 +
+            import.meta.env.VITE_API_LESSON_SHOW_V2 +
             "/" +
             id
         );
@@ -257,38 +198,32 @@ export default {
         const res = entry.data;
         if (!res.status) throw res.error;
 
-        this.model.email = res.data.email;
-        this.model.fullname = res.data.fullname;
-        this.model.contact = res.data.contact;
         this.model.id = res.data._id;
-        this.model.status = res.data.status;
+        this.model.name = res.data.name;
       } catch (error) {
         console.log(error);
         alert(error);
       }
     },
-    async createUser() {
+    async createLesson() {
       try {
         if (this.isUpdate) throw "Invalid action";
 
+        let data = {
+          name: this.model.name,
+        };
+
         const entry = await axiosClient.post(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_CREATE_V2,
-          {
-            email: this.model.email,
-            fullname: this.model.fullname,
-            contact: this.model.contact,
-            status: this.model.status,
-            password: "password",
-            confirm_password: "password",
-          }
+            import.meta.env.VITE_API_LESSON_CREATE_V2,
+          data
         );
 
         const res = entry.data;
 
         if (!res.status) throw res.error;
 
-        alert("User created");
+        alert("Lesson created");
         this.clearModal();
         this.loadData();
       } catch (error) {
@@ -296,45 +231,43 @@ export default {
         alert(error);
       }
     },
-    async updateUser() {
+    async updateLesson() {
       try {
         if (!this.isUpdate) throw "Invalid action";
 
+        let data = {
+          name: this.model.name,
+        };
+
         const entry = await axiosClient.put(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_UPDATE_V2 +
+            import.meta.env.VITE_API_LESSON_UPDATE_V2 +
             "/" +
             this.model.id,
-          {
-            email: this.model.email,
-            fullname: this.model.fullname,
-            contact: this.model.contact,
-            status: this.model.status,
-            id: this.model.id,
-          }
+          data
         );
 
         const res = entry.data;
 
         if (!res.status) throw res.error;
 
-        alert(this.model.fullname + " updated");
+        alert("Lesson updated");
         this.loadData();
       } catch (error) {
         console.log(error);
         alert(error);
       }
     },
-    async deleteUser(id) {
+    async deleteLesson(id) {
       try {
         if (
           confirm(
-            "Are you sure you want to delete this user? Operation can not be undone!"
+            "Are you sure you want to delete this lesson? Operation can not be undone!"
           )
         ) {
           const entry = await axiosClient.delete(
             import.meta.env.VITE_SERVER +
-              import.meta.env.VITE_API_ADMIN_DELETE_V2 +
+              import.meta.env.VITE_API_LESSON_DELETE_V2 +
               "/" +
               id
           );
@@ -343,7 +276,7 @@ export default {
           console.log(entry);
           if (!res.status) throw res.error;
 
-          alert("Admin deleted");
+          alert("Lesson deleted");
           this.loadData();
         }
       } catch (error) {

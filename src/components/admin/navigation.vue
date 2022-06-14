@@ -15,12 +15,12 @@
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
-          to="/admin/class"
+          :to="{ name: 'admin-classes' }"
           class="text-decoration-none text-white border-bottom"
           >Classrooms</RouterLink
         >&nbsp;
         <RouterLink
-          to="/admin/teachers"
+          :to="{ name: 'admin-lessons' }"
           class="text-decoration-none text-white border-bottom"
           >Lessons</RouterLink
         >&nbsp;
@@ -33,9 +33,12 @@
 
       <section>
         <div class="flex-fill d-flex justify-content-end align-items-center">
-          <!-- <div class="rounded-circle overflow-hidden border me-3" style="height:50px;width:50px;">
-                        <img v-if="img" :src="`${img}`" class="d-block w-100"/>
-                    </div> -->
+          <div
+            class="rounded-circle overflow-hidden border me-3"
+            style="height: 50px; width: 50px"
+          >
+            <img v-if="avatar" :src="`${avatar}`" class="d-block w-100" />
+          </div>
           <div class="dropdown">
             <div
               class="dropdown-toggle text-light"
@@ -48,7 +51,7 @@
             <ul class="dropdown-menu">
               <li>
                 <RouterLink
-                  to="/admin/profile"
+                  :to="{ name: 'admin-profile' }"
                   class="dropdown-item btn btn-outline-danger"
                   >Profile</RouterLink
                 >
@@ -68,17 +71,19 @@
     </div>
   </div>
 </template>
-<script>
-import auth from "../../utils/authHeader";
+<script setup>
+import store from "../../store";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "admin-header",
-  methods: {
-    logout() {
-      localStorage.removeItem("admin-token");
-      auth("admin");
-      this.$router.push("/admin");
-    },
-  },
-};
+const router = useRouter();
+const avatar =
+  import.meta.env.VITE_SERVER + "/" + store.state.user.data.avatar[0]?.path;
+
+function logout() {
+  store.dispatch("logout").then((data) => {
+    router.push({
+      name: "index",
+    });
+  });
+}
 </script>

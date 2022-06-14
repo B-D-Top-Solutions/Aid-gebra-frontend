@@ -86,6 +86,11 @@ const routes = [
         component: () => import("../views/admin/dashboard.vue"),
       },
       {
+        path: "/admin/profile",
+        name: "admin-profile",
+        component: () => import("../views/admin/profile.vue"),
+      },
+      {
         path: "/admin/users/admin",
         name: "admin-users",
         component: () => import("../views/admin/adminUsers.vue"),
@@ -99,6 +104,16 @@ const routes = [
         path: "/admin/users/students",
         name: "admin-students",
         component: () => import("../views/admin/studentUsers.vue"),
+      },
+      {
+        path: "/admin/classes",
+        name: "admin-classes",
+        component: () => import("../views/admin/classes.vue"),
+      },
+      {
+        path: "/admin/lessons",
+        name: "admin-lessons",
+        component: () => import("../views/admin/lessons.vue"),
       },
     ],
   },
@@ -125,6 +140,11 @@ const routes = [
         name: "teacher-dashboard",
         component: () => import("../views/teacher/dashboard.vue"),
       },
+      {
+        path: "/teacher/profile",
+        name: "teacher-profile",
+        component: () => import("../views/teacher/profile.vue"),
+      },
     ],
   },
   // Student Routes
@@ -150,112 +170,13 @@ const routes = [
         name: "student-dashboard",
         component: () => import("../views/student/dashboard.vue"),
       },
+      {
+        path: "/student/profile",
+        name: "student-profile",
+        component: () => import("../views/student/profile.vue"),
+      },
     ],
   },
-  // {
-  //   path: "/teacher",
-  //   name: "teacher-index",
-  //   component: () => import("../views/teacher/index.vue"),
-  // },
-
-  // Admin Dash
-
-  // {
-  //   path: "/admin/class/:class?",
-  //   name: "admin-class",
-  //   meta: { requiresAuth: true },
-  //   component: () => import("../views/admin/class.vue"),
-  // },
-  // {
-  //   path: "/admin/profile",
-  //   name: "admin-profile",
-  //   meta: { requiresAuth: true },
-  //   component: () => import("../views/admin/profile.vue"),
-  // },
-  // {
-  //   path: "/admin/users",
-  //   name: "admin-users",
-  //   meta: { requiresAuth: true },
-  //   component: () => import("../views/admin/users.vue"),
-  // },
-  // {
-  //   path: "/admin/teachers",
-  //   name: "admin-teachers",
-  //   meta: { requiresAuth: true },
-  //   component: () => import("../views/admin/teachers.vue"),
-  // },
-
-  // {
-  //   path: "/student/dashboard",
-  //   name: "student-dashboard",
-  //   component: () => import("../views/student/dashboard.vue"),
-  // },
-  // {
-  //   path: "/student/profile",
-  //   name: "student-profile",
-  //   component: () => import("../views/student/profile.vue"),
-  // },
-  // {
-  //   path: "/student/classroom/:id/:lesson?/:concept?",
-  //   name: "student-class",
-  //   component: () => import("../views/student/class.vue"),
-  // },
-
-  // {
-  //   path: "/teacher/dashboard",
-  //   name: "teacher-dashboard",
-  //   component: () => import("../views/teacher/dashboard.vue"),
-  // },
-  // {
-  //   path: "/teacher/profile",
-  //   name: "teacher-profile",
-  //   component: () => import("../views/teacher/profile.vue"),
-  // },
-  // {
-  //   path: "/teacher/classes",
-  //   name: "teacher-classes",
-  //   component: () => import("../views/teacher/classes.vue"),
-  // },
-  // {
-  //   path: "/teacher/students/:classId/:classCode",
-  //   name: "teacher-students",
-  //   props: true,
-  //   component: () => import("../views/teacher/students.vue"),
-  // },
-  // {
-  //   path: "/admin/monitoring",
-  //   name: "admin-monitoring-dashboard",
-  //   component: () => import("../views/monitoring/admin/dashboard.vue"),
-  // },
-  // {
-  //   path: "/admin/monitoring/class/:id",
-  //   name: "admin-monitoring-class",
-  //   props: true,
-  //   component: () => import("../views/monitoring/admin/class.vue"),
-  // },
-  // {
-  //   path: "/admin/monitoring/student/:studentId/class/:classId",
-  //   name: "admin-monitoring-student",
-  //   props: true,
-  //   component: () => import("../views/monitoring/admin/student.vue"),
-  // },
-  // {
-  //   path: "/teacher/monitoring",
-  //   name: "teacher-monitoring-dashboard",
-  //   component: () => import("../views/monitoring/teacher/dashboard.vue"),
-  // },
-  // {
-  //   path: "/teacher/monitoring/class/:id",
-  //   name: "teacher-monitoring-class",
-  //   props: true,
-  //   component: () => import("../views/monitoring/teacher/class.vue"),
-  // },
-  // {
-  //   path: "/teacher/monitoring/student/:studentId/class/:classId",
-  //   name: "teacher-monitoring-student",
-  //   props: true,
-  //   component: () => import("../views/monitoring/teacher/student.vue"),
-  // },
 ];
 
 const router = createRouter({
