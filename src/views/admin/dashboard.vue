@@ -25,12 +25,8 @@
 </template>
 
 <script>
-import Navigation from "../../components/admin/navigation.vue";
-
 export default {
-  name: "Dashboard",
-  components: {
-    Navigation,
-  },
+  name: "admin-dashboard",
+  components: {},
 };
 </script>

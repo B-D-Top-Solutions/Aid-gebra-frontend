@@ -2,11 +2,11 @@
   <h1 class="text-maincolor text-center mb-5">Welcome students!</h1>
   <center>
     <div style="max-width: 450px">
-      <div class="rounded border p-4">
+      <form class="rounded border p-4" @submit="login">
         <div class="form-floating mb-3">
           <input
             type="email"
-            v-model.trim="email"
+            v-model.trim="student.email"
             class="form-control"
             id="floatingInput"
             placeholder="name@example.com"
@@ -16,20 +16,17 @@
         <div class="form-floating">
           <input
             type="password"
-            v-model.trim="password"
+            v-model.trim="student.password"
             class="form-control"
             id="floatingPassword"
             placeholder="Password"
           />
           <label for="floatingPassword">Password</label>
         </div>
-        <button
-          @click="login()"
-          class="d-block w-100 btn bg-main text-white mt-4"
-        >
+        <button type="submit" class="d-block w-100 btn bg-main text-white mt-4">
           SIGN IN
         </button>
-      </div>
+      </form>
       <br />
       <small class="d-flex">
         <span class="text-muted">Don't have an account ?</span> &nbsp;
@@ -44,47 +41,26 @@
   </center>
 </template>
 
-<script>
-import axios from "axios";
-import auth from "../../utils/authHeader";
+<script setup>
+import store from "../../store";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "student-login",
-  data() {
-    return {
-      email: null,
-      password: null,
-    };
-  },
-  mounted() {},
-  methods: {
-    async login() {
-      try {
-        const entry = await axios.post(
-          import.meta.env.VITE_SERVER + import.meta.env.VITE_API_STUDENT_LOGIN,
-          {
-            email: this.email,
-            password: this.password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+const router = useRouter();
 
-        const res = entry.data;
-        if (!res.status) throw res.error;
-
-        localStorage.setItem("student-token", res.token);
-        auth("student");
-        alert("Logged!");
-        this.$router.push({ name: "student-dashboard" });
-      } catch (error) {
-        console.log(error);
-        alert(error);
-      }
-    },
-  },
+const student = {
+  email: "",
+  password: "",
+  role: "STUDENT",
 };
+
+function login(ev) {
+  ev.preventDefault();
+  store.dispatch("login", student).then((data) => {
+    if (data.status == true) {
+      router.push({ name: "student-dashboard" });
+    } else {
+      alert(data.error);
+    }
+  });
+}
 </script>

@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Navigation from "../admin/navigation.vue";
+import Navigation from "../teacher/navigation.vue";
 export default {
-  name: "Admin",
+  name: "Teacher",
   components: {
     Navigation,
   },

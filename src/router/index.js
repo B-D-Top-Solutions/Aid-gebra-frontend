@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "../store";
 
 const routes = [
+  // Index
   {
     path: "/",
     name: "index",
@@ -11,8 +12,28 @@ const routes = [
   // Auth
   {
     path: "/auth",
-    name: "Auth",
+    name: "auth",
     component: () => import("../components/layouts/authLayout.vue"),
+    beforeEnter(to, from, next) {
+      if (store.state.user.token != null) {
+        switch (store.state.user.role) {
+          case "ADMIN":
+            next({ name: "admin-dashboard" });
+            break;
+          case "TEACHER":
+            next({ name: "teacher-dashboard" });
+            break;
+          case "STUDENT":
+            next({ name: "student-dashboard" });
+            break;
+          default:
+            next({ name: "index" });
+            break;
+        }
+      } else {
+        next();
+      }
+    },
     children: [
       {
         path: "/login/admin",
@@ -42,25 +63,80 @@ const routes = [
     ],
   },
 
+  // Admin Routes
   {
     path: "/admin",
     redirect: "/admin/dashboard",
-    name: "Admin",
     component: () => import("../components/layouts/adminLayout.vue"),
+    beforeEnter(to, from, next) {
+      if (store.state.user.token != null) {
+        if (store.state.user.role == "ADMIN") {
+          next();
+        } else {
+          next({ name: "index" });
+        }
+      } else {
+        next({ name: "index" });
+      }
+    },
     children: [
       {
         path: "/admin/dashboard",
         name: "admin-dashboard",
-        meta: { requiresAuth: true, adminOnly: true },
         component: () => import("../views/admin/dashboard.vue"),
       },
     ],
   },
-  // {
-  //   path: "/login/student",
-  //   name: "student-index",
-  //   component: () => import("../views/student/index.vue"),
-  // },
+  // Teacher Routes
+  {
+    path: "/teacher",
+    redirect: "/teacher/dashboard",
+    name: "Admin",
+    component: () => import("../components/layouts/teacherLayout.vue"),
+    beforeEnter(to, from, next) {
+      if (store.state.user.token != null) {
+        if (store.state.user.role == "TEACHER") {
+          next();
+        } else {
+          next({ name: "index" });
+        }
+      } else {
+        next({ name: "index" });
+      }
+    },
+    children: [
+      {
+        path: "/teacher/dashboard",
+        name: "teacher-dashboard",
+        component: () => import("../views/teacher/dashboard.vue"),
+      },
+    ],
+  },
+  // Student Routes
+  {
+    path: "/student",
+    redirect: "/student/dashboard",
+    name: "Student",
+    component: () => import("../components/layouts/studentLayout.vue"),
+    beforeEnter(to, from, next) {
+      if (store.state.user.token != null) {
+        if (store.state.user.role == "STUDENT") {
+          next();
+        } else {
+          next({ name: "index" });
+        }
+      } else {
+        next({ name: "index" });
+      }
+    },
+    children: [
+      {
+        path: "/student/dashboard",
+        name: "student-dashboard",
+        component: () => import("../views/student/dashboard.vue"),
+      },
+    ],
+  },
   // {
   //   path: "/teacher",
   //   name: "teacher-index",
@@ -172,17 +248,29 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.state.user.token) {
-    next("/");
-  } else if (
-    store.state.user.token &&
-    (to.name === "index" || to.name === "admin-index")
-  ) {
-    next({ name: "admin-dashboard" });
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requiresAuth && !store.state.user.token) {
+//     next({ name: "index" });
+//   } else if (store.state.user.token && to.meta.isGuest) {
+//     next({ name: "admin-dashboard" });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
+// console.log(store.state.user.data.role);
+// switch (store.state.user.data.role) {
+//   case "ADMIN":
+//     next({ name: "admin-dashboard" });
+//     break;
+//   case "TEACHER":
+//     next({ name: "teacher-dashboard" });
+//     break;
+//   case "STUDENT":
+//     next({ name: "student-dashboard" });
+//     break;
+//   default:
+//     next({ name: "index" });
+//     break;
+// }

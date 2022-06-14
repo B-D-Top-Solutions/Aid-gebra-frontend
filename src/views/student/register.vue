@@ -2,54 +2,61 @@
   <h1 class="text-maincolor text-center mb-5">Welcome students!</h1>
   <center>
     <div style="max-width: 450px">
-      <div class="rounded border p-4">
+      <form class="rounded border p-4" @submit="register">
         <div class="form-floating mb-3">
           <input
             type="email"
-            v-model.trim="email"
+            v-model.trim="student.email"
             class="form-control"
-            id="floatingInput"
             placeholder="name@example.com"
+            id="floating-email"
           />
-          <label for="floatingInput">Email address</label>
+          <label for="floating-email">Email address</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="text"
-            v-model.trim="fullname"
+            v-model.trim="student.fullname"
             class="form-control"
-            id="floatingInput1"
             placeholder="Fullname"
+            id="floating-fullname"
           />
-          <label for="floatingInput1">Fullname</label>
+          <label for="floating-fullname">Fullname</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="student.contact"
+            class="form-control"
+            placeholder="Contact Number"
+            id="floating-contact"
+          />
+          <label for="floating-contact">Contact Number</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="password"
-            v-model.trim="password"
+            v-model.trim="student.password"
             class="form-control"
-            id="floatingPassword"
-            placeholder="Password"
+            placeholder="passsowrd"
+            id="floating-password"
           />
-          <label for="floatingPassword">Password</label>
+          <label for="floating-password">Password</label>
         </div>
         <div class="form-floating">
           <input
             type="password"
-            v-model.trim="confirm_password"
+            v-model.trim="student.confirm_password"
             class="form-control"
-            id="floatingPassword1"
             placeholder="Confirm Password"
+            id="floating-confirm"
           />
-          <label for="floatingPassword1">Confirm Password</label>
+          <label for="floating-confirm">Confirm Password</label>
         </div>
-        <button
-          @click="create()"
-          class="d-block w-100 btn bg-main text-white mt-4"
-        >
+        <button type="submit" class="d-block w-100 btn bg-main text-white mt-4">
           REGISTER
         </button>
-      </div>
+      </form>
       <br />
       <small class="d-flex">
         <span class="text-muted">Already have an account ?</span> &nbsp;
@@ -64,43 +71,27 @@
   </center>
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
+import store from "../../store";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "student-register",
-  data() {
-    return {
-      email: null,
-      fullname: null,
-      password: null,
-      confirm_password: null,
-    };
-  },
-  mounted() {},
-  methods: {
-    async create() {
-      try {
-        const entry = await axios.post(
-          import.meta.env.VITE_SERVER + import.meta.env.VITE_API_STUDENT_CREATE,
-          {
-            email: this.email,
-            fullname: this.fullname,
-            password: this.password,
-            confirm_password: this.confirm_password,
-          }
-        );
-        const res = entry.data;
+const router = useRouter();
 
-        if (!res.status) throw res.error;
-
-        alert("Student created");
-        setTimeout(() => this.$router.push("/student"), 1500);
-      } catch (error) {
-        console.log(error);
-        alert(error);
-      }
-    },
-  },
+const student = {
+  email: "",
+  fullname: "",
+  contact: "",
+  password: "",
+  confirm_password: "",
+  role: "STUDENT",
 };
+
+function register(ev) {
+  ev.preventDefault();
+  store.dispatch("register", student).then(() =>
+    router.push({
+      name: "student-dashboard",
+    })
+  );
+}
 </script>
