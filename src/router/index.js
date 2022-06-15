@@ -81,6 +81,11 @@ const routes = [
     },
     children: [
       {
+        path: "/admin/monitoring",
+        name: "admin-monitoring-test",
+        component: () => import("../views/monitoring/admin/test.vue"),
+      },
+      {
         path: "/admin/dashboard",
         name: "admin-dashboard",
         component: () => import("../views/admin/dashboard.vue"),
