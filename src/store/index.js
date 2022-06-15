@@ -16,7 +16,10 @@ const store = createStore({
         .post("/api/v2/auth/register", user)
         .then(({ data }) => {
           if (data.status == true) {
-            commit("setUser", data);
+            // If teacher dont login
+            if (!data.role == "TEACHER") {
+              commit("setUser", data);
+            }
           }
           return data;
         });

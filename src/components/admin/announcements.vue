@@ -1,5 +1,10 @@
 <template>
-  <div v-if="!isHidden" class="alert alert-info" role="alert">
+  <div
+    v-if="!isHidden"
+    class="alert alert-info"
+    role="alert"
+    style="z-index: -1"
+  >
     <p>Announcement: {{ message }}</p>
   </div>
 </template>
