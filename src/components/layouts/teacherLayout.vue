@@ -1,17 +1,21 @@
 <template>
   <Navigation />
   <br />
-  <div class="container py-5">
+  <Announcement />
+  <div class="container py-3">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Navigation from "../teacher/navigation.vue";
+import Announcement from "../admin/announcements.vue";
+
 export default {
   name: "Teacher",
   components: {
     Navigation,
+    Announcement,
   },
 };
 </script>

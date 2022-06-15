@@ -15,6 +15,11 @@
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
+          :to="{ name: 'admin-announcements' }"
+          class="text-decoration-none text-white border-bottom ml-4"
+          >Announcement</RouterLink
+        >&nbsp;
+        <RouterLink
           :to="{ name: 'admin-classes' }"
           class="text-decoration-none text-white border-bottom"
           >Classrooms</RouterLink

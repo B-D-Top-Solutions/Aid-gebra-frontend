@@ -145,6 +145,11 @@ const routes = [
         props: true,
         component: () => import("../views/admin/posttestView.vue"),
       },
+      {
+        path: "/admin/announcements",
+        name: "admin-announcements",
+        component: () => import("../views/admin/announcement.vue"),
+      },
     ],
   },
   // Teacher Routes

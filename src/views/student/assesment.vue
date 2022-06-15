@@ -35,7 +35,7 @@
 
       <div class="card-header p-4">
         <h2 class="m-auto">Assesment: ({{ mastery }})</h2>
-				<small>Score: {{ score }}/5  |  Questions: {{ questionCount }}</small>
+				<small>Score: {{ score }}/5</small>
       </div>
       <div class="card-body">
         <h5 class="card-title"><small>Type the letter of the answer</small></h5>
@@ -46,12 +46,12 @@
 						<span>Difficulty: {{ currentQuestion.difficulty }}</span>
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ currentQuestion.text }}</h5>
-            <p class="card-text d-flex justify-content-around">
-							<p>{{ currentQuestion.choiceA.value }} . {{ currentQuestion.choiceA.text  }}</p>
-							<p>{{ currentQuestion.choiceB.value }} . {{ currentQuestion.choiceB.text  }}</p>
-							<p>{{ currentQuestion.choiceC.value }} . {{ currentQuestion.choiceC.text  }}</p>
-							<p>{{ currentQuestion.choiceD.value }} . {{ currentQuestion.choiceD.text  }}</p>
+          <h5 class="card-title" v-html="currentQuestion.text"></h5>
+            <p class="card-text">
+							<p>{{ currentQuestion.choiceA.value }} . <span v-html=" currentQuestion.choiceA.text  "></span></p>
+							<p>{{ currentQuestion.choiceB.value }} . <span v-html=" currentQuestion.choiceB.text  "></span></p>
+							<p>{{ currentQuestion.choiceC.value }} . <span v-html=" currentQuestion.choiceC.text  "></span></p>
+							<p>{{ currentQuestion.choiceD.value }} . <span v-html=" currentQuestion.choiceD.text  "></span></p>
             </p>
 						<input required v-model="answer.answer" class="form-control" type="text" v-if="!isAfterQuestion">
 						<p v-if="isAfterQuestion">
@@ -61,7 +61,7 @@
           </div>
 					<div class="card-footer" v-if="isAfterQuestion">
 							Explaination:
-							<p> {{ currentQuestion.explaination }}</p>
+							<p v-html="currentQuestion.explaination"> </p>
 					</div>
         </div>
 				<button 

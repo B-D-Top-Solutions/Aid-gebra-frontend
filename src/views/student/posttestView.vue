@@ -70,10 +70,10 @@
             >
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ question.question }}</h5>
+            <h5 class="card-title" v-html="question.question"></h5>
             <p class="card-text ">
-							<div>Correct: {{ question.correctText  }}</div>
-							<div>Your Answer: {{ question.answerText  }}</div>
+							<div>Correct: <span v-html="question.correctText"></span></div>
+							<div>Your Answer: <span v-html="question.answerText"></span></div>
             </p>
           </div>
         </div>
@@ -94,12 +94,12 @@
 						<span>Tag: {{ question.tags }}</span>
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ question.text }}</h5>
-            <p class="card-text d-flex justify-content-around">
-							<p>{{ question.choiceA.value }} . {{ question.choiceA.text  }}</p>
-							<p>{{ question.choiceB.value }} . {{ question.choiceB.text  }}</p>
-							<p>{{ question.choiceC.value }} . {{ question.choiceC.text  }}</p>
-							<p>{{ question.choiceD.value }} . {{ question.choiceD.text  }}</p>
+            <h5 class="card-title" v-html="question.text"></h5>
+            <p class="card-text">
+							<p>{{ question.choiceA.value }} . <span v-html=" question.choiceA.text  "></span></p>
+							<p>{{ question.choiceB.value }} . <span v-html=" question.choiceB.text  "></span></p>
+							<p>{{ question.choiceC.value }} . <span v-html=" question.choiceC.text  "></span></p>
+							<p>{{ question.choiceD.value }} . <span v-html=" question.choiceD.text  "></span></p>
             </p>
 						<input required v-model="answers[question.order - 1]" class="form-control" type="text" >
           </div>
