@@ -7,7 +7,7 @@ axios.defaults.headers = {
 };
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: import.meta.env.VITE_SERVER,
 });
 
 axiosClient.interceptors.request.use((config) => {

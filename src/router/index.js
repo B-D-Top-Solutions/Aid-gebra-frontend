@@ -205,6 +205,24 @@ const routes = [
         name: "student-profile",
         component: () => import("../views/student/profile.vue"),
       },
+      {
+        path: "/student/lesson/:lessonId",
+        name: "student-lesson-view",
+        props: true,
+        component: () => import("../views/student/classView.vue"),
+      },
+      {
+        path: "/student/lecture/:conceptId/:setType",
+        name: "student-lecture-view",
+        props: true,
+        component: () => import("../views/student/lectureView.vue"),
+      },
+      {
+        path: "/student/prettest/:lessonId",
+        name: "student-pretest-view",
+        props: true,
+        component: () => import("../views/student/pretestView.vue"),
+      },
     ],
   },
 ];
