@@ -1,20 +1,34 @@
 <template>
   <div class="row">
 
-		<div v-if="completedPretest" class="card-body">
+		<div v-if="(isMaxAttempts && noPassed)" class="card-body">
 			<div class="text-center">
-				<h5 class="card-title">You already took this pretest.</h5>
+				<h5 class="card-title">You have reached maximum attempt for Post-test. Kindly seek for 
+	a professional's help. Thank you.</h5>
 			</div>
 		</div>
 
-		<div class="card" v-if="(completedPretest)">
+		<div v-if="notYetComplete" class="card-body">
+			<div class="text-center">
+				<h5 class="card-title">This posttest does not have enough questions.</h5>
+			</div>
+		</div>
+
+		<div v-if="!noPassed" class="card-body">
+			<div class="text-center">
+				<h5 class="card-title">You already passed this test.</h5>
+			</div>
+		</div>
+
+		<div class="card" v-if="lastestResult">
 
       <div class="card-header p-4">
-        <h2 class="m-auto">Pre-test Results</h2>
-				<small>{{ pretestResult.totalScore }} Points</small>
+        <h2 class="m-auto">Post Test Results</h2>
+				<small>{{ lastestResult.totalScore }} Points</small>
+				<small>Attempt: {{ lastestResult.attemptNumber }}</small>
       </div>
       <div class="card-body">
-        <h5 class="card-title"><small>Knowledge Level: {{ pretestResult.knowledgeLevel }}</small></h5>
+        <h5 class="card-title"><small>Verdict: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
 						<table class="table table-hover table-striped">
 							<thead>
 								<tr>
@@ -30,7 +44,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="concept in pretestResult.result">
+								<tr v-for="concept in lastestResult.result">
 									<td>
 										<span class="card-title">{{ concept.conceptName }}</span>
 									</td>
@@ -45,7 +59,7 @@
 						</table>
 			
 	
-        <div class="card my-3" v-for="(question, index) in pretestResult.questions"  v-bind:key="question._id">
+        <div class="card my-3" v-for="(question, index) in lastestResult.questions"  v-bind:key="question._id">
           <div class="card-header d-flex justify-content-between">
             <div class="">Question: {{ question.order  }}</div>
 						<span
@@ -64,22 +78,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> 
 
-			<div v-if="notYetComplete" class="card-body">
-			<div class="text-center">
-				<h5 class="card-title">This pretest does not have enough questions.</h5>
-			</div>
-		</div>
-
-    <div class="card" v-if="(!completedPretest && !notYetComplete)">
+    <div class="card" v-if="(noPassed == true && isMaxAttempts == false && lastestResult == null)">
 
       <div class="card-header p-4">
-        <h2 class="m-auto">Pre-test</h2>
+        <h2 class="m-auto">Post-test</h2>
+				<small>Attempt: {{ attemptCount }}/5</small>
       </div>
       <div class="card-body">
         <h5 class="card-title"><small>Type the letter of the answer</small></h5>
-        <div class="card my-3" v-for="(question, index) in pretestQuestions"  v-bind:key="question._id">
+        <div class="card my-3" v-for="(question, index) in posttestQuestions"  v-bind:key="question._id">
           <div class="card-header d-flex justify-content-between">
             <div class="">Question: {{ question.order  }}</div>
 						<span>Tag: {{ question.tags }}</span>
@@ -116,15 +125,15 @@ export default {
 	props: [ "lessonId" ],
 	data () {
 		return {
-			completedPretest:false,
-			hasPretest: false,
+			attemptCount: 0,
+			isMaxAttempts: false,
 			notYetComplete: false,
-			pretestResult: null,
+			noPassed: false,
 			studentId: store.state.user.data._id,
 			student: {},
-			pretestIdnum: null,
-			pretest: {},
-			pretestQuestions: [],
+			posttest: {},
+			posttestQuestions: [],
+			lastestResult: null,
 			answers: [],
 		};
 	},
@@ -147,7 +156,7 @@ export default {
 
 				this.student = res.data;
 
-				await this.getPretest();
+				await this.getPosttest();
 				
 			} catch ( error )
 			{
@@ -155,39 +164,12 @@ export default {
 				alert( error );
 			}
 		},
-		async getStudentPretest () {
-			try
-			{
-				const entry = await axiosClient.get(
-					import.meta.env.VITE_SERVER + import.meta.env.VITE_API_PRETEST_RESULTS_ALL_V2 +
-					`/?student=${ this.student._id }&lesson=${ this.lessonId }`
-				);
-
-				const res = entry.data;
-				if ( !res.status ) throw res.error;
-
-				if(res.data.length > 0) {
-					this.completedPretest = true;
-					this.pretestResult = res.data[ 0 ];
-					console.log( this.pretestResult );
-					return
-				}
-
-				this.completedPretest = false;
-				await this.getQuestions()
-
-			} catch ( error )
-			{
-				console.log( error );
-				alert( error );
-			}
-		},
-		async getPretest () {
+		async getPosttest () {
 			try
 			{
 				const entry = await axiosClient.get(
 					import.meta.env.VITE_SERVER +
-					import.meta.env.VITE_API_PRETEST_ALL_V2 +
+					import.meta.env.VITE_API_POSTTEST_ALL_V2 +
 					"?lesson=" +
 					this.lessonId
 				);
@@ -195,13 +177,11 @@ export default {
 				const res = entry.data;
 				if ( !res.status ) throw res.error;
 
-				if ( res.data.length <= 0 ) throw "This lesson has no pretest yet";
+				if ( res.data.length <= 0 ) throw "This lesson has no post test yet";
 
-				this.pretestIdnum = res.data[ 0 ]._id;
-				this.pretest = res.data[ 0 ];
-				this.hasPretest = true;
+				this.posttest = res.data[ 0 ];
 
-				await this.getStudentPretest();
+				await this.getStudentAttempts();
 
 			} catch ( error )
 			{
@@ -209,13 +189,54 @@ export default {
 				alert( error );
 			}
 		},
+		async getStudentAttempts () {
+			try
+			{
+				const entry = await axiosClient.get(
+					import.meta.env.VITE_SERVER + import.meta.env.VITE_API_POSTTEST_RESULTS_ALL_V2 +
+					`/?student=${ this.student._id }&lesson=${ this.lessonId }`
+				);
+
+				const res = entry.data;
+				if ( !res.status ) throw res.error;
+
+				const attempts = res.data;
+				// counter number of attempts
+				this.attemptCount = res.data.length + 1;
+
+				// check if passed
+				const successFullAttempts = attempts.filter( ( attempt ) => attempt.isPassed );
+				if ( successFullAttempts.length > 0 ) {
+					this.noPassed = false;
+				} else {
+					this.noPassed = true;
+				}
+
+				if(this.noPassed == false ) {
+					return
+				}
+
+				// check if max attempts reached
+				if ( this.attemptCount >= 6 ) {
+					this.isMaxAttempts = true;
+					return
+				}
+
+				await this.getQuestions()
+
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
+		},	
 		async getQuestions () {
 			try
 			{
 				const entry = await axiosClient.get(
 					import.meta.env.VITE_SERVER +
-					import.meta.env.VITE_API_PRETEST_QUESTIONS_ALL_V2 +
-					`?pretest=${ this.pretestIdnum }`
+					import.meta.env.VITE_API_POSTTEST_QUESTIONS_ALL_V2 +
+					`?posttest=${ this.posttest._id }`
 				);
 
 				const res = entry.data;
@@ -235,7 +256,7 @@ export default {
 					return a.order - b.order;
 				} );
 
-				this.pretestQuestions = sortedData;
+				this.posttestQuestions = sortedData;
 			} catch ( error )
 			{
 				console.log( error );
@@ -282,7 +303,7 @@ export default {
 
 				const entry = await axiosClient.post(
 					import.meta.env.VITE_SERVER +
-					import.meta.env.VITE_API_PRETEST_RESULTS_CREATE_V2,
+					import.meta.env.VITE_API_POSTTEST_RESULTS_CREATE_V2,
 					inputData
 				);
 
@@ -290,8 +311,7 @@ export default {
 				if ( res.status == false ) throw res.error;
 				console.log( res.data );
 
-				this.pretestResult = res.data;
-				this.completedPretest = true;
+				this.lastestResult = res.data;
 
 				alert( "Test Submited" );
 

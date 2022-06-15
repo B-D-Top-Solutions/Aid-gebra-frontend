@@ -30,7 +30,10 @@
           <RouterLink
             v-if="isInClass"
             class="text-danger"
-            :to="{ name: 'index' }"
+            :to="{
+              name: 'student-posttest-view',
+              params: { lessonId: lesson._id },
+            }"
             >Take Test</RouterLink
           >
           <span v-if="!isInClass" class="text-danger"

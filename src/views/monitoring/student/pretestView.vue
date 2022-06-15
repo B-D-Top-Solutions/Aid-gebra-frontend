@@ -1,12 +1,5 @@
 <template>
   <div class="row">
-
-		<div v-if="completedPretest" class="card-body">
-			<div class="text-center">
-				<h5 class="card-title">You already took this pretest.</h5>
-			</div>
-		</div>
-
 		<div class="card" v-if="(completedPretest)">
 
       <div class="card-header p-4">
@@ -65,44 +58,6 @@
         </div>
       </div>
     </div>
-
-			<div v-if="notYetComplete" class="card-body">
-			<div class="text-center">
-				<h5 class="card-title">This pretest does not have enough questions.</h5>
-			</div>
-		</div>
-
-    <div class="card" v-if="(!completedPretest && !notYetComplete)">
-
-      <div class="card-header p-4">
-        <h2 class="m-auto">Pre-test</h2>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title"><small>Type the letter of the answer</small></h5>
-        <div class="card my-3" v-for="(question, index) in pretestQuestions"  v-bind:key="question._id">
-          <div class="card-header d-flex justify-content-between">
-            <div class="">Question: {{ question.order  }}</div>
-						<span>Tag: {{ question.tags }}</span>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{ question.text }}</h5>
-            <p class="card-text d-flex justify-content-around">
-							<p>{{ question.choiceA.value }} . {{ question.choiceA.text  }}</p>
-							<p>{{ question.choiceB.value }} . {{ question.choiceB.text  }}</p>
-							<p>{{ question.choiceC.value }} . {{ question.choiceC.text  }}</p>
-							<p>{{ question.choiceD.value }} . {{ question.choiceD.text  }}</p>
-            </p>
-						<input required v-model="answers[question.order - 1]" class="form-control" type="text" >
-          </div>
-        </div>
-        <button
-          class="btn btn-primary my-4"
-          @click="saveTest()"
-        >
-          Submit
-        </button>
-      </div>
-    </div>
   </div>
 
 </template>
@@ -112,18 +67,14 @@ import axiosClient from '../../axios';
 import store from '../../store';
 
 export default {
-	name: "student-pretest-view",
+	name: "student-pretest-monitor",
 	props: [ "lessonId" ],
 	data () {
 		return {
-			completedPretest:false,
-			hasPretest: false,
-			notYetComplete: false,
+			completedPretest : false,
 			pretestResult: null,
 			studentId: store.state.user.data._id,
 			student: {},
-			pretestIdnum: null,
-			pretest: {},
 			pretestQuestions: [],
 			answers: [],
 		};
