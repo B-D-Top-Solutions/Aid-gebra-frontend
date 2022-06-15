@@ -87,6 +87,12 @@ const routes = [
     props: true,
     component: () => import("../views/monitoring/monitor/viewPosttest.vue"),
   },
+  {
+    path: "/monitor/student-progress/:studentId",
+    name: "monitor-progress",
+    props: true,
+    component: () => import("../views/monitoring/monitor/studentProgress.vue"),
+  },
 
   // Admin Routes
   {
