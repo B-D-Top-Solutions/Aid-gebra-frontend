@@ -1,6 +1,8 @@
 <template>
   <div class="container py-5">
     <BarShit/>
+    <br/>
+    <BarConcept/>
   </div>
 </template>
 
@@ -8,11 +10,12 @@
 import axios from "axios";
 import auth from "../../../utils/authHeader";
 import BarShit from '../../../components/bar.shit.vue'
+import BarConcept from '../../../components/barConcept.shit.vue'
 
 export default {
   name: "admin-monitoring-test",
   components: {
-    BarShit
+    BarShit,BarConcept
   },
   data() {
     return {

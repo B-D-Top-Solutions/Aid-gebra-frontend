@@ -65,9 +65,14 @@ export default {
         labels: [],
         datasets: [ 
             {
-                label: 'Incorrect Answers [Post test Questions]',
-                backgroundColor: '#f87979',
-                data: [] 
+              label: 'Incorrect Answers [Post test Concepts]',
+              backgroundColor: '#f87979',
+              data: [] 
+            },
+            {
+              label: 'Correct Answers [Post test Concepts]',
+              backgroundColor: '#f87979',
+              data: [] 
             }
         ]
       },
@@ -87,9 +92,9 @@ export default {
             data: this.items,
             fileName: "myFile",
             columns: [
-              { field: '_id.text', title : "Question"},
-              { field: '_id.tags', title : "Tags"},
-              { field: 'inCorrectAnswers', title: 'Total Incorrect Answers' }
+              { field: '_id.name', title : "Concepts"},
+              { field: 'incorrectAnswers', title : "Total Incorrect Answers"},
+              { field: 'correctAnswers', title: 'Total correct Answers' }
           ]
         });
     },
@@ -98,7 +103,7 @@ export default {
             const entry =  await axios
             .get(
                 import.meta.env.VITE_SERVER+
-                "/api/v2/graph/question/answers/incorrectly",
+                "/api/v2/graph/concept/answers/incorrectly",
             )
 
             const res = entry.data
@@ -106,8 +111,9 @@ export default {
             console.log(res)
             if(!res.status) throw res.error
             this.items = res.data
-            this.chartData.labels = res.data.map(e => e._id.tags)
-            this.chartData.datasets[0].data = res.data.map(e => e.inCorrectAnswers)
+            this.chartData.labels = res.data.map(e => e._id.name)
+            this.chartData.datasets[0].data = res.data.map(e => e.incorrectAnswers)
+            this.chartData.datasets[1].data = res.data.map(e => e.correctAnswers)
         }
         catch(error){
             alert(error)

@@ -10,6 +10,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@progress/kendo-vue-excel-export": "^3.3.5",
+    "@progress/kendo-vue-grid": "^3.3.5",
     "@vueup/vue-quill": "^1.0.0-beta.8",
     "axios": "^0.27.2",
     "chart.js": "^3.8.0",
