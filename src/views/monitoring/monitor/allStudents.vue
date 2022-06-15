@@ -1,21 +1,27 @@
 <template>
   <div class="container">
+    <div class="row m-auto p-4">
+      <h4>Most Incorrecty Answered Questions</h4>
+      <bar />
+    </div>
     <div class="row m-auto">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="input-group" style="width: 300px">
-          <input
-            type="text"
-            class="form-control"
-            v-model="search"
-            placeholder="What are you looking for ?"
-          />
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="loadData()"
-          >
-            <i class="bi bi-search text-maincolor"></i>
-          </button>
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="input-group" style="width: 300px">
+            <input
+              type="text"
+              class="form-control"
+              v-model="search"
+              placeholder="What are you looking for ?"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              @click="loadData()"
+            >
+              <i class="bi bi-search text-maincolor"></i>
+            </button>
+          </div>
         </div>
       </div>
       <br />
@@ -49,9 +55,18 @@
                   >{{ e.status.toUpperCase() }}</span
                 >
               </td>
-              <td>
+              <td class="d-flex justify-content-around">
                 <RouterLink
-                  class="shadow-sm btn btn-sm bg-main text-light"
+                  class="shadow-sm btn btn-sm bg-primary text-light"
+                  :to="{
+                    name: 'monitor-progress',
+                    params: { studentId: e._id },
+                  }"
+                >
+                  View Progress
+                </RouterLink>
+                <RouterLink
+                  class="shadow-sm btn btn-sm bg-success text-light"
                   :to="{
                     name: 'monitor-tests',
                     params: { studentId: e._id, type: 'pretest' },
@@ -102,9 +117,12 @@
 
 <script>
 import axiosClient from "../../../axios";
-
+import bar from "./bar.vue";
 export default {
   name: "monitor-students",
+  components: {
+    bar,
+  },
   data() {
     return {
       list: [],

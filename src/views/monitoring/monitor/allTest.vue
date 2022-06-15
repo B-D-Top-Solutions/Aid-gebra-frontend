@@ -109,8 +109,26 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.loadStudent();
   },
   methods: {
+    async loadStudent() {
+      try {
+        const entry = await axiosClient.get(
+          import.meta.env.VITE_SERVER +
+            import.meta.env.VITE_API_STUDENT_SHOW_V2 +
+            "/" +
+            this.studentId
+        );
+
+        const res = entry.data;
+        if (!res.status) throw res.error;
+
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async loadData(page = 1) {
       try {
         switch (this.type) {
