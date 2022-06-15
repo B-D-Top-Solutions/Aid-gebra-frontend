@@ -8,11 +8,6 @@
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
-          to="/teacher/classes"
-          class="text-decoration-none text-white border-bottom"
-          >Classes</RouterLink
-        >&nbsp;
-        <RouterLink
           to="/teacher/monitoring"
           class="text-decoration-none text-white border-bottom"
           >Monitoring</RouterLink

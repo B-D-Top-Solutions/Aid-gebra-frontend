@@ -89,9 +89,12 @@ const teacher = {
 function register(ev) {
   ev.preventDefault();
   store.dispatch("register", teacher).then((data) => {
+    console.log(data);
     if (data.status == true) {
       router.push({ name: "teacher-dashboard" });
     } else {
+      console.log(data.error);
+
       alert(data.error);
     }
   });

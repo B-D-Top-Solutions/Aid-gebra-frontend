@@ -175,6 +175,12 @@ const routes = [
         name: "teacher-profile",
         component: () => import("../views/teacher/profile.vue"),
       },
+      {
+        path: "/teacher/classes/:classId",
+        name: "teacher-class-view",
+        props: true,
+        component: () => import("../views/teacher/myClass.vue"),
+      },
     ],
   },
   // Student Routes
@@ -222,6 +228,11 @@ const routes = [
         name: "student-pretest-view",
         props: true,
         component: () => import("../views/student/pretestView.vue"),
+      },
+      {
+        path: "/student/myclass",
+        name: "student-myclass",
+        component: () => import("../views/student/myClass.vue"),
       },
     ],
   },

@@ -1,7 +1,15 @@
 <template>
   <div class="row">
-    <div class="card" v-if="pretestIdnum">
-      <div class="card-header p-4">
+    <div class="card" v-if="hasPretest">
+
+			<div class="card-body">
+				<div class="text-center">
+					<h5 class="card-title">You already took this pretest.</h5>
+				</div>
+			</div>
+			
+
+      <div v-if="!hasPretest" class="card-header p-4">
         <h2 class="m-auto">Pre-test</h2>
       </div>
       <div class="card-body">
@@ -36,58 +44,83 @@
 
 <script>
 import axiosClient from '../../axios';
+import store from '../../store';
 
 export default {
-  name: "admin-pretest-view",
-  props: ["lessonId"],
-  data() {
+	name: "admin-pretest-view",
+	props: [ "lessonId" ],
+	data () {
 		return {
+			hasPretest: false,
+			studentId: store.state.user.data.id,
 			pretestIdnum: null,
-      pretest: {},
+			pretest: {},
 			pretestQuestions: [],
 			answers: [],
-    };
+		};
 	},
-	mounted() {
+	mounted () {
 		this.getPretest();
 	},
 	methods: {
+		async getStudentPretest () {
+			try
+			{
+				const entry = await axiosClient.get(
+					import.meta.env.VITE_SERVER + import.meta.env.VITE_API_PRETEST_RESULTS_ALL_V2 +
+					`/?student=${ this.studentId }&lesson=${ this.lessonId }`
+				);
+
+				const res = entry.data;
+				if ( !res.status ) throw res.error;
+
+				this.hasPretest = res.data.length > 0 ? true : false;
+				if ( !this.hasPretest )
+				{
+					await this.getPretest();
+				}
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
+		},
 		async getPretest () {
 			try
-      {
-        const entry = await axiosClient.get(
-          import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_PRETEST_ALL_V2 +
-          "?lesson=" +
-          this.lessonId
-        );
+			{
+				const entry = await axiosClient.get(
+					import.meta.env.VITE_SERVER +
+					import.meta.env.VITE_API_PRETEST_ALL_V2 +
+					"?lesson=" +
+					this.lessonId
+				);
 
-        const res = entry.data;
-        if ( !res.status ) throw res.error;
+				const res = entry.data;
+				if ( !res.status ) throw res.error;
 
-				if(res.data.length <= 0) throw "This lesson has no pretest yet";
+				if ( res.data.length <= 0 ) throw "This lesson has no pretest yet";
 
 				this.pretestIdnum = res.data[ 0 ]._id;
 				this.pretest = res.data[ 0 ];
 
 				await this.getQuestions()
-      } catch ( error )
-      {
-        console.log( error );
-        alert( error );
-      }
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
 		},
 		async getQuestions () {
 			try
-      {
-        const entry = await axiosClient.get(
-          import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_PRETEST_QUESTIONS_ALL_V2 +
-          `?pretest=${ this.pretestIdnum }`
-        );
+			{
+				const entry = await axiosClient.get(
+					import.meta.env.VITE_SERVER +
+					import.meta.env.VITE_API_PRETEST_QUESTIONS_ALL_V2 +
+					`?pretest=${ this.pretestIdnum }`
+				);
 
-        const res = entry.data;
-        if ( !res.status ) throw res.error;
+				const res = entry.data;
+				if ( !res.status ) throw res.error;
 
 				console.log( res.data )
 
@@ -95,15 +128,15 @@ export default {
 					return a.order - b.order;
 				} );
 
-        this.pretestQuestions = sortedData;
-      } catch ( error )
-      {
-        console.log( error );
-        alert( error );
-      }
+				this.pretestQuestions = sortedData;
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
 		},
 		async saveTest () {
-      try
+			try
 			{
 				let inputData = {
 					lesson: this.lessonId,
@@ -113,14 +146,16 @@ export default {
 				for ( let i = 0; i < this.answers.length; i++ )
 				{
 					console.log( this.answers[ i ] );
-					if ( this.answers[ i ] == null ) {
+					if ( this.answers[ i ] == null )
+					{
 						throw "Please fill in all answers";
 					}
 				}
 
 				// format the answers to be in the same format as the database
 				let answers = [];
-				for ( let i = 0; i < this.answers.length; i++ ) {
+				for ( let i = 0; i < this.answers.length; i++ )
+				{
 					answers.push( {
 						number: i + 1,
 						answer: this.answers[ i ],
@@ -128,27 +163,28 @@ export default {
 				}
 
 				inputData.answers = answers;
-				
-        const entry = await axiosClient.post(
-          import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_PRETEST_RESULTS_CREATE_V2,
-          inputData
-        );
 
-        const res = entry.data;
-        if (res.status == false) throw res.error;
+				const entry = await axiosClient.post(
+					import.meta.env.VITE_SERVER +
+					import.meta.env.VITE_API_PRETEST_RESULTS_CREATE_V2,
+					inputData
+				);
+
+				const res = entry.data;
+				if ( res.status == false ) throw res.error;
 				console.log( res.data );
 
-				alert("Test Submited");
+				alert( "Test Submited" );
 
-      } catch ( error )
-      {
-        console.log( error );
-        alert( error );
-      }
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
 		},
 	}
-};
+}
+
 </script>
 
 <style scoped></style>
