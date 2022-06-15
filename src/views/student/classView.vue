@@ -65,7 +65,10 @@
               <RouterLink
                 v-if="isInClass"
                 class="text-danger"
-                :to="{ name: 'index' }"
+                :to="{
+                  name: 'student-assesment-view',
+                  params: { conceptId: concept._id },
+                }"
                 >Take Assesment</RouterLink
               >
               <span v-if="!isInClass" class="text-danger"

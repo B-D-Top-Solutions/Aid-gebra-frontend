@@ -27,15 +27,15 @@
 						</div>
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ question.text }}</h5>
+            <h5 class="card-title" v-html="question.text"></h5>
 						<p class="card-text">
               Answer: {{ question.answer }}
             </p>
-            <p class="card-text d-flex justify-content-around">
-							<p>{{ question.choiceA.value }} . {{ question.choiceA.text  }}</p>
-							<p>{{ question.choiceB.value }} . {{ question.choiceB.text  }}</p>
-							<p>{{ question.choiceC.value }} . {{ question.choiceC.text  }}</p>
-							<p>{{ question.choiceD.value }} . {{ question.choiceD.text  }}</p>
+            <p class="card-text">
+							<p>{{ question.choiceA.value }} . <span v-html=" question.choiceA.text  "></span></p>
+							<p>{{ question.choiceB.value }} . <span v-html=" question.choiceB.text  "></span></p>
+							<p>{{ question.choiceC.value }} . <span v-html=" question.choiceC.text  "></span></p>
+							<p>{{ question.choiceD.value }} . <span v-html=" question.choiceD.text  "></span></p>
             </p>
           </div>
           <div class="card-footer">
@@ -67,30 +67,55 @@
               placeholder="Concept Order" min="1" max="20" />
             <label for="floatingInput">Order</label>
           </div>
-          <div class="form-floating mb-3">
-            <input type="text" v-model.trim=" questionModel.text " class="form-control" id="floatingInput"
-              placeholder="Question" />
-            <label for="floatingInput">Question</label>
+          <div class="form mb-3">
+            <label for="">Question</label>
+            <QuillEditor
+              theme="snow"
+              toolbar="full"
+              v-model:content="questionModel.text"
+              contentType="html"
+              placeholder="Enter Question"
+            />
           </div>
-					<div class="form-floating mb-3">
-            <input type="text" v-model.trim=" questionModel.choiceA " class="form-control" id="floatingInput"
-              placeholder="Question" />
-            <label for="floatingInput">Choice A</label>
+					<div class="form mb-3">
+            <label for="">Choice A</label>
+            <QuillEditor
+              theme="snow"
+              toolbar="full"
+              v-model:content="questionModel.choiceA"
+              contentType="html"
+              placeholder="Enter Choice A"
+            />
           </div>
-					<div class="form-floating mb-3">
-            <input type="text" v-model.trim=" questionModel.choiceB " class="form-control" id="floatingInput"
-              placeholder="Question" />
-            <label for="floatingInput">Choice B</label>
+					<div class="form mb-3">
+            <label for="">Choice B</label>
+            <QuillEditor
+              theme="snow"
+              toolbar="full"
+              v-model:content="questionModel.choiceB"
+              contentType="html"
+              placeholder="Enter Choice B"
+            />
           </div>
-					<div class="form-floating mb-3">
-            <input type="text" v-model.trim=" questionModel.choiceC " class="form-control" id="floatingInput"
-              placeholder="Question" />
-            <label for="floatingInput">Choice C</label>
+					<div class="form mb-3">
+            <label for="">Choice C</label>
+            <QuillEditor
+              theme="snow"
+              toolbar="full"
+              v-model:content="questionModel.choiceC"
+              contentType="html"
+              placeholder="Enter Choice C"
+            />
           </div>
-					<div class="form-floating mb-3">
-            <input type="text" v-model.trim=" questionModel.choiceD " class="form-control" id="floatingInput"
-              placeholder="Question" />
-            <label for="floatingInput">Choice D</label>
+					<div class="form mb-3">
+            <label for="">Choice D</label>
+            <QuillEditor
+              theme="snow"
+              toolbar="full"
+              v-model:content="questionModel.choiceD"
+              contentType="html"
+              placeholder="Enter Choice D"
+            />
           </div>
 					<div class="form-floating mb-3">
             <select
@@ -130,8 +155,13 @@
 
 <script>
 import axiosClient from '../../axios';
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
+  components: {
+    QuillEditor,
+  },
   name: "admin-posttest-view",
   props: ["lessonId"],
   data() {

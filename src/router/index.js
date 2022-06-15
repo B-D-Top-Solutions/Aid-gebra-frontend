@@ -145,6 +145,11 @@ const routes = [
         props: true,
         component: () => import("../views/admin/posttestView.vue"),
       },
+      {
+        path: "/admin/announcements",
+        name: "admin-announcements",
+        component: () => import("../views/admin/announcement.vue"),
+      },
     ],
   },
   // Teacher Routes
@@ -239,6 +244,12 @@ const routes = [
         path: "/student/myclass",
         name: "student-myclass",
         component: () => import("../views/student/myClass.vue"),
+      },
+      {
+        path: "/student/assesment/:conceptId",
+        name: "student-assesment-view",
+        props: true,
+        component: () => import("../views/student/assesment.vue"),
       },
     ],
   },
