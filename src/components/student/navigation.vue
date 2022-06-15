@@ -8,7 +8,7 @@
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
-          to="/student/dashboard"
+          :to="{ name: 'student-myclass' }"
           class="text-decoration-none text-white border-bottom"
           >Classroom</RouterLink
         >
@@ -66,7 +66,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const avatar =
-  import.meta.env.VITE_SERVER + "/" + store.state.user.data.avatar[0]?.path;
+  import.meta.env.VITE_SERVER + "/" + store.state.user.data?.avatar[0]?.path;
 
 function logout() {
   store.dispatch("logout").then((data) => {

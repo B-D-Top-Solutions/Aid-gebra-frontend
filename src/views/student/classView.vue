@@ -117,6 +117,7 @@ export default {
 
         const res = entry.data;
         if (res.status == false) throw res.error;
+        console.log(res);
 
         const entry2 = await axiosClient.get(
           import.meta.env.VITE_SERVER +
@@ -125,7 +126,9 @@ export default {
         );
 
         const res2 = entry2.data;
+        if (res2.status == false) throw res2.error;
 
+        console.log(res2);
         if (res2.data.classId != null) {
           this.isInClass = true;
         }

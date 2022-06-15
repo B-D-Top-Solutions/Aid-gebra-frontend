@@ -23,7 +23,9 @@ const store = createStore({
     },
     login({ commit }, user) {
       return axiosClient.post("/api/v2/auth/login", user).then(({ data }) => {
-        if (data.status == true) commit("setUser", data);
+        if (data.status == true) {
+          commit("setUser", data);
+        }
         return data;
       });
     },
@@ -46,6 +48,11 @@ const store = createStore({
       window.location.reload();
     },
     setUser: (state, user) => {
+      // if data is array take first element
+      if (Array.isArray(user.data)) {
+        user.data = user.data[0];
+      }
+
       state.user.token = user.token;
       state.user.role = user.role;
       state.user.data = user.data;
