@@ -135,13 +135,33 @@ export default {
       let count = 0;
       while (count < 5) {
         result.push({
-          conceptName: pretestResult.concepts[count].name,
+          conceptName: pretestResult.concepts[count].conceptId.name,
           conceptMastery: pretestResult.concepts[count].mastery,
           incorrectlyAnswered: pretestResult.results[count].incorrectlyAnswered,
         });
         count++;
       }
       return result;
+    },
+
+    displayPostestResults(posttestAttemps) {
+      let attempts = [];
+      posttestAttemps.forEach((attempt) => {
+        let result = {
+          attempt: attempt.attemptNumber,
+          res: [],
+        };
+        let count = 0;
+        while (count < 5) {
+          result.res.push({
+            conceptName: attempt.concepts[count].conceptId.name,
+            conceptMastery: attempt.concepts[count].mastery,
+            incorrectlyAnswered: attempt.results[count].incorrectlyAnswered,
+          });
+          count++;
+        }
+      });
+      return attempts;
     },
   },
 };

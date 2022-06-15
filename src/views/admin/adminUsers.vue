@@ -1,99 +1,101 @@
 <template>
-  <Navigation />
-  <br />
-  <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <div class="input-group" style="width: 300px">
-        <input
-          type="text"
-          class="form-control"
-          v-model="search"
-          placeholder="What are you looking for ?"
-        />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="loadData()"
-        >
-          <i class="bi bi-search text-maincolor"></i>
-        </button>
-      </div>
-
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="input-group" style="width: 300px">
+      <input
+        type="text"
+        class="form-control"
+        v-model="search"
+        placeholder="What are you looking for ?"
+      />
       <button
-        class="btn btn-light border shadow-sm"
-        @click="clearModal()"
-        data-bs-toggle="modal"
-        data-bs-target="#user_modal"
+        class="btn btn-outline-secondary"
+        type="button"
+        @click="loadData()"
       >
-        <i class="bi bi-plus"></i>&nbsp;Create users
+        <i class="bi bi-search text-maincolor"></i>
       </button>
     </div>
-    <br />
-    <div class="p-2 rounded bg-light">
-      <table class="table">
-        <thead style="border: none">
-          <tr class="">
-            <th class="text-maincolor">Fullname</th>
-            <th class="text-maincolor">Email</th>
-            <th class="text-maincolor">Role</th>
-            <th class="text-maincolor" style="max-width: 150px">Status</th>
-            <th class="text-maincolor" style="max-width: 150px">-</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="e in list" v-bind:key="e._id">
-            <td>
-              <small>{{ e.fullname }}</small>
-            </td>
-            <td>
-              <small>{{ e.email }}</small>
-            </td>
-            <td>
-              <small>{{ e.role }}</small>
-            </td>
-            <td>
-              <span
-                :class="`badge bg-${
-                  e.status.toUpperCase() == 'ACTIVE' ? 'success' : 'danger'
-                }`"
-                >{{ e.status.toUpperCase() }}</span
-              >
-            </td>
-            <td>
-              <button
-                class="shadow-sm btn btn-sm bg-main text-light"
-                @click="loadUser(e._id)"
-                data-bs-toggle="modal"
-                data-bs-target="#user_modal"
-              >
-                Modify
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
-      <div class="btn-group" role="group">
-        <button
-          type="button"
-          v-if="hasPrevPage"
-          @click="loadData(page - 1)"
-          class="btn btn-outline-secondary"
-        >
-          Prev
-        </button>
-        <button type="button" class="btn btn-outline-secondary">
-          {{ page }}
-        </button>
-        <button
-          type="button"
-          v-if="hasNextPage"
-          @click="loadData(page + 1)"
-          class="btn btn-outline-secondary"
-        >
-          Next
-        </button>
-      </div>
+    <button
+      class="btn btn-light border shadow-sm"
+      @click="clearModal()"
+      data-bs-toggle="modal"
+      data-bs-target="#user_modal"
+    >
+      <i class="bi bi-plus"></i>&nbsp;Create Admin
+    </button>
+  </div>
+  <br />
+  <div class="p-2 rounded bg-light">
+    <table class="table">
+      <thead style="border: none">
+        <tr class="">
+          <th class="text-maincolor">Fullname</th>
+          <th class="text-maincolor">Email</th>
+          <th class="text-maincolor">Contact</th>
+          <th class="text-maincolor" style="max-width: 150px">Status</th>
+          <th class="text-maincolor" style="max-width: 150px">-</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="e in list" v-bind:key="e._id">
+          <td>
+            <small>{{ e.fullname }}</small>
+          </td>
+          <td>
+            <small>{{ e.email }}</small>
+          </td>
+          <td>
+            <small>{{ e.contact }}</small>
+          </td>
+          <td>
+            <span
+              :class="`badge bg-${
+                e.status.toUpperCase() == 'ACTIVE' ? 'success' : 'danger'
+              }`"
+              >{{ e.status.toUpperCase() }}</span
+            >
+          </td>
+          <td>
+            <button
+              class="shadow-sm btn btn-sm bg-main text-light"
+              @click="loadUser(e._id)"
+              data-bs-toggle="modal"
+              data-bs-target="#user_modal"
+            >
+              Modify
+            </button>
+            <button
+              class="shadow-sm btn btn-sm bg-danger text-light"
+              @click="deleteUser(e._id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="btn-group" role="group">
+      <button
+        type="button"
+        v-if="hasPrevPage"
+        @click="loadData(page - 1)"
+        class="btn btn-outline-secondary"
+      >
+        Prev
+      </button>
+      <button type="button" class="btn btn-outline-secondary">
+        {{ page }}
+      </button>
+      <button
+        type="button"
+        v-if="hasNextPage"
+        @click="loadData(page + 1)"
+        class="btn btn-outline-secondary"
+      >
+        Next
+      </button>
     </div>
   </div>
 
@@ -123,26 +125,25 @@
             <label for="floatingInput1">Fullname</label>
           </div>
           <div class="form-floating mb-3">
+            <input
+              type="text"
+              v-model.trim="model.contact"
+              class="form-control"
+              id="floatingInput1"
+              placeholder="Contact Number"
+            />
+            <label for="floatingInput1">Contact Number</label>
+          </div>
+          <div class="form-floating mb-3">
             <select
               v-model.trim="model.status"
               class="form-select"
               id="floatingSelect"
             >
               <option value="ACTIVE">Active</option>
-              <option value="INACTIVE">Inactive</option>
+              <option value="DEACTIVATED">Deactivate</option>
             </select>
             <label for="floatingSelect">Status</label>
-          </div>
-          <div class="form-floating mb-3">
-            <select
-              v-model.trim="model.role"
-              class="form-select"
-              id="floatingSelect1"
-            >
-              <option value="ADMIN">Admin</option>
-              <option value="STAFF">Staff</option>
-            </select>
-            <label for="floatingSelect1">Role</label>
           </div>
         </div>
         <div class="modal-footer">
@@ -176,22 +177,18 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navigation from "../../components/admin/navigation.vue";
-import auth from "../../utils/authHeader";
+import store from "../../store";
+import axiosClient from "../../axios";
 
 export default {
   name: "admin-users",
-  components: {
-    Navigation,
-  },
   data() {
     return {
       model: {
         email: null,
         fullname: null,
         status: "ACTIVE",
-        role: "ADMIN",
+        contact: null,
         id: null,
       },
       list: [],
@@ -203,7 +200,6 @@ export default {
     };
   },
   mounted() {
-    auth("admin");
     this.loadData();
   },
   methods: {
@@ -211,14 +207,13 @@ export default {
       try {
         let list = [];
         let params = `?page=${page}&${this.search && "search=" + this.search}`;
-        const entry = await axios.get(
+        const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_USERLIST +
+            import.meta.env.VITE_API_ADMIN_PAGINATE_V2 +
             params
         );
 
         const res = entry.data;
-        console.log(page);
         if (!res.status) throw res.error;
 
         res.data.docs.forEach((e) => {
@@ -226,7 +221,7 @@ export default {
             _id: e._id,
             email: e.email,
             fullname: e.fullname,
-            role: e.role,
+            contact: e.contact,
             status: e.status,
           });
         });
@@ -243,7 +238,7 @@ export default {
     clearModal() {
       this.model.email = "";
       this.model.fullname = "";
-      this.model.role = "ADMIN";
+      this.model.contact = "";
       this.model.id = "";
       this.model.status = "ACTIVE";
       this.isUpdate = false;
@@ -252,20 +247,19 @@ export default {
       try {
         this.clearModal();
         this.isUpdate = true;
-        const entry = await axios.get(
+        const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_USER +
+            import.meta.env.VITE_API_ADMIN_SHOW_V2 +
             "/" +
             id
         );
 
         const res = entry.data;
-        console.log(res);
         if (!res.status) throw res.error;
 
         this.model.email = res.data.email;
         this.model.fullname = res.data.fullname;
-        this.model.role = res.data.role;
+        this.model.contact = res.data.contact;
         this.model.id = res.data._id;
         this.model.status = res.data.status;
       } catch (error) {
@@ -277,13 +271,13 @@ export default {
       try {
         if (this.isUpdate) throw "Invalid action";
 
-        const entry = await axios.post(
+        const entry = await axiosClient.post(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_USERCREATE,
+            import.meta.env.VITE_API_ADMIN_CREATE_V2,
           {
             email: this.model.email,
             fullname: this.model.fullname,
-            role: this.model.role,
+            contact: this.model.contact,
             status: this.model.status,
             password: "password",
             confirm_password: "password",
@@ -306,13 +300,15 @@ export default {
       try {
         if (!this.isUpdate) throw "Invalid action";
 
-        const entry = await axios.put(
+        const entry = await axiosClient.put(
           import.meta.env.VITE_SERVER +
-            import.meta.env.VITE_API_ADMIN_USERUPDATE,
+            import.meta.env.VITE_API_ADMIN_UPDATE_V2 +
+            "/" +
+            this.model.id,
           {
             email: this.model.email,
             fullname: this.model.fullname,
-            role: this.model.role,
+            contact: this.model.contact,
             status: this.model.status,
             id: this.model.id,
           }
@@ -329,6 +325,34 @@ export default {
         alert(error);
       }
     },
+    async deleteUser(id) {
+      try {
+        if (
+          confirm(
+            "Are you sure you want to delete this user? Operation can not be undone!"
+          )
+        ) {
+          const entry = await axiosClient.delete(
+            import.meta.env.VITE_SERVER +
+              import.meta.env.VITE_API_ADMIN_DELETE_V2 +
+              "/" +
+              id
+          );
+
+          const res = entry.data;
+          console.log(entry);
+          if (!res.status) throw res.error;
+
+          alert("Admin deleted");
+          this.loadData();
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+    },
   },
 };
 </script>
+
+<style scoped></style>

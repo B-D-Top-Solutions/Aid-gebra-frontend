@@ -1,33 +1,22 @@
 <template>
-  <div class="p-3 bg-main position-sticky shadow top-0">
+  <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 10">
     <div class="container d-flex justify-content-between align-items-center">
       <section>
-        <RouterLink to="/" class="text-decoration-none">
-          <img
-            class="w-100 px-auto mx-2"
-            src="/src/assets/images/logo.png"
-            style="max-width: 150px"
-          />
-        </RouterLink>
         <RouterLink
-          to="/admin/dashboard"
-          class="text-decoration-none text-white border-bottom ml-4"
+          :to="{ name: 'student-dashboard' }"
+          class="text-decoration-none text-white border-bottom"
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
-          :to="{ name: 'admin-classes' }"
+          to="/student/dashboard"
           class="text-decoration-none text-white border-bottom"
-          >Classrooms</RouterLink
-        >&nbsp;
+          >Classroom</RouterLink
+        >
+        &nbsp;
         <RouterLink
-          :to="{ name: 'admin-lessons' }"
+          to="/student/dashboard"
           class="text-decoration-none text-white border-bottom"
-          >Lessons</RouterLink
-        >&nbsp;
-        <RouterLink
-          to="/admin/monitoring"
-          class="text-decoration-none text-white border-bottom"
-          >Monitoring</RouterLink
+          >Scores</RouterLink
         >
       </section>
 
@@ -51,7 +40,7 @@
             <ul class="dropdown-menu">
               <li>
                 <RouterLink
-                  :to="{ name: 'admin-profile' }"
+                  :to="{ name: 'student-profile' }"
                   class="dropdown-item btn btn-outline-danger"
                   >Profile</RouterLink
                 >
