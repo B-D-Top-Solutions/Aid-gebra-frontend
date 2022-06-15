@@ -230,6 +230,12 @@ const routes = [
         component: () => import("../views/student/pretestView.vue"),
       },
       {
+        path: "/student/posttest/:lessonId",
+        name: "student-posttest-view",
+        props: true,
+        component: () => import("../views/student/posttestView.vue"),
+      },
+      {
         path: "/student/myclass",
         name: "student-myclass",
         component: () => import("../views/student/myClass.vue"),
