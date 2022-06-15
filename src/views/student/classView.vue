@@ -46,8 +46,6 @@
         <h2 v-if="lesson" class="m-auto">{{ lesson.name }}</h2>
       </div>
       <div v-if="concepts.length > 0" class="card-body">
-        <h5 class="card-title">Concepts</h5>
-
         <div
           class="card my-3"
           v-for="(concept, index) in concepts"
