@@ -60,6 +60,8 @@ const store = createStore({
       sessionStorage.setItem("token", user.token);
       sessionStorage.setItem("role", user.role);
       sessionStorage.setItem("user", JSON.stringify(user.data));
+
+      window.location.reload();
     },
   },
   modules: {},

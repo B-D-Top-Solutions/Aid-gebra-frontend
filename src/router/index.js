@@ -240,6 +240,12 @@ const routes = [
         name: "student-myclass",
         component: () => import("../views/student/myClass.vue"),
       },
+      {
+        path: "/student/assesment/:conceptId",
+        name: "student-assesment-view",
+        props: true,
+        component: () => import("../views/student/assesment.vue"),
+      },
     ],
   },
 ];
