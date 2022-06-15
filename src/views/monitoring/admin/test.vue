@@ -1,18 +1,18 @@
 <template>
   <div class="container py-5">
-    <BarShit/>
+    <!-- <BarShit/> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import auth from "../../../utils/authHeader";
-import BarShit from '../../../components/bar.shit.vue'
+// import BarShit from '../../../components/bar.shit.vue'
 
 export default {
   name: "admin-monitoring-test",
   components: {
-    BarShit
+    // BarShit
   },
   data() {
     return {
