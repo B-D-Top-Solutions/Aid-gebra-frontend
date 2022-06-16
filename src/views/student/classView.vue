@@ -35,13 +35,12 @@
               }"
               >Take Test</RouterLink
             >
-            <span v-if="!isInClass" class="text-danger"
-              >You are not in a class, you may not take the test</span
-            >
-            <span v-if="!canTakeLesson" class="text-danger"
-              >You cannot take this lesson yet until you complete the
-              previous</span
-            >
+            <p v-if="!isInClass" class="text-danger">
+              You are not in a class, you may not take the test
+            </p>
+            <p v-if="!canTakeLesson" class="text-danger">
+              You cannot take this lesson yet until you complete the previous
+            </p>
           </div>
         </div>
       </div>
@@ -61,13 +60,12 @@
               }"
               >Take Test</RouterLink
             >
-            <span v-if="!isInClass" class="text-danger"
-              >you are not in a class, you may not take the test</span
-            >
-            <span v-if="conceptStatus.length != 5" class="text-danger"
-              >You cannot take this post test until you complete all
-              concepts</span
-            >
+            <p v-if="!isInClass" class="text-danger">
+              you are not in a class, you may not take the test
+            </p>
+            <p v-if="conceptStatus.length != 5" class="text-danger">
+              You cannot take this post test until you complete all concepts
+            </p>
           </div>
         </div>
       </div>
@@ -99,6 +97,17 @@
               v-if="hasPretest && checkStatus(concept.order)"
             >
               <p class="card-text">
+                Lecture:
+                <RouterLink
+                  class="text-danger"
+                  :to="{
+                    name: 'student-lecture-view',
+                    params: { conceptId: concept._id, setType: 'A' },
+                  }"
+                  >View Lecture</RouterLink
+                >
+              </p>
+              <p class="card-text">
                 Assesment:
                 <RouterLink
                   v-if="isInClass"
@@ -111,17 +120,6 @@
                 >
                 <span v-if="!isInClass" class="text-danger"
                   >You may only view if you dont have a class</span
-                >
-              </p>
-              <p class="card-text">
-                Lecture:
-                <RouterLink
-                  class="text-danger"
-                  :to="{
-                    name: 'student-lecture-view',
-                    params: { conceptId: concept._id, setType: 'A' },
-                  }"
-                  >View Lecture</RouterLink
                 >
               </p>
             </div>
@@ -265,34 +263,41 @@ export default {
 
         // if its the first lesson and its not failed student can take the class
         const lessonOrder = this.lesson.order;
-        if (lessonOrder == 1 && userLessons[0].status != "FAILED") {
-          this.canTakeLesson = true;
+        if (userLessons.length > 0) {
+          if (lessonOrder == 1 && userLessons[0].status != "FAILED") {
+            this.canTakeLesson = true;
 
-          // check if the student has completed the lesson
-          if (userLessons[0].status == "COMPLETED") {
-            this.isCompleted = true;
+            // check if the student has completed the lesson
+            if (userLessons[0].status == "COMPLETED") {
+              this.isCompleted = true;
+            }
+          } else {
+            // find if the prev lesson order status is completed
+            const prevLesson = userLessons.find(
+              (lesson) => lesson.lessonId.order == lessonOrder - 1
+            );
+            if (prevLesson != null && prevLesson.status == "COMPLETED") {
+              this.canTakeLesson = true;
+            }
+
+            // check if student failed the current lesson
+            const currentLesson = userLessons.find(
+              (lesson) => lesson.lessonId.order == lessonOrder
+            );
+
+            if (currentLesson != null && currentLesson.status == "FAILED") {
+              this.isFailed = true;
+            }
+
+            // check if student completed the current lesson
+            if (currentLesson != null && currentLesson.status == "COMPLETED") {
+              this.isCompleted = true;
+            }
           }
         } else {
-          // find if the prev lesson order status is completed
-          const prevLesson = userLessons.find(
-            (lesson) => lesson.lessonId.order == lessonOrder - 1
-          );
-          if (prevLesson != null && prevLesson.status == "COMPLETED") {
+          this.hasPretest = false;
+          if (this.lesson.order == 1) {
             this.canTakeLesson = true;
-          }
-
-          // check if student failed the current lesson
-          const currentLesson = userLessons.find(
-            (lesson) => lesson.lessonId.order == lessonOrder
-          );
-
-          if (currentLesson != null && currentLesson.status == "FAILED") {
-            this.isFailed = true;
-          }
-
-          // check if student completed the current lesson
-          if (currentLesson != null && currentLesson.status == "COMPLETED") {
-            this.isCompleted = true;
           }
         }
 

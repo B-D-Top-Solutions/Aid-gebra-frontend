@@ -1,12 +1,20 @@
 <template>
   <div class="d-grid grid-gap2 grid-item-card">
     <div v-for="(lesson, index) in lessons" class="card" :key="lesson._id">
-      <RouterLink
-        class="card-body"
-        :to="{ name: 'student-lesson-view', params: { lessonId: lesson._id } }"
-      >
-        <h5 class="card-title">{{ lesson.name }}</h5>
-      </RouterLink>
+      <div class="card-body">
+        <div class="card-text">
+          <RouterLink
+            class="card-body"
+            :to="{
+              name: 'student-lesson-view',
+              params: { lessonId: lesson._id },
+            }"
+          >
+            <p class="card-title">View</p>
+          </RouterLink>
+          <h5 class="m-auto">{{ lesson.name }}</h5>
+        </div>
+      </div>
     </div>
   </div>
 </template>
