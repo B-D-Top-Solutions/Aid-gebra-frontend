@@ -55,16 +55,21 @@ export default {
         if (!res.status) throw res.error;
 
         this.student = res.data;
+        console.log(this.student);
 
-        // get the concept's lecture set type
         const lesson = this.student.lessons.find((lesson) =>
           lesson.concepts.find((concept) => concept.conceptId == this.conceptId)
         );
-        const concept = lesson.concepts.find(
-          (concept) => concept.conceptId == this.conceptId
-        );
 
-        this.setType = concept.alternateLecture ? "B" : "A";
+        if (lesson) {
+          const concept = lesson.concepts.find(
+            (concept) => concept.conceptId == this.conceptId
+          );
+
+          this.setType = concept.alternateLecture ? "B" : "A";
+        } else {
+          this.setType = "A";
+        }
 
         await this.fetchMaterial();
       } catch (error) {
