@@ -29,12 +29,24 @@
         <h5 class="card-title">Success</h5>
         <p>You completed the assesment, move on to the next concept or take the post test</p>
       </div>
+				<div class="text-center">
+					<RouterLink 
+					class="btn btn-primary" 
+					:to="{
+              name: 'student-lesson-view',
+              params: { lessonId: concept.lessonId },
+            }"
+				>
+					Back To Lesson
+				</RouterLink>
+				</div>
     </div>
 
 		<div class="card" v-if="(isStarted && currentQuestion != null && !noQuestionsFound && !isFinished)">
 
       <div class="card-header p-4">
-        <h2 class="m-auto">Assesment: ({{ mastery }})</h2>
+        <h3 class="m-auto">{{ concept.name }}</h3>
+        <h5 class="m-auto">Knowledge Level: {{ knowledgeLevel }}</h5>
 				<small>Score: {{ score }}/5</small>
       </div>
       <div class="card-body">
@@ -107,6 +119,7 @@ export default {
 			currentQuestion: null,
 			prevQuestions: [],
 			difficultyStack: null,
+			knowledgeLevel: '',
 			score: 0,
 			answer: {
 				question: '',
@@ -179,26 +192,91 @@ export default {
 					(r) => r.conceptName == this.concept.name
 				)
 				this.mastery = mastery[ 0 ].mastery ?? '';
+				this.knowledgeLevel = this.pretestResult.knowledgeLevel;
 
-				if(this.mastery == 'MASTERED') {
-					this.difficultyStack = [
+				// DEFAULT STACK
+				this.derivedMastery = 'UNMASTERED';
+
+				const easyStack = [
+					'EASY',
+					'EASY',
+					'AVERAGE',
+					'AVERAGE',
+					'DIFFICULT',
+				];
+
+				const hardStack = [
 						'EASY',
 						'AVERAGE',
 						'DIFFICULT',
 						'DIFFICULT',
 						'DIFFICULT',
-					];
+				]
+
+				///////////// NEW QUESTIONS LOGIC
+				this.difficultyStack = hardStack;
+				this.derivedMastery = 'MASTERED';
+				switch (this.knowledgeLevel) {
+					case 'POOR':
+						this.difficultyStack = easyStack
+						this.derivedMastery = 'UNMASTERED';
+						break;
+					case 'FAIR':
+						if(this.concept.order > 1) {
+							this.difficultyStack = easyStack
+							this.derivedMastery = 'UNMASTERED';
+						}
+						break;
+					case 'AVERAGE':
+						if(this.concept.order > 2) {
+							this.difficultyStack = easyStack
+							this.derivedMastery = 'UNMASTERED';
+						}
+						break;
+					case 'GOOD':
+						if(this.concept.order > 3) {
+							this.difficultyStack = easyStack
+							this.derivedMastery = 'UNMASTERED';
+						}
+						break;
+					case 'VERY GOOD':
+						if ( this.concept.order > 4 )
+						{
+							this.difficultyStack = easyStack
+							this.derivedMastery = 'UNMASTERED';
+						}
+						break;
+					case 'EXCELLENT':
+						this.difficultyStack = hardStack
+						this.derivedMastery = 'MASTERED';
+						break;
+					default:
+						break;
 				}
 
-				if(this.mastery == 'UNMASTERED') {
-					this.difficultyStack = [
-						'EASY',
-						'EASY',
-						'AVERAGE',
-						'AVERAGE',
-						'DIFFICULT',
-					];
-				}
+				///////////// NEW QUESTIONS LOGIC
+
+				/////////////////// OLD MASTERY LOGIC
+				// if(this.mastery == 'MASTERED') {
+				// 	this.difficultyStack = [
+				// 		'EASY',
+				// 		'AVERAGE',
+				// 		'DIFFICULT',
+				// 		'DIFFICULT',
+				// 		'DIFFICULT',
+				// 	];
+				// }
+
+				// if(this.mastery == 'UNMASTERED') {
+				// 	this.difficultyStack = [
+				// 		'EASY',
+				// 		'EASY',
+				// 		'AVERAGE',
+				// 		'AVERAGE',
+				// 		'DIFFICULT',
+				// 	];
+				// }
+				/////////////////// OLD MASTERY LOGIC
 
 				await this.startAssesment();
 				
