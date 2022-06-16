@@ -29,6 +29,7 @@
       </div>
       <div class="card-body">
         <h5 class="card-title"><small>Verdict: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
+						<small>You may change the lecture to SET B for more detailed explainations</small>
 						<table class="table table-hover table-striped">
 							<thead>
 								<tr>
@@ -40,6 +41,9 @@
 									</td>
 									<td>
 										<span class="card-title">Mastery</span>
+									</td>
+									<td>
+										<span class="card-title">Lecture</span>
 									</td>
 								</tr>
 							</thead>
@@ -53,6 +57,19 @@
 									</td>
 									<td>
 										<span class="card-title">{{ concept.mastery }}</span>
+									</td>
+									<td>
+									<select class="form-control" v-model="conceptLecture[concept.conceptId]">
+										<option value="A" selected>Set A</option>
+										<option value="B">Set B</option>
+									</select>
+									<button
+										class="btn btn-outline-secondary"
+										type="button"
+										@click="setLecture(concept.conceptId)"
+									>
+										Set
+									</button>
 									</td>
 								</tr>
 							</tbody>
@@ -136,12 +153,36 @@ export default {
 			posttestQuestions: [],
 			lastestResult: null,
 			answers: [],
+			conceptLecture: {},
 		};
 	},
 	mounted () {
 		this.getStudent();
 	},
 	methods: {
+		async setLecture (id) {
+			try {
+				const entry = await axiosClient.post(
+					import.meta.env.VITE_SERVER + import.meta.env.VITE_API_STUDENT_LECTURE_CHANGE_V2,
+					{
+						concept: id,
+						lecture: this.conceptLecture[id],
+					}
+				);
+
+				const res = entry.data;
+				if ( !res.status ) throw res.error;
+
+				console.log( res );
+
+				alert('Lecture changed');
+				
+			} catch ( error )
+			{
+				console.log( error );
+				alert( error );
+			}
+		},
 		async getStudent() {
 			try
 			{

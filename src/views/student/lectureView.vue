@@ -9,25 +9,69 @@
           <p v-html="material"></p>
         </div>
       </div>
+      <div class="card-footer text-center">
+        <RouterLink
+          v-if="!isLoading"
+          class="btn btn-primary m-5"
+          :to="{
+            name: 'student-assesment-view',
+            params: { conceptId: conceptId },
+          }"
+          >Take Assesment</RouterLink
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axiosClient from "../../axios";
+import store from "../../store";
 
 export default {
-  props: ["conceptId", "setType"],
+  props: ["conceptId"],
   data() {
     return {
       lectureId: "",
+      student: null,
       material: null,
+      setType: "A",
     };
   },
   mounted() {
-    this.fetchMaterial();
+    this.loadSelf();
   },
   methods: {
+    async loadSelf() {
+      try {
+        const entry = await axiosClient.get(
+          import.meta.env.VITE_SERVER +
+            import.meta.env.VITE_API_STUDENT_SHOW_V2 +
+            "/" +
+            store.state.user.data._id
+        );
+
+        const res = entry.data;
+        if (!res.status) throw res.error;
+
+        this.student = res.data;
+
+        // get the concept's lecture set type
+        const lesson = this.student.lessons.find((lesson) =>
+          lesson.concepts.find((concept) => concept.conceptId == this.conceptId)
+        );
+        const concept = lesson.concepts.find(
+          (concept) => concept.conceptId == this.conceptId
+        );
+
+        this.setType = concept.alternateLecture ? "B" : "A";
+
+        await this.fetchMaterial();
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+    },
     async fetchMaterial() {
       try {
         const entry = await axiosClient.get(
@@ -41,6 +85,8 @@ export default {
 
         this.material = res.data[0].material;
         this.lectureId = res.data[0]._id;
+
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);

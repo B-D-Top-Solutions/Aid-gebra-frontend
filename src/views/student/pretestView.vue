@@ -3,7 +3,7 @@
 
 		<div v-if="completedPretest" class="card-body">
 			<div class="text-center">
-				<h5 class="card-title">You already took this pretest.</h5>
+				<h5 class="card-title">You already took this pretest. you may now view the lectures and answer the assesments</h5>
 			</div>
 		</div>
 

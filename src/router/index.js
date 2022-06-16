@@ -277,7 +277,7 @@ const routes = [
         component: () => import("../views/student/classView.vue"),
       },
       {
-        path: "/student/lecture/:conceptId/:setType",
+        path: "/student/lecture/:conceptId",
         name: "student-lecture-view",
         props: true,
         component: () => import("../views/student/lectureView.vue"),
