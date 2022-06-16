@@ -13,7 +13,7 @@
     <div v-if="!takenPretest && isStarted" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Stop</h5>
-        <p>You must the the pretest before assesment</p>
+        <p>You must take the pretest before assesment</p>
       </div>
     </div>
 

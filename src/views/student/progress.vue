@@ -166,11 +166,11 @@
 </template>
 
 <script>
-import axiosClient from "../../../axios";
+import axiosClient from "../../axios";
+import store from "../../store";
 
 export default {
   name: "student-myprogress",
-  props: ["studentId"],
   data() {
     return {
       student: null,
@@ -200,7 +200,7 @@ export default {
           import.meta.env.VITE_SERVER +
             import.meta.env.VITE_API_STUDENT_SHOW_V2 +
             "/" +
-            this.studentId
+            store.state.user.data._id
         );
 
         const res = entry.data;

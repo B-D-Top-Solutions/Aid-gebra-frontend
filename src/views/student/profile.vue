@@ -2,6 +2,7 @@
   <h1>My Profile</h1>
   <div class="d-flex mt-3 justify-content-between">
     <section class="flex-fill me-3" style="max-width: 500px">
+      <p>Note: You must re-login again for the changes to take effect.</p>
       <div class="form-floating mb-3">
         <input
           type="email"

@@ -46,8 +46,6 @@
           <thead style="border: none">
             <tr class="">
               <th class="text-maincolor">Fullname</th>
-              <th class="text-maincolor">Email</th>
-              <th class="text-maincolor">Contact</th>
               <th class="text-maincolor" style="max-width: 150px">Status</th>
             </tr>
           </thead>
@@ -55,12 +53,6 @@
             <tr v-for="e in studentsList" v-bind:key="e._id">
               <td>
                 <small>{{ e.fullname }}</small>
-              </td>
-              <td>
-                <small>{{ e.email }}</small>
-              </td>
-              <td>
-                <small>{{ e.contact }}</small>
               </td>
               <td>
                 <span

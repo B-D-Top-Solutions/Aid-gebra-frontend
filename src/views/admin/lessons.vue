@@ -37,6 +37,9 @@
       <tbody>
         <tr v-for="e in list" v-bind:key="e._id">
           <td>
+            <small>{{ e.order }}</small>
+          </td>
+          <td>
             <small>{{ e.name }}</small>
           </td>
           <td>
@@ -96,6 +99,16 @@
           <div class="form-floating mb-3">
             <input
               type="text"
+              v-model.trim="model.order"
+              class="form-control"
+              id="floatingInput"
+              placeholder="Lesson Order"
+            />
+            <label for="floatingInput">Order</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
               v-model.trim="model.name"
               class="form-control"
               id="floatingInput"
@@ -144,6 +157,7 @@ export default {
       model: {
         id: "",
         name: "",
+        order: "",
       },
       list: [],
       hasPrevPage: false,
@@ -174,6 +188,7 @@ export default {
           list.push({
             _id: e._id,
             name: e.name,
+            order: e.order,
           });
         });
 
