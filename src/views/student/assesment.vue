@@ -241,7 +241,7 @@ export default {
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
           import.meta.env.VITE_API_CONCEPT_QUESTIONS_ALL_V2 +
-          `?concept=${ this.conceptId }&difficulty=${ difficulty }&exclude=${ prevQuestions }`
+          `?concept=${ this.conceptId }&difficulty=${ difficulty }`
         );
 
         const res = entry.data;
