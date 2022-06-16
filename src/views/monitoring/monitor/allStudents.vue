@@ -2,7 +2,11 @@
   <div class="container">
     <div class="row m-auto p-4">
       <h4>Most Incorrecty Answered Questions</h4>
-      <bar />
+      <QuestionBar />
+    </div>
+    <div class="row m-auto p-4">
+      <h4>Most Incorrecty Answered Concepts</h4>
+      <ConceptBar />
     </div>
     <div class="row m-auto">
       <div class="col-12">
@@ -117,11 +121,13 @@
 
 <script>
 import axiosClient from "../../../axios";
-import bar from "./bar.vue";
+import QuestionBar from "./questionBar.vue";
+import ConceptBar from "./conceptBar.vue";
 export default {
   name: "monitor-students",
   components: {
-    bar,
+    QuestionBar,
+    ConceptBar,
   },
   data() {
     return {
