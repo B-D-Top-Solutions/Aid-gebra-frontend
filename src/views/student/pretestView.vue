@@ -56,10 +56,10 @@
             >
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ question.question }}</h5>
+            <h5 class="card-title" v-html="question.question"></h5>
             <p class="card-text ">
-							<div>Correct: {{ question.correctText  }}</div>
-							<div>Your Answer: {{ question.answerText  }}</div>
+							<div>Correct: <span v-html="question.correctText"></span></div>
+							<div>Your Answer: <span v-html="question.answerText"></span></div>
             </p>
           </div>
         </div>

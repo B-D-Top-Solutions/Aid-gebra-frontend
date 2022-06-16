@@ -63,6 +63,37 @@ const routes = [
     ],
   },
 
+  // Monitor Routes
+  {
+    path: "/monitor/students",
+    name: "monitor-students",
+    component: () => import("../views/monitoring/monitor/allStudents.vue"),
+  },
+  {
+    path: "/monitor/tests/:studentId/:type",
+    name: "monitor-tests",
+    props: true,
+    component: () => import("../views/monitoring/monitor/allTest.vue"),
+  },
+  {
+    path: "/monitor/tests/pretest/:pretestId",
+    name: "monitor-pretest",
+    props: true,
+    component: () => import("../views/monitoring/monitor/viewPretest.vue"),
+  },
+  {
+    path: "/monitor/tests/posttest/:posttestId",
+    name: "monitor-posttest",
+    props: true,
+    component: () => import("../views/monitoring/monitor/viewPosttest.vue"),
+  },
+  {
+    path: "/monitor/student-progress/:studentId",
+    name: "monitor-progress",
+    props: true,
+    component: () => import("../views/monitoring/monitor/studentProgress.vue"),
+  },
+
   // Admin Routes
   {
     path: "/admin",
