@@ -30,7 +30,7 @@
           >Lessons</RouterLink
         >&nbsp;
         <RouterLink
-          :to="{ name: 'monitor-students' }"
+          :to="{ name: 'admin-allstudents' }"
           class="text-decoration-none text-white border-bottom"
           >Monitoring</RouterLink
         >

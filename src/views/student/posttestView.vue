@@ -14,7 +14,7 @@
 			</div>
 		</div>
 
-		<div v-if="!noPassed" class="card-body">
+		<div v-if="!noPassed && !isLoading" class="card-body">
 			<div class="text-center">
 				<h5 class="card-title">You already passed this test.</h5>
 			</div>
@@ -125,6 +125,7 @@ export default {
 	props: [ "lessonId" ],
 	data () {
 		return {
+			isLoading: true,
 			attemptCount: 0,
 			isMaxAttempts: false,
 			notYetComplete: false,
@@ -211,6 +212,8 @@ export default {
 				} else {
 					this.noPassed = true;
 				}
+
+				this.isLoading = false;
 
 				if(this.noPassed == false ) {
 					return

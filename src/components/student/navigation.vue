@@ -14,7 +14,7 @@
         >
         &nbsp;
         <RouterLink
-          to="/student/dashboard"
+          :to="{ name: 'student-myprogress' }"
           class="text-decoration-none text-white border-bottom"
           >Scores</RouterLink
         >

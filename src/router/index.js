@@ -65,33 +65,41 @@ const routes = [
 
   // Monitor Routes
   {
-    path: "/monitor/students",
-    name: "monitor-students",
-    component: () => import("../views/monitoring/monitor/allStudents.vue"),
-  },
-  {
-    path: "/monitor/tests/:studentId/:type",
-    name: "monitor-tests",
-    props: true,
-    component: () => import("../views/monitoring/monitor/allTest.vue"),
-  },
-  {
-    path: "/monitor/tests/pretest/:pretestId",
-    name: "monitor-pretest",
-    props: true,
-    component: () => import("../views/monitoring/monitor/viewPretest.vue"),
-  },
-  {
-    path: "/monitor/tests/posttest/:posttestId",
-    name: "monitor-posttest",
-    props: true,
-    component: () => import("../views/monitoring/monitor/viewPosttest.vue"),
-  },
-  {
-    path: "/monitor/student-progress/:studentId",
-    name: "monitor-progress",
-    props: true,
-    component: () => import("../views/monitoring/monitor/studentProgress.vue"),
+    path: "/monitor",
+    name: "monitor",
+    component: () => import("../components/layouts/monitoringLayout.vue"),
+    children: [
+      {
+        path: "/monitor/students",
+        name: "monitor-students",
+        component: () => import("../views/monitoring/monitor/allStudents.vue"),
+      },
+      {
+        path: "/monitor/tests/:studentId/:type",
+        name: "monitor-tests",
+        props: true,
+        component: () => import("../views/monitoring/monitor/allTest.vue"),
+      },
+      {
+        path: "/monitor/tests/pretest/:pretestId",
+        name: "monitor-pretest",
+        props: true,
+        component: () => import("../views/monitoring/monitor/viewPretest.vue"),
+      },
+      {
+        path: "/monitor/tests/posttest/:posttestId",
+        name: "monitor-posttest",
+        props: true,
+        component: () => import("../views/monitoring/monitor/viewPosttest.vue"),
+      },
+      {
+        path: "/monitor/student-progress/:studentId",
+        name: "monitor-progress",
+        props: true,
+        component: () =>
+          import("../views/monitoring/monitor/studentProgress.vue"),
+      },
+    ],
   },
 
   // Admin Routes
@@ -186,6 +194,11 @@ const routes = [
         name: "admin-announcements",
         component: () => import("../views/admin/announcement.vue"),
       },
+      {
+        path: "/admin/allstudents",
+        name: "admin-allstudents",
+        component: () => import("../views/admin/monitorAll.vue"),
+      },
     ],
   },
   // Teacher Routes
@@ -221,6 +234,11 @@ const routes = [
         name: "teacher-class-view",
         props: true,
         component: () => import("../views/teacher/myClass.vue"),
+      },
+      {
+        path: "/teacher/mystudents",
+        name: "teacher-mystudents",
+        component: () => import("../views/teacher/myStudents.vue"),
       },
     ],
   },
@@ -286,6 +304,11 @@ const routes = [
         name: "student-assesment-view",
         props: true,
         component: () => import("../views/student/assesment.vue"),
+      },
+      {
+        path: "/student/myprogress",
+        name: "student-myprogress",
+        component: () => import("../views/student/progress.vue"),
       },
     ],
   },

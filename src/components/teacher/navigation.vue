@@ -8,7 +8,7 @@
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
-          :to="{ name: 'monitor-students' }"
+          :to="{ name: 'teacher-mystudents' }"
           class="text-decoration-none text-white border-bottom"
           >Monitoring</RouterLink
         >
