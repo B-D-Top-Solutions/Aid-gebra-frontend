@@ -27,7 +27,7 @@
 		<div v-if="isFinished && isStarted" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Success</h5>
-        <p>You completed the assesment</p>
+        <p>You completed the assesment, move on to the next concept or take the post test</p>
       </div>
     </div>
 
