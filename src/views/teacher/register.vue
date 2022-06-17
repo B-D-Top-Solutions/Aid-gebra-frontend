@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-maincolor text-center mb-5">Welcome teacher!</h1>
+  <h1 class="text-maincolor text-center mb-5">Welcome, teacher!</h1>
   <p class="text-dark text-center">
     Note: Your account will be pending, you will need admin approval to login.
   </p>

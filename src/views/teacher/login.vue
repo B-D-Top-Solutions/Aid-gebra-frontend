@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-maincolor text-center mb-5">Welcome Teacher!</h1>
+  <h1 class="text-maincolor text-center mb-5">Welcome, Teacher!</h1>
   <center>
     <div style="max-width: 450px">
       <form class="rounded border p-4" @submit="login">

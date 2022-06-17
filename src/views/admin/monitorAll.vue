@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="row m-auto p-4">
-      <h4>Most Incorrecty Answered Questions</h4>
+      <h4>Most Incorrectly Answered Questions</h4>
       <QuestionBar />
     </div>
     <div class="row m-auto p-4">
-      <h4>Most Incorrecty Answered Concepts</h4>
+      <h4>Most Incorrectly Answered Concepts</h4>
       <ConceptBar />
     </div>
     <div class="row m-auto mt-5">

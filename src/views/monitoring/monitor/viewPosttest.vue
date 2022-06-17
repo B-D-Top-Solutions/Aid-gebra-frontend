@@ -50,7 +50,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title" v-html="question.question"></h5>
-            <p class="card-text ">
+            <p class="card-text" v-if="!isStudent || !isFailed">
 							<div>Correct: <span v-html="question.correctText"></span></div>
 							<div>Your Answer: <span v-html="question.answerText"></span></div>
             </p>
@@ -63,12 +63,15 @@
 
 <script>
 import axiosClient from '../../../axios';
+import store from '../../../store';
 
 export default {
 	props: [ "posttestId" ],
 	data () {
 		return {
-			testResult: null
+			testResult: null,
+			isStudent: false,
+			isFailed: true,
 		}
 	},
 	mounted () {
@@ -85,6 +88,12 @@ export default {
 
 				const res = entry.data;
 				if ( !res.status ) throw res.error;
+
+				if ( store.state.user.role == 'STUDENT' )
+				{
+					this.isStudent = true;
+					this.isFailed = !res.data.isPassed;
+				}
 
 				this.testResult = res.data;
 			} catch (error) {
