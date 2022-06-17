@@ -87,10 +87,10 @@
           <div class="card-body">
             <h5 class="card-title" v-html="question.text"></h5>
             <p class="card-text">
-							<p>{{ question.choiceA.value }} . <span v-html=" question.choiceA.text  "></span></p>
-							<p>{{ question.choiceB.value }} . <span v-html=" question.choiceB.text  "></span></p>
-							<p>{{ question.choiceC.value }} . <span v-html=" question.choiceC.text  "></span></p>
-							<p>{{ question.choiceD.value }} . <span v-html=" question.choiceD.text  "></span></p>
+							<p class="d-flex"><span>{{ question.choiceA.value }}</span>.&nbsp; <span v-html=" question.choiceA.text  "></span></p>
+							<p class="d-flex"><span>{{ question.choiceB.value }}</span>.&nbsp; <span v-html=" question.choiceB.text  "></span></p>
+							<p class="d-flex"><span>{{ question.choiceC.value }}</span>.&nbsp; <span v-html=" question.choiceC.text  "></span></p>
+							<p class="d-flex"><span>{{ question.choiceD.value }}</span>.&nbsp; <span v-html=" question.choiceD.text  "></span></p>
             </p>
 						<input required v-model="answers[question.order - 1]" class="form-control" type="text" >
           </div>

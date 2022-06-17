@@ -24,10 +24,10 @@
           <div class="card-body">
             <h5 class="card-title">Pre-test</h5>
             <p class="card-text">
-              Take the pretest to determine your knowledge mastery
+              Take the pretest to determine your knowledge mastery.
             </p>
             <RouterLink
-              v-if="isInClass && canTakeLesson"
+              v-if="isInClass && (canTakeLesson || hasPretest)"
               class="text-danger"
               :to="{
                 name: 'student-pretest-view',
@@ -36,10 +36,10 @@
               >Take Test</RouterLink
             >
             <p v-if="!isInClass" class="text-danger">
-              You are not in a class, you may not take the test
+              You must be in a class to take this test.
             </p>
-            <p v-if="!canTakeLesson" class="text-danger">
-              You cannot take this lesson yet until you complete the previous
+            <p v-if="!canTakeLesson && !hasPretest" class="text-danger">
+              You must complete the previous lesson to take this test
             </p>
           </div>
         </div>
@@ -61,10 +61,10 @@
               >Take Test</RouterLink
             >
             <p v-if="!isInClass" class="text-danger">
-              you are not in a class, you may not take the test
+              You must be in a class to take this test.
             </p>
             <p v-if="conceptStatus.length != 5" class="text-danger">
-              You cannot take this post test until you complete all concepts
+              You cannot take this post test until you complete all assessments
             </p>
           </div>
         </div>
@@ -108,7 +108,7 @@
                 >
               </p>
               <p class="card-text">
-                Assesment:
+                Assessment:
                 <RouterLink
                   v-if="isInClass"
                   class="text-danger"
@@ -116,7 +116,7 @@
                     name: 'student-assesment-view',
                     params: { conceptId: concept._id },
                   }"
-                  >Take Assesment</RouterLink
+                  >Take Assessment</RouterLink
                 >
                 <span v-if="!isInClass" class="text-danger"
                   >You may only view if you dont have a class</span

@@ -2,8 +2,8 @@
   <div class="row">
     <div v-if="!isStarted" class="card-body">
       <div class="text-center">
-        <h5 class="card-title">Assesment</h5>
-        <p>Get 5 correct answers to complete this assesment</p>
+        <h5 class="card-title">Assessment</h5>
+        <p>Get 5 correct answers to complete this assesment.</p>
         <button v-if="!hideStartBtn" class="btn btn-primary" @click="getConcept()">
           Start Assesment
         </button>
@@ -13,21 +13,22 @@
     <div v-if="!takenPretest && isStarted" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Stop</h5>
-        <p>You must take the pretest before assesment</p>
+        <p>You must take the pretest before doing the assessment.</p>
       </div>
     </div>
 
 		<div v-if="noQuestionsFound && isStarted" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Uh oh</h5>
-        <p>There are no questions found. ask the admin to add more</p>
+        <p>There are no questions found. ask the admin to add more.</p>
       </div>
     </div>
 
 		<div v-if="isFinished && isStarted" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Success</h5>
-        <p>You completed the assesment, move on to the next concept or take the post test</p>
+        <p v-if="concept.order <= 4">You have completed the assessment, you may now continue on the next concept</p>
+				<p v-if="concept.order == 5">You have completed the assessment, you may now take the post test.</p>
       </div>
 				<div class="text-center">
 					<RouterLink 
@@ -60,10 +61,10 @@
           <div class="card-body">
           <h5 class="card-title" v-html="currentQuestion.text"></h5>
             <p class="card-text">
-							<p>{{ currentQuestion.choiceA.value }} . <span v-html=" currentQuestion.choiceA.text  "></span></p>
-							<p>{{ currentQuestion.choiceB.value }} . <span v-html=" currentQuestion.choiceB.text  "></span></p>
-							<p>{{ currentQuestion.choiceC.value }} . <span v-html=" currentQuestion.choiceC.text  "></span></p>
-							<p>{{ currentQuestion.choiceD.value }} . <span v-html=" currentQuestion.choiceD.text  "></span></p>
+							<p class="d-flex"><span>{{ currentQuestion.choiceA.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceA.text  "></span></p>
+							<p class="d-flex"><span>{{ currentQuestion.choiceB.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceB.text  "></span></p>
+							<p class="d-flex"><span>{{ currentQuestion.choiceC.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceC.text  "></span></p>
+							<p class="d-flex"><span>{{ currentQuestion.choiceD.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceD.text  "></span></p>
             </p>
 						<input required v-model="answer.answer" class="form-control" type="text" v-if="!isAfterQuestion">
 						<p v-if="isAfterQuestion">
@@ -72,7 +73,7 @@
 						</p>
           </div>
 					<div class="card-footer" v-if="isAfterQuestion">
-							Explaination:
+							Explanation:
 							<p v-html="currentQuestion.explaination"> </p>
 					</div>
         </div>

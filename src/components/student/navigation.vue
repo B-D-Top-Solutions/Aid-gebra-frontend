@@ -65,8 +65,12 @@ import store from "../../store";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const avatar =
-  import.meta.env.VITE_SERVER + "/" + store.state.user.data?.avatar[0]?.path;
+let avatar = "/src/assets/images/user128x128.png";
+
+if (store.state.user.data.avatar[0]?.path != null) {
+  avatar =
+    import.meta.env.VITE_SERVER + "/" + store.state.user.data.avatar[0]?.path;
+}
 
 function logout() {
   store.dispatch("logout").then((data) => {
