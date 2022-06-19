@@ -85,11 +85,11 @@ export default {
             backgroundColor: "#f87979",
             data: [],
           },
-          {
-            label: "Correct Answers [Post test Concepts]",
-            backgroundColor: "#f87979",
-            data: [],
-          },
+          // {
+          //   label: "Correct Answers [Post test Concepts]",
+          //   backgroundColor: "#f87979",
+          //   data: [],
+          // },
         ],
       },
       chartOptions: {
@@ -109,7 +109,7 @@ export default {
         columns: [
           { field: "_id.name", title: "Concepts" },
           { field: "incorrectAnswers", title: "Total Incorrect Answers" },
-          { field: "correctAnswers", title: "Total correct Answers" },
+          // { field: "correctAnswers", title: "Total correct Answers" },
         ],
       });
     },
@@ -129,7 +129,7 @@ export default {
         this.chartData.datasets[0].data = res.data.map(
           (e) => e.incorrectAnswers
         );
-        this.chartData.datasets[1].data = res.data.map((e) => e.correctAnswers);
+        // this.chartData.datasets[1].data = res.data.map((e) => e.correctAnswers);
       } catch (error) {
         alert(error);
       }

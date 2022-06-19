@@ -19,10 +19,21 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" v-if="!isLoading">
     <div class="card">
       <div class="card-header p-4">
-        <h2 class="m-auto">{{ concept.name }}</h2>
+        <h2 class="m-auto">
+          {{ concept.name }}
+          <RouterLink
+          class="btn btn-primary float-end"
+          :to="{
+            name: 'admin-lessons-view',
+            params: { lessonId: concept.lessonId },
+          }"
+          >
+            Back To Lessons
+          </RouterLink>
+        </h2>
       </div>
       <div class="card-body">
         <h5 class="card-title">Questions</h5>
@@ -198,6 +209,7 @@ export default {
   props: ["conceptId"],
   data() {
     return {
+      isLoading: true,
       isUpdate: false,
       concept: {},
 			conceptQuestions: [],
@@ -246,6 +258,7 @@ export default {
         if ( !res.status ) throw res.error;
 
         this.concept = res.data;
+        this.isLoading = false;
       } catch ( error )
       {
         console.log( error );
