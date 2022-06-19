@@ -4,8 +4,40 @@
 		<div v-if="completedPretest" class="card-body">
 			<div class="text-center">
 				<h5 class="card-title">You already took this pretest. you may now view the lectures and answer the assesments</h5>
+				<RouterLink 
+					class="btn btn-primary my-3" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
 			</div>
 		</div>
+
+		
+		<div v-if="notYetComplete" class="card-body">
+			<div class="text-center">
+				<h5 class="card-title">This pretest does not have enough questions.</h5>
+				<RouterLink 
+					class="btn btn-primary my-3" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
+			</div>
+		</div>
+
+		<div v-if="isLoading" class="card-body">
+      <div class="text-center">
+        <h5 class="card-title">Loading Pre-test</h5>
+        <p>Preparing questions....</p>
+      </div>
+    </div>
 
 		<div class="card" v-if="(completedPretest)">
 
@@ -66,14 +98,8 @@
       </div>
     </div>
 
-			<div v-if="notYetComplete" class="card-body">
-			<div class="text-center">
-				<h5 class="card-title">This pretest does not have enough questions.</h5>
-			</div>
-		</div>
 
-    <div class="card" v-if="(!completedPretest && !notYetComplete)">
-
+    <div class="card" v-if="(!completedPretest && !notYetComplete && !isLoading)">
       <div class="card-header p-4">
         <h2 class="m-auto">Pre-test</h2>
       </div>
@@ -103,6 +129,7 @@
         </button>
       </div>
     </div>
+
   </div>
 
 </template>
@@ -116,6 +143,7 @@ export default {
 	props: [ "lessonId" ],
 	data () {
 		return {
+			isLoading: true,
 			completedPretest:false,
 			hasPretest: false,
 			notYetComplete: false,
@@ -170,10 +198,12 @@ export default {
 					this.completedPretest = true;
 					this.pretestResult = res.data[ 0 ];
 					console.log( this.pretestResult );
+					this.isLoading = false;
 					return
 				}
 
 				this.completedPretest = false;
+				this.isLoading = false;
 				await this.getQuestions()
 
 			} catch ( error )

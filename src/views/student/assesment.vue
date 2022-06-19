@@ -1,12 +1,28 @@
 <template>
   <div class="row">
-    <div v-if="!isStarted" class="card-body">
+    <div v-if="!startClicked" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Assessment</h5>
         <p>Get 5 correct answers to complete this assesment.</p>
-        <button v-if="!hideStartBtn" class="btn btn-primary" @click="getConcept()">
+				<RouterLink 
+					class="btn btn-primary mx-1" 
+					:to="{
+							name: 'student-lesson-view',
+							params: { lessonId: lessonId },
+						}"
+					>
+						Back To Lesson
+				</RouterLink>
+        <button v-if="!hideStartBtn" class="btn btn-success mx-1" @click="getConcept()">
           Start Assesment
         </button>
+      </div>
+    </div>
+
+		<div v-if="startClicked && !isStarted" class="card-body">
+      <div class="text-center">
+        <h5 class="card-title">Starting Assessment</h5>
+        <p>Preparing questions....</p>
       </div>
     </div>
 
@@ -14,6 +30,15 @@
       <div class="text-center">
         <h5 class="card-title">Stop</h5>
         <p>You must take the pretest before doing the assessment.</p>
+				<RouterLink 
+				class="btn btn-primary" 
+				:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+				>
+					Back To Lesson
+				</RouterLink>
       </div>
     </div>
 
@@ -21,6 +46,15 @@
       <div class="text-center">
         <h5 class="card-title">Uh oh</h5>
         <p>There are no questions found. ask the admin to add more.</p>
+				<RouterLink 
+				class="btn btn-primary" 
+				:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+				>
+					Back To Lesson
+				</RouterLink>
       </div>
     </div>
 
@@ -35,11 +69,11 @@
 					class="btn btn-primary" 
 					:to="{
               name: 'student-lesson-view',
-              params: { lessonId: concept.lessonId },
+              params: { lessonId: lessonId },
             }"
-				>
-					Back To Lesson
-				</RouterLink>
+					>
+						Back To Lesson
+					</RouterLink>
 				</div>
     </div>
 
@@ -101,9 +135,10 @@ import store from "../../store";
 
 export default {
   name: "student-assesment",
-  props: ["conceptId"],
+  props: ["conceptId", "lessonId"],
   data() {
 		return {
+			startClicked: false,
 			hideStartBtn: false,
 			isCorrect: false,
 			isFinished: false,
@@ -130,6 +165,7 @@ export default {
   },
 	methods: {
 		async getConcept () {
+			this.startClicked = true;
 			try {
 				this.hideStartBtn = true;
         const req = await axiosClient.get(
