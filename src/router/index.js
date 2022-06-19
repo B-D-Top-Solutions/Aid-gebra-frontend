@@ -277,7 +277,7 @@ const routes = [
         component: () => import("../views/student/classView.vue"),
       },
       {
-        path: "/student/lecture/:conceptId",
+        path: "/student/lecture/:lessonId/:conceptId",
         name: "student-lecture-view",
         props: true,
         component: () => import("../views/student/lectureView.vue"),
@@ -300,7 +300,7 @@ const routes = [
         component: () => import("../views/student/myClass.vue"),
       },
       {
-        path: "/student/assesment/:conceptId",
+        path: "/student/assesment/:lessonId/:conceptId",
         name: "student-assesment-view",
         props: true,
         component: () => import("../views/student/assesment.vue"),

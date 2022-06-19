@@ -73,7 +73,17 @@
     <div class="row">
       <div class="card">
         <div class="card-header p-4">
-          <h2 v-if="lesson" class="m-auto">{{ lesson.name }}</h2>
+          <h2 v-if="lesson" class="m-auto">
+            {{ lesson.name }}
+            <RouterLink
+              v-if="!isLoading"
+              class="btn btn-primary float-end"
+              :to="{
+                name: 'student-dashboard',
+              }"
+              >Back To Lessons</RouterLink
+            >
+          </h2>
         </div>
         <div v-if="concepts.length > 0" class="card-body">
           <div
@@ -102,7 +112,11 @@
                   class="text-danger"
                   :to="{
                     name: 'student-lecture-view',
-                    params: { conceptId: concept._id, setType: 'A' },
+                    params: {
+                      conceptId: concept._id,
+                      setType: 'A',
+                      lessonId: lesson._id,
+                    },
                   }"
                   >View Lecture</RouterLink
                 >
@@ -114,7 +128,7 @@
                   class="text-danger"
                   :to="{
                     name: 'student-assesment-view',
-                    params: { conceptId: concept._id },
+                    params: { conceptId: concept._id, lessonId: lesson._id },
                   }"
                   >Take Assessment</RouterLink
                 >

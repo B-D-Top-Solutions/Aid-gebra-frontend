@@ -3,20 +3,63 @@
 
 		<div v-if="(isMaxAttempts && noPassed)" class="card-body">
 			<div class="text-center">
-				<h5 class="card-title">You have reached maximum attempt for Post-test. Kindly seek for 
-	a professional's help. Thank you.</h5>
+				<h5 class="card-title">
+					You have reached maximum attempt for Post-test. Kindly seek for a professional's help. Thank you.
+				</h5>
+				<RouterLink 
+					class="btn btn-primary" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
 			</div>
 		</div>
 
 		<div v-if="notYetComplete" class="card-body">
 			<div class="text-center">
 				<h5 class="card-title">This posttest does not have enough questions.</h5>
+				<RouterLink 
+					class="btn btn-primary" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
 			</div>
 		</div>
 
 		<div v-if="!noPassed && !isLoading" class="card-body">
 			<div class="text-center">
 				<h5 class="card-title">You already passed this test.</h5>
+				<RouterLink 
+					class="btn btn-primary" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
+			</div>
+		</div>
+
+		<div v-if="lastestResult" class="card-body">
+			<div class="text-center">
+				<h5 class="card-title">Post Test Done.</h5>
+				<RouterLink 
+					class="btn btn-primary" 
+					:to="{
+						name: 'student-lesson-view',
+						params: { lessonId: lessonId },
+					}"
+					>
+						Back To Lesson
+				</RouterLink>
 			</div>
 		</div>
 

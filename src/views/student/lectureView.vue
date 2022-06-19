@@ -1,6 +1,11 @@
 <template>
   <div class="row">
-    <div class="card">
+    <div v-if="isLoading" class="card-body">
+      <div class="text-center">
+        <h5 class="card-title">Loading...</h5>
+      </div>
+    </div>
+    <div class="card" v-if="!isLoading">
       <div class="card-header d-flex justify-content-between">
         <h2 class="m-auto">Lecture</h2>
       </div>
@@ -14,10 +19,19 @@
           v-if="!isLoading"
           class="btn btn-primary m-5"
           :to="{
-            name: 'student-assesment-view',
-            params: { conceptId: conceptId },
+            name: 'student-lesson-view',
+            params: { lessonId: lessonId },
           }"
-          >Take Assesment</RouterLink
+          >Back To Lesson</RouterLink
+        >
+        <RouterLink
+          v-if="!isLoading"
+          class="btn btn-success m-5"
+          :to="{
+            name: 'student-assesment-view',
+            params: { conceptId: conceptId, lessonId: lessonId },
+          }"
+          >Take Assessment</RouterLink
         >
       </div>
     </div>
@@ -29,9 +43,10 @@ import axiosClient from "../../axios";
 import store from "../../store";
 
 export default {
-  props: ["conceptId"],
+  props: ["conceptId", "lessonId"],
   data() {
     return {
+      isLoading: true,
       lectureId: "",
       student: null,
       material: null,
