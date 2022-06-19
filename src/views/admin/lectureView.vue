@@ -2,6 +2,16 @@
   <div class="row">
     <div class="card">
       <div class="card-header d-flex justify-content-between">
+        <RouterLink
+          v-if="!isLoading"
+          class="btn btn-primary float-end"
+          :to="{
+            name: 'admin-concepts-view',
+            params: { conceptId: conceptId },
+          }"
+        >
+          Back
+        </RouterLink>
         <h2 class="m-auto">Lecture</h2>
         <button class="btn btn-primary" @click="saveMaterial()">Save</button>
       </div>

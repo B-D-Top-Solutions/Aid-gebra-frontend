@@ -2,7 +2,19 @@
   <div class="row">
     <div class="card">
       <div class="card-header p-4">
-        <h2 class="m-auto">Post-test Questions</h2>
+        <h2 class="m-auto">
+          Post-test Questions
+          <RouterLink
+          v-if="!isLoading"
+          class="btn btn-primary float-end"
+          :to="{
+            name: 'admin-lessons-view',
+            params: { lessonId: lessonId },
+          }"
+          >
+            Back To Lessons
+          </RouterLink>
+        </h2>
       </div>
       <div class="card-body">
         <h5 class="card-title"><small>Max of 20 Questions, Every question must have an order between 1 to 20</small></h5>
