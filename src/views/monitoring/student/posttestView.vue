@@ -49,7 +49,7 @@
               >{{ question.correctAnswer.toUpperCase() == question.answer.toUpperCase() ? '✔' : '❌' }}</span
             >
           </div>
-          <div class="card-body">
+          <div class="card-body" v-if="lastestResult.isPassed">
             <h5 class="card-title">{{ question.question }}</h5>
             <p class="card-text ">
 							<div>Correct: {{ question.correctText  }}</div>
