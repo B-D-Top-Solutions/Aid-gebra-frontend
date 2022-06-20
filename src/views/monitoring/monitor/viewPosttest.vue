@@ -48,9 +48,9 @@
               >{{ question.correctAnswer.toUpperCase() == question.answer.toUpperCase() ? '✔' : '❌' }}</span
             >
           </div>
-          <div class="card-body">
+          <div class="card-body" v-if="!isStudent || !isFailed">
             <h5 class="card-title" v-html="question.question"></h5>
-            <p class="card-text" v-if="!isStudent || !isFailed">
+            <p class="card-text">
 							<div>Correct: <span v-html="question.correctText"></span></div>
 							<div>Your Answer: <span v-html="question.answerText"></span></div>
             </p>
