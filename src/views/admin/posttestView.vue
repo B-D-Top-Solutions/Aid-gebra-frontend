@@ -243,7 +243,7 @@ export default {
         const entry = await axiosClient.get(
           import.meta.env.VITE_SERVER +
           import.meta.env.VITE_API_POSTTEST_QUESTIONS_ALL_V2 +
-          `?pretest=${ this.posttestIdnum }`
+          `?posttest=${ this.posttestIdnum }`
         );
 
         const res = entry.data;
