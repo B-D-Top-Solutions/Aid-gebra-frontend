@@ -216,13 +216,23 @@ export default {
 				const res = req.data;
 				if ( !res.status ) throw res.error;
 
-				// if there is no pretest
-				if ( res.data.length === 0 ) {
+				console.log(res.data)
+
+				// check if any of the pretest is for this lesson
+				const pretestLesson = res.data.find( ( prettest ) => 
+					prettest.lessonId._id.toString() == this.lessonId.toString()
+				);
+
+				console.log(pretestLesson)
+
+
+				// check if there is a pretest for this lesson if not, return
+				if ( pretestLesson == null ) {
 					this.takenPretest = false;
 					return;
 				}
 
-				this.pretestResult = res.data[ 0 ];
+				this.pretestResult = pretestLesson
 
 				// get the mastery of the concept
 				const mastery = this.pretestResult.result.filter(
