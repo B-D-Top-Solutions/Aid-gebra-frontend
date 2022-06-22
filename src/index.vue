@@ -3,7 +3,7 @@
     <div class="container d-flex align-items-center flex-column">
       <!-- Masthead Avatar Image-->
       <img
-        class="masthead-avatar mb-5"
+        class="masthead-avatar mb-5 img-fluid"
         src="/src/assets/images/logo.png"
         alt="AidGebra logo"
       />
@@ -52,7 +52,7 @@
       </div>
       <div class="row justify-content-center">
         <div
-          class="col-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
+          class="col-md-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
         >
           <div class="portfolio-item mx-auto">
             <RouterLink
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div
-          class="col-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
+          class="col-md-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
         >
           <div class="portfolio-item mx-auto">
             <RouterLink
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div
-          class="col-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
+          class="col-md-3 mb-5 m-auto border border-maincolor p-5 rounded-circle"
         >
           <div class="portfolio-item mx-auto">
             <RouterLink
