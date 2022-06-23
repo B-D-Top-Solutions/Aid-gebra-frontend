@@ -1,5 +1,10 @@
 <template>
-  <div class="d-grid grid-gap2 grid-item-card">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="d-grid grid-gap2 grid-item-card">
     <div v-for="(lesson, index) in lessons" class="card" :key="lesson._id">
       <div class="card-body">
         <div class="card-text">
@@ -27,6 +32,7 @@ export default {
   components: {},
   data() {
     return {
+      isLoading: true,
       lessons: null,
     };
   },
@@ -44,6 +50,7 @@ export default {
         if (!res.status) throw res.error;
 
         this.lessons = res.data;
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);

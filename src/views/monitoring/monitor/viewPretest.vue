@@ -1,5 +1,10 @@
 <template>
-	<div class="row">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+	<div v-if="!isLoading" class="row">
 		<div class="card" v-if="(testResult)">
 
       <div class="card-header p-4">
@@ -68,6 +73,7 @@ export default {
 	props: [ "pretestId" ],
 	data () {
 		return {
+			isLoading: true,
 			testResult: null
 		}
 	},
@@ -87,6 +93,7 @@ export default {
 				if ( !res.status ) throw res.error;
 
 				this.testResult = res.data;
+				this.isLoading = false;
 			} catch (error) {
 				console.log( error );
 				alert( error );

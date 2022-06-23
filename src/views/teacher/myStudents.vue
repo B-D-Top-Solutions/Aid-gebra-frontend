@@ -1,5 +1,10 @@
 <template>
-  <div class="container">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="container">
     <div class="row m-auto p-4">
       <h4>Most Incorrectly Answered Questions</h4>
       <QuestionBar />
@@ -116,6 +121,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       hasNoClass: true,
       isLoading: true,
       classList: [],
@@ -193,6 +199,7 @@ export default {
         this.page = res.data.page;
         this.hasPrevPage = res.data.hasPrevPage;
         this.hasNextPage = res.data.hasNextPage;
+        this.isLoading = false;
 
         this.isLoading = false;
       } catch (error) {

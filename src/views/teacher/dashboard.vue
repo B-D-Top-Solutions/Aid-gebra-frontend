@@ -1,5 +1,13 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center mb-3">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div
+    v-if="!isLoading"
+    class="d-flex justify-content-between align-items-center mb-3"
+  >
     <div class="input-group" style="width: 300px">
       <input
         type="text"
@@ -26,7 +34,7 @@
     </button>
   </div>
   <br />
-  <div class="p-2 rounded bg-light">
+  <div v-if="!isLoading" class="p-2 rounded bg-light">
     <table class="table">
       <thead style="border: none">
         <tr class="">
@@ -124,6 +132,7 @@ export default {
   name: "teacher-classes",
   data() {
     return {
+      isLoading: true,
       model: {
         _id: "",
         code: null,
@@ -165,6 +174,7 @@ export default {
         this.page = res.data.page;
         this.hasPrevPage = res.data.hasPrevPage;
         this.hasNextPage = res.data.hasNextPage;
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);
