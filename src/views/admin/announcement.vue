@@ -1,5 +1,10 @@
 <template>
-  <div class="bd-example">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="bd-example">
     <div class="mb-3">
       <label for="show-message" class="form-label">SHOW ANNOUNCEMENT</label>
       <select id="show-message" v-model="isShown">
@@ -28,6 +33,7 @@ import axiosClient from "../../axios";
 export default {
   data() {
     return {
+      isLoading: true,
       message: "",
       isShown: null,
     };
@@ -47,6 +53,7 @@ export default {
         if (res.status == false) throw res.error;
         this.message = res.data.message;
         this.isHidden = !res.data.isShown;
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
       }

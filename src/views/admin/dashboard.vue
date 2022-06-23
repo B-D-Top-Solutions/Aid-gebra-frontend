@@ -1,5 +1,10 @@
 <template>
-  <div class="d-grid grid-gap2 grid-item-card">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="d-grid grid-gap2 grid-item-card">
     <RouterLink
       :to="{ name: 'admin-users' }"
       class="text-decoration-none border rounded p-3 bg-light"
@@ -32,6 +37,7 @@ export default {
   components: {},
   data() {
     return {
+      isLoading: true,
       totalAdmins: 0,
       totalTeachers: 0,
       totalStudents: 0,
@@ -41,6 +47,7 @@ export default {
     this.countAdmins();
     this.countTeachers();
     this.countStudents();
+    this.isLoading = false;
   },
   methods: {
     async countAdmins() {

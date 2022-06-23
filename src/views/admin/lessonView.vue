@@ -1,5 +1,10 @@
 <template>
-  <div class="row">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="row">
     <div class="card">
       <div class="card-header p-4">
         <h2 class="m-auto">{{ lesson.name }}</h2>
@@ -43,7 +48,7 @@
     </div>
   </div>
 
-  <div class="row p-4">
+  <div v-if="!isLoading" class="row p-4">
     <div class="col-6">
       <div class="card">
         <div class="card-body">
@@ -108,6 +113,7 @@ export default {
   props: [ 'lessonId' ],
   data () {
     return {
+      isLoading: true,
       isUpdate: false,
       lesson: {},
       concepts: [],
@@ -156,6 +162,7 @@ export default {
         if ( !res.status ) throw res.error;
 
         this.concepts = res.data;
+        this.isLoading = false;
       } catch ( error )
       {
         console.log( error );

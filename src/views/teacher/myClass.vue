@@ -1,5 +1,10 @@
 <template>
-  <div class="row">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="row">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
@@ -15,8 +20,8 @@
     </div>
   </div>
 
-  <div v-if="studentsList.length == 0" class="">No Students</div>
-  <div v-if="studentsList.length > 0" class="row">
+  <div v-if="studentsList.length == 0 && !isLoading" class="">No Students</div>
+  <div v-if="studentsList.length > 0 && !isLoading" class="row">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Students</h5>
@@ -86,6 +91,7 @@ export default {
   props: ["classId"],
   data() {
     return {
+      isLoading: true,
       teacherId: store.state.user.data._id,
       teacher: {},
       classInfo: {},
@@ -149,6 +155,7 @@ export default {
         const res = entry.data;
         if (!res.status) throw res.error;
         this.studentsList = res.data;
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);

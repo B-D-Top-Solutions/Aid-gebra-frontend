@@ -1,7 +1,12 @@
 <template>
   <br class="p-2 rounded bg-light" />
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
   <!-- Row start -->
-  <div class="row">
+  <div v-if="!isLoading" class="row">
     <!-- Col 1 -->
     <div
       v-if="student"
@@ -39,7 +44,7 @@
     <!-- Col 1 end -->
   </div>
   <!-- Row end -->
-  <div class="row m-auto mt-5">
+  <div v-if="!isLoading" class="row m-auto mt-5">
     <!-- Pretests -->
     <div class="col-6">
       <h5>Pretest</h5>
@@ -173,6 +178,7 @@ export default {
   props: ["studentId"],
   data() {
     return {
+      isLoading: true,
       student: null,
       pretest: {
         hasPrevPage: false,
@@ -210,6 +216,7 @@ export default {
 
         await this.loadPretest();
         await this.loadPosttest();
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);

@@ -1,6 +1,11 @@
 <template>
   <h1>My Profile</h1>
-  <div class="d-flex mt-3 justify-content-between">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+  <div v-if="!isLoading" class="d-flex mt-3 justify-content-between">
     <section class="flex-fill me-3" style="max-width: 500px">
       <p>Note: You must re-login again for the changes to take effect.</p>
       <div class="form-floating mb-3">
@@ -87,6 +92,7 @@ export default {
   name: "user-profile",
   data() {
     return {
+      isLoading: true,
       model: {
         email: null,
         fullname: null,
@@ -116,6 +122,8 @@ export default {
         this.model.contact = res.data.contact;
         this.image_url =
           import.meta.env.VITE_SERVER + "/" + res.data.avatar[0]?.path;
+
+        this.isLoading = false;
       } catch (error) {
         console.log(error);
         alert(error);

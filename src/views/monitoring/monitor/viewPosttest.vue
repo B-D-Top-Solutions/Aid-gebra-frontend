@@ -1,5 +1,10 @@
 <template>
-	<div class="row">
+  <div v-if="isLoading" class="card-body">
+    <div class="text-center">
+      <h5 class="card-title">Loading...</h5>
+    </div>
+  </div>
+	<div v-if="!isLoading" class="row">
 		<div class="card" v-if="testResult">
       <div class="card-header p-4">
         <h2 class="m-auto">Post Test Results</h2>
@@ -69,6 +74,7 @@ export default {
 	props: [ "posttestId" ],
 	data () {
 		return {
+			isLoading: true,
 			testResult: null,
 			isStudent: false,
 			isFailed: true,
@@ -96,6 +102,7 @@ export default {
 				}
 
 				this.testResult = res.data;
+				this.isLoading = false;
 			} catch (error) {
 				console.log( error );
 				alert( error );
