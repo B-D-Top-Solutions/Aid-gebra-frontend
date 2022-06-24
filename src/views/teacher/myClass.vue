@@ -22,14 +22,17 @@
 
   <div v-if="studentsList.length == 0 && !isLoading" class="">No Students</div>
   <div v-if="studentsList.length > 0 && !isLoading" class="row">
-    <div class="card">
+    <div class="card table-responsive">
       <div class="card-body">
         <h5 class="card-title">Students</h5>
         <table class="table">
           <thead style="border: none">
             <tr class="">
-              <th class="text-maincolor">Fullname</th>
               <th class="text-maincolor">Email</th>
+              <th class="text-maincolor">Username</th>
+              <th class="text-maincolor">First Name</th>
+              <th class="text-maincolor">Middle Name</th>
+              <th class="text-maincolor">Last Name</th>
               <th class="text-maincolor">Contact</th>
               <th class="text-maincolor" style="max-width: 150px">Status</th>
               <th class="text-maincolor" style="max-width: 150px">-</th>
@@ -38,13 +41,22 @@
           <tbody>
             <tr v-for="e in studentsList" v-bind:key="e._id">
               <td>
-                <small>{{ e.fullname }}</small>
-              </td>
-              <td>
                 <small>{{ e.email }}</small>
               </td>
               <td>
-                <small>{{ e.contact }}</small>
+                <small>{{ e.fullname }}</small>
+              </td>
+              <td>
+                <small>{{ e.firstname || "" }}</small>
+              </td>
+              <td>
+                <small>{{ e.middlename || "" }}</small>
+              </td>
+              <td>
+                <small>{{ e.lastname || "" }}</small>
+              </td>
+              <td>
+                <small>{{ "09" + e.contact }}</small>
               </td>
               <td>
                 <span

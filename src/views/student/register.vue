@@ -10,6 +10,7 @@
             class="form-control"
             placeholder="name@example.com"
             id="floating-email"
+            required
           />
           <label for="floating-email">Email address</label>
         </div>
@@ -21,17 +22,46 @@
             placeholder="Fullname"
             id="floating-fullname"
           />
-          <label for="floating-fullname">Fullname</label>
+          <label for="floating-fullname">Username</label>
         </div>
         <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="student.firstname"
+            class="form-control"
+            placeholder="First Name"
+            id="floating-firstname"
+          />
+          <label for="floating-firstname">First Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="student.middlename"
+            class="form-control"
+            placeholder="Middle Name"
+            id="floating-middlename"
+          />
+          <label for="floating-middlename">Middle Name(Optional)</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="student.lastname"
+            class="form-control"
+            placeholder="Last Name"
+            id="floating-lastname"
+          />
+          <label for="floating-lastname">Last Name</label>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">09</span>
           <input
             type="text"
             v-model.trim="student.contact"
             class="form-control"
             placeholder="Contact Number"
-            id="floating-contact"
           />
-          <label for="floating-contact">Contact Number</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -80,6 +110,9 @@ const router = useRouter();
 const student = {
   email: "",
   fullname: "",
+  firstname: "",
+  middlename: "",
+  lastname: "",
   contact: "",
   password: "",
   confirm_password: "",
@@ -88,6 +121,7 @@ const student = {
 
 function register(ev) {
   ev.preventDefault();
+
   store.dispatch("register", student).then((data) => {
     if (data.status == true) {
       router.push({ name: "student-dashboard" });

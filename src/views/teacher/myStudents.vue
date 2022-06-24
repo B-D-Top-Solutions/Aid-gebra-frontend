@@ -40,7 +40,7 @@
         <table class="table">
           <thead style="border: none">
             <tr class="">
-              <th class="text-maincolor">Fullname</th>
+              <th class="text-maincolor">Username</th>
               <th class="text-maincolor">Email</th>
               <th class="text-maincolor">Contact</th>
               <th class="text-maincolor" style="max-width: 150px">Status</th>

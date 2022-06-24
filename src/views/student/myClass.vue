@@ -151,6 +151,8 @@ export default {
           this.isPending = this.student.classStatus == "PENDING" ? true : false;
           this.classInfo = this.student.classId;
           this.loadClassInfo();
+        } else {
+          this.isLoading = false;
         }
       } catch (error) {
         console.log(error);
