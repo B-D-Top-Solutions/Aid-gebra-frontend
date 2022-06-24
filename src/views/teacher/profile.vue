@@ -24,19 +24,48 @@
           v-model="model.fullname"
           class="form-control"
           id="floatingInput1"
-          placeholder="Fullname"
+          placeholder="Username"
         />
-        <label for="floatingInput1">Fullname</label>
+        <label for="floatingInput1">Username</label>
       </div>
       <div class="form-floating mb-3">
         <input
           type="text"
-          v-model="model.contact"
+          v-model.trim="model.firstname"
           class="form-control"
-          id="floatingInput2"
-          placeholder="Contact"
+          placeholder="First Name"
+          id="floating-firstname"
         />
-        <label for="floatingInput2">Contact</label>
+        <label for="floating-firstname">First Name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          v-model.trim="model.middlename"
+          class="form-control"
+          placeholder="Middle Name"
+          id="floating-middlename"
+        />
+        <label for="floating-middlename">Middle Name(Optional)</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          v-model.trim="model.lastname"
+          class="form-control"
+          placeholder="Last Name"
+          id="floating-lastname"
+        />
+        <label for="floating-lastname">Last Name</label>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">09</span>
+        <input
+          type="text"
+          v-model.trim="model.contact"
+          class="form-control"
+          placeholder="Contact Number"
+        />
       </div>
       <button class="d-block btn bg-main text-white mt-4" @click="updateUser()">
         Save changes
@@ -96,6 +125,9 @@ export default {
       model: {
         email: null,
         fullname: null,
+        firstname: null,
+        middlename: null,
+        lastname: null,
         password: null,
         contact: null,
         repassword: null,
@@ -119,6 +151,9 @@ export default {
 
         this.model.email = res.data.email;
         this.model.fullname = res.data.fullname;
+        this.model.firstname = res.data.firstname || "";
+        this.model.middlename = res.data.middlename || "";
+        this.model.lastname = res.data.lastname || "";
         this.model.contact = res.data.contact;
         this.image_url =
           import.meta.env.VITE_SERVER + "/" + res.data.avatar[0]?.path;
@@ -158,6 +193,9 @@ export default {
           {
             email: this.model.email,
             fullname: this.model.fullname,
+            firstname: this.model.firstname,
+            middlename: this.model.middlename,
+            lastname: this.model.lastname,
             contact: this.model.contact,
           }
         );

@@ -24,17 +24,46 @@
             id="floatingInput1"
             placeholder="Fullname"
           />
-          <label for="floatingInput1">Fullname</label>
+          <label for="floatingInput1">Username</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="text"
+            v-model.trim="teacher.firstname"
+            class="form-control"
+            placeholder="First Name"
+            id="floating-firstname"
+          />
+          <label for="floating-firstname">First Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="teacher.middlename"
+            class="form-control"
+            placeholder="Middle Name"
+            id="floating-middlename"
+          />
+          <label for="floating-middlename">Middle Name(Optional)</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model.trim="teacher.lastname"
+            class="form-control"
+            placeholder="Last Name"
+            id="floating-lastname"
+          />
+          <label for="floating-lastname">Last Name</label>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">09</span>
+          <input
+            type="text"
             v-model.trim="teacher.contact"
             class="form-control"
-            id="floatingInput2"
-            placeholder="Contact"
+            placeholder="Contact Number"
           />
-          <label for="floatingInput2">Contact</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -83,6 +112,9 @@ const router = useRouter();
 const teacher = {
   email: "",
   fullname: "",
+  firstname: "",
+  middlename: "",
+  lastname: "",
   contact: "",
   password: "",
   confirm_password: "",
