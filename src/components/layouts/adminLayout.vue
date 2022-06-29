@@ -1,8 +1,9 @@
 <template>
   <Navigation />
   <br />
-  <Announcement />
   <div class="container py-3">
+    <Announcement />
+
     <router-view></router-view>
   </div>
 </template>

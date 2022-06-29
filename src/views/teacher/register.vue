@@ -1,11 +1,14 @@
 <template>
-  <h1 class="text-maincolor text-center mb-5">Welcome, teacher!</h1>
-  <p class="text-dark text-center">
-    Note: Your account will be pending, you will need admin approval to login.
-  </p>
-  <center>
-    <div style="max-width: 450px">
-      <form class="rounded border p-4" @submit="register">
+  <div class="row rounded pt-5">
+    <div class="col-md p-5 " style="background-color:#ADEFD1;border-radius: 20px 0 0 20px;">
+      <h1 class="mb-3 fw-bolder" style="font-size:4em">Sign up</h1><br/><br/>
+      <h1 class="mb-5">HELLO TEACHERS</h1>
+      <p>AidGebra is an adaptive learning system designed for Filipino Grade 7 students which takes into account learners' knowledge level to ensure mastery of Algebra fundamentals.
+              <br/><br/>
+      Enhance your algebra skills and monitor your progress!</p>
+    </div>
+    <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
+      <form  @submit="register">
         <div class="form-floating mb-3">
           <input
             type="email"
@@ -85,12 +88,12 @@
           />
           <label for="floatingPassword1">Confirm Password</label>
         </div>
-        <button type="submit" class="d-block w-100 btn bg-main text-white mt-4">
+        <button type="submit" class="p-3 d-block w-100 btn bg-main text-white mt-4">
           REGISTER
         </button>
       </form>
       <br />
-      <small class="d-flex">
+      <small class="d-flex justify-content-center">
         <span class="text-muted">Already have an account ?</span> &nbsp;
         <RouterLink
           :to="{ name: 'teacher-login' }"
@@ -100,7 +103,7 @@
         </RouterLink>
       </small>
     </div>
-  </center>
+  </div>
 </template>
 
 <script setup>

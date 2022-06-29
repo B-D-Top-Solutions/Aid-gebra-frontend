@@ -13,7 +13,7 @@
 }
 
 :root{
-  --maincolor : #1c82a2;
+  --maincolor : #00203F;
   --regularFont : 400;
   --mediumFont : 500;
   --boldFont : 600;
@@ -28,7 +28,7 @@
 }
 
 body{
-  background-color: #f0f7f6;
+  background-color: #00203F;
 }
 
 .fw-bold{

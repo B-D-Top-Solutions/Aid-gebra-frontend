@@ -5,20 +5,19 @@
     </div>
   </div>
   <div v-if="!isLoading" class="d-grid grid-gap2 grid-item-card">
-    <div v-for="(lesson, index) in lessons" class="card" :key="lesson._id">
-      <div class="card-body">
-        <div class="card-text">
-          <RouterLink
-            class="card-body"
-            :to="{
-              name: 'student-lesson-view',
-              params: { lessonId: lesson._id },
-            }"
-          >
-            <p class="card-title">View</p>
-          </RouterLink>
-          <h5 class="m-auto">{{ lesson.name }}</h5>
-        </div>
+    <div v-for="(lesson, index) in lessons" class="card shadow" :key="lesson._id">
+      <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+        <h5 class="m-auto text-center p-3">{{ lesson.name }}</h5>
+
+        <RouterLink
+          class="d-flex justify-content-center text-decoration-none"
+          :to="{
+            name: 'student-lesson-view',
+            params: { lessonId: lesson._id },
+          }"
+        >
+        <p class="btn mt-5 bg-main text-light">Start</p>
+        </RouterLink>
       </div>
     </div>
   </div>

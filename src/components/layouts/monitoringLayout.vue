@@ -3,8 +3,9 @@
   <TeacherNavigation v-if="isTeacher" />
   <StudentNavigation v-if="isStudent" />
   <br />
-  <Announcement />
   <div class="container py-3">
+    <Announcement />
+
     <router-view></router-view>
   </div>
 </template>
@@ -34,4 +35,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+  body {
+    background-color: white !important;
+  }
+</style>
+

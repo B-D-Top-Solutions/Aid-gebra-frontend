@@ -8,7 +8,31 @@ const routes = [
     name: "index",
     component: () => import("../index.vue"),
   },
-
+  {
+    path : "/login",
+    name : "public_login",
+    component : () => import("../views/login.vue")
+  }, 
+  {
+    path : "/register",
+    name : "public_register",
+    component : () => import("../views/signup.vue")
+  }, 
+  {
+    path : "/about",
+    name : "public_about",
+    component : () => import("../views/about.vue")
+  }, 
+  {
+    path : "/verify/email",
+    name : "public_about",
+    component : () => import("../views/emailverify.vue")
+  }, 
+  {
+    path : "/forgotpassword/change",
+    name : "public_about",
+    component : () => import("../views/forgotpassword.vue")
+  }, 
   // Auth
   {
     path: "/auth",

@@ -2,32 +2,31 @@
   <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 10">
     <div class="container d-flex justify-content-between align-items-center">
       <section>
+        <img
+          class="d-block w-100 mx-auto"
+          src="/src/assets/images/logo dark.png"
+          style="max-width: 200px"
+        />
+      </section>
+
+      <section class="d-flex align-items-center">
         <RouterLink
           :to="{ name: 'student-dashboard' }"
-          class="text-decoration-none text-white border-bottom"
+          class="text-decoration-none text-white border-bottom me-3"
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
           :to="{ name: 'student-myclass' }"
-          class="text-decoration-none text-white border-bottom"
+          class="text-decoration-none text-white border-bottom me-3"
           >Classroom</RouterLink
         >
         &nbsp;
         <RouterLink
           :to="{ name: 'student-myprogress' }"
-          class="text-decoration-none text-white border-bottom"
+          class="text-decoration-none text-white border-bottom me-3"
           >Scores</RouterLink
-        >
-      </section>
-
-      <section>
-        <div class="flex-fill d-flex justify-content-end align-items-center">
-          <div
-            class="rounded-circle overflow-hidden border me-3"
-            style="height: 50px; width: 50px"
-          >
-            <img v-if="avatar" :src="`${avatar}`" class="d-block w-100" />
-          </div>
+        >&nbsp;
+        <div class=" d-flex justify-content-end align-items-center">
           <div class="dropdown">
             <div
               class="dropdown-toggle text-light"
