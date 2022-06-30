@@ -33,10 +33,13 @@
     </div>
   </div>
 
-  <div class="container d-flex justify-content-between mt-5">
+  <div class="container mt-5">
+    <div class="row mt-5 pt-3">
+    <div class="col-md-5">
     <img src="/src/assets/images/homepage.png" />
-
-    <section class="text-light mt-5 pt-3">
+    </div>
+    
+    <section class="col-md-5">
       <h1 style="font-size: 3em">Enhance your Algebra Skills</h1>
       <p style="font-size: 1.5em; margin-top: 15px">
         Learn Grade 7 Algebra anytime and anywhere
@@ -57,5 +60,6 @@
         STUDENT
       </RouterLink>
     </section>
+    </div>
   </div>
 </template>
