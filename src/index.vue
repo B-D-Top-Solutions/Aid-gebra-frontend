@@ -39,7 +39,7 @@
     <img src="/src/assets/images/homepage.png" />
     </div>
     
-    <section class="col-md-6 pt-5">
+    <section class="col-md-6 pt-5 text-light">
       <h1 style="font-size: 3em">Enhance your Algebra Skills</h1>
       <p style="font-size: 1.5em; margin-top: 15px">
         Learn Grade 7 Algebra anytime and anywhere
