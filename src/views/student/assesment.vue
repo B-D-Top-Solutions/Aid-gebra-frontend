@@ -3,7 +3,7 @@
     <div v-if="!startClicked" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Assessment</h5>
-        <p>Get 5 correct answers to complete this assesment.</p>
+        <p>Get 5 correct answers to complete this assessment.</p>
 				<RouterLink 
 					class="btn btn-primary mx-1" 
 					:to="{
@@ -14,7 +14,7 @@
 						Back To Lesson
 				</RouterLink>
         <button v-if="!hideStartBtn" class="btn btn-success mx-1" @click="getConcept()">
-          Start Assesment
+          Start Assessment
         </button>
       </div>
     </div>

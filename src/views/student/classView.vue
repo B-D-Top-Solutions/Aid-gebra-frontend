@@ -121,7 +121,7 @@
                   >View Lecture</RouterLink
                 >
               </p>
-              <p class="card-text">
+              <!-- <p class="card-text">
                 Assessment:
                 <RouterLink
                   v-if="isInClass"
@@ -135,7 +135,7 @@
                 <span v-if="!isInClass" class="text-danger"
                   >You may only view if you dont have a class</span
                 >
-              </p>
+              </p> -->
             </div>
           </div>
         </div>
