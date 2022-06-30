@@ -17,7 +17,7 @@
             theme="bubble"
             v-model:content="material"
             contentType="html"
-            :toolbar="false"
+            :toolbar="[]"
             :readOnly="true"
             :enable="false"
           />

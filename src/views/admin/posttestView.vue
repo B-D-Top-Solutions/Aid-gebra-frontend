@@ -39,15 +39,77 @@
 						</div>
           </div>
           <div class="card-body">
-            <h5 class="card-title" v-html="question.text"></h5>
+            <div class="card-title" style="margin-left: -1rem;">
+              <QuillEditor
+              v-if="question.text"
+              theme="bubble"
+              v-model:content="question.text"
+              contentType="html"
+              :toolbar="[]"
+              :readOnly="true"
+              :enable="false"
+              />
+            </div>
 						<p class="card-text">
               Answer: {{ question.answer }}
             </p>
             <p class="card-text">
-							<p>{{ question.choiceA.value }} . <span v-html=" question.choiceA.text  "></span></p>
-							<p>{{ question.choiceB.value }} . <span v-html=" question.choiceB.text  "></span></p>
-							<p>{{ question.choiceC.value }} . <span v-html=" question.choiceC.text  "></span></p>
-							<p>{{ question.choiceD.value }} . <span v-html=" question.choiceD.text  "></span></p>
+              <p class="d-flex">
+                <p style="">{{ question.choiceA.value }}</p>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    v-if="question.choiceA.text"
+                    theme="bubble"
+                    v-model:content="question.choiceA.text"
+                    contentType="html"
+                    :toolbar="false"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ question.choiceB.value }}</span>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    v-if="question.choiceB.text"
+                    theme="bubble"
+                    v-model:content="question.choiceB.text"
+                    contentType="html"
+                    :toolbar="false"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ question.choiceC.value }}</span>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    v-if="question.choiceC.text"
+                    theme="bubble"
+                    v-model:content="question.choiceC.text"
+                    contentType="html"
+                    :toolbar="false"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ question.choiceD.value }}</span>.&nbsp;
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    v-if="question.choiceD.text"
+                    theme="bubble"
+                    v-model:content="question.choiceD.text"
+                    contentType="html"
+                    :toolbar="false"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
             </p>
           </div>
           <div class="card-footer">
@@ -82,6 +144,7 @@
           <div class="form mb-3">
             <label for="">Question</label>
             <QuillEditor
+              v-if="questionModel.text"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.text"
@@ -92,6 +155,7 @@
 					<div class="form mb-3">
             <label for="">Choice A</label>
             <QuillEditor
+              v-if="questionModel.choiceA"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceA"
@@ -102,6 +166,7 @@
 					<div class="form mb-3">
             <label for="">Choice B</label>
             <QuillEditor
+              v-if="questionModel.choiceB"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceB"
@@ -112,6 +177,7 @@
 					<div class="form mb-3">
             <label for="">Choice C</label>
             <QuillEditor
+              v-if="questionModel.choiceD"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceC"
@@ -122,6 +188,7 @@
 					<div class="form mb-3">
             <label for="">Choice D</label>
             <QuillEditor
+              v-if="questionModel.choiceD"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceD"
@@ -142,7 +209,6 @@
             </select>
             <label for="floatingSelect">Answer</label>
           </div>
-					<!-- add textarea -->
 					<div class="form-floating mb-3">
             <input type="text" v-model.trim=" questionModel.tags " class="form-control" id="floatingInput"
               placeholder="Tag" />
@@ -169,6 +235,7 @@
 import axiosClient from '../../axios';
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 
 export default {
   components: {
