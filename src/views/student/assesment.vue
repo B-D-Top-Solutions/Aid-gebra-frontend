@@ -242,7 +242,7 @@ export default {
 				this.knowledgeLevel = this.pretestResult.knowledgeLevel;
 
 				// DEFAULT STACK
-				this.derivedMastery = 'UNMASTERED';
+				this.derivedMastery = 'NOT MASTERED';
 
 				const easyStack = [
 					'EASY',
@@ -266,31 +266,31 @@ export default {
 				switch (this.knowledgeLevel) {
 					case 'POOR':
 						this.difficultyStack = easyStack
-						this.derivedMastery = 'UNMASTERED';
+						this.derivedMastery = 'NOT MASTERED';
 						break;
 					case 'FAIR':
 						if(this.concept.order > 1) {
 							this.difficultyStack = easyStack
-							this.derivedMastery = 'UNMASTERED';
+							this.derivedMastery = 'NOT MASTERED';
 						}
 						break;
 					case 'AVERAGE':
 						if(this.concept.order > 2) {
 							this.difficultyStack = easyStack
-							this.derivedMastery = 'UNMASTERED';
+							this.derivedMastery = 'NOT MASTERED';
 						}
 						break;
 					case 'GOOD':
 						if(this.concept.order > 3) {
 							this.difficultyStack = easyStack
-							this.derivedMastery = 'UNMASTERED';
+							this.derivedMastery = 'NOT MASTERED';
 						}
 						break;
 					case 'VERY GOOD':
 						if ( this.concept.order > 4 )
 						{
 							this.difficultyStack = easyStack
-							this.derivedMastery = 'UNMASTERED';
+							this.derivedMastery = 'NOT MASTERED';
 						}
 						break;
 					case 'EXCELLENT':
@@ -314,7 +314,7 @@ export default {
 				// 	];
 				// }
 
-				// if(this.mastery == 'UNMASTERED') {
+				// if(this.mastery == 'NOT MASTERED') {
 				// 	this.difficultyStack = [
 				// 		'EASY',
 				// 		'EASY',
