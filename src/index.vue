@@ -36,7 +36,7 @@
   <div class="container mt-5">
     <div class="row mt-5 pt-3">
     <div class="col-md-6">
-    <img src="/src/assets/images/homepage1.png" />
+    <img src="/src/assets/images/homepage.png" class="w-100 d-block" />
     </div>
     
     <section class="col-md-6 pt-5 text-light">
@@ -47,14 +47,14 @@
 
       <RouterLink
         :to="{ name: 'teacher-login' }"
-        class="btn text-decoration-none me-3 fw-bolder text-maincolor px-5 py-3"
+        class="btn text-decoration-none me-3 fw-bolder text-maincolor px-5 py-3 mb-2"
         style="background-color: aquamarine"
       >
         TEACHER
       </RouterLink>
       <RouterLink
         :to="{ name: 'student-login' }"
-        class="btn text-decoration-none me-3 fw-bolder text-maincolor px-5 py-3"
+        class="btn text-decoration-none me-3 fw-bolder text-maincolor px-5 py-3 mb-2"
         style="background-color: aquamarine"
       >
         STUDENT
