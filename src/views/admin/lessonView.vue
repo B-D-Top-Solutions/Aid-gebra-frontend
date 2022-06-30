@@ -55,7 +55,9 @@
           <h5 class="card-title">Pre-Test</h5>
           <h6 class="card-subtitle mb-2 text-muted">Manage Pre-Test</h6>
           <p class="card-text">Set up 20 questions to measure the knowledge level of the students.</p>
-          <RouterLink v-if="concepts.length >= 5" :to="{ name: 'admin-pretest-view', params: { lessonId: lessonId } }" class="card-link">View</RouterLink>
+          <center>
+            <RouterLink v-if="concepts.length >= 5" :to="{ name: 'admin-pretest-view', params: { lessonId: lessonId } }" class="btn bg-main text-light">View</RouterLink>
+          </center>
           <span v-if="concepts.length < 5" class="text-danger">Lesson must have 5 concepts to proceed</span>
         </div>
       </div>
@@ -66,7 +68,9 @@
           <h5 class="card-title">Post Test</h5>
           <h6 class="card-subtitle mb-2 text-muted">Manage Post Test</h6>
           <p class="card-text">Set up 20 questions to determine if the student has completed the lesson.</p>
-          <RouterLink v-if="concepts.length >= 5" :to="{ name: 'admin-posttest-view', params: { lessonId: lessonId } }" class="card-link">View</RouterLink>
+          <center>
+            <RouterLink v-if="concepts.length >= 5" :to="{ name: 'admin-posttest-view', params: { lessonId: lessonId } }" class="btn bg-main text-light">View</RouterLink>
+          </center>
           <span v-if="concepts.length < 5" class="text-danger">Lesson must have 5 concepts to proceed</span>
         </div>
       </div>
