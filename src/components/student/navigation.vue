@@ -4,7 +4,7 @@
       <section>
         <img
           class="d-block w-100 mx-auto"
-          src="/src/assets/images/logo dark.png"
+          src="/src/assets/images/logo_dark.png"
           style="max-width: 200px"
         />
       </section>
@@ -26,7 +26,7 @@
           class="text-decoration-none text-white border-bottom me-3"
           >Scores</RouterLink
         >&nbsp;
-        <div class=" d-flex justify-content-end align-items-center">
+        <div class="d-flex justify-content-end align-items-center">
           <div class="dropdown">
             <div
               class="dropdown-toggle text-light"
