@@ -1,8 +1,12 @@
 <template>
-  <h1 class="text-maincolor text-center mb-5">Welcome, Admin!</h1>
-  <center>
-    <div style="max-width: 450px">
-      <form class="rounded border p-4" @submit="login">
+  <div class="row rounded pt-5">
+    <div class="col-md p-5 " style="background-color:#ADEFD1;border-radius: 20px 0 0 20px;">
+      <h1 class="mb-3 fw-bolder">Login</h1>
+      <p>Good to see you again!</p>
+    </div>
+    <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
+      <h1 class="mb-5">Welcome, Admins!</h1>
+      <form class="" @submit="login">
         <div class="form-floating mb-3">
           <input
             v-model.trim="admin.email"
@@ -23,17 +27,18 @@
           />
           <label for="floatingPassword">Password</label>
         </div>
-        <button class="d-block w-100 btn bg-main text-white mt-4" type="submit">
+        <button class="p-3 d-block w-100 btn bg-main text-white mt-4" type="submit">
           SIGN IN
         </button>
       </form>
       <br />
-      <small class="d-flex">
+      <small class="d-flex text-light justify-content-center">
         <span class="text-muted">Don't have an account ?</span> &nbsp; Please
         contact the admin.
       </small>
     </div>
-  </center>
+  </div>
+ 
 </template>
 
 <script setup>

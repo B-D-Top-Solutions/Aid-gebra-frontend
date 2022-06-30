@@ -25,12 +25,12 @@ const routes = [
   }, 
   {
     path : "/verify/email",
-    name : "public_about",
+    name : "public_verifyemail",
     component : () => import("../views/emailverify.vue")
   }, 
   {
     path : "/forgotpassword/change",
-    name : "public_about",
+    name : "public_changepassword",
     component : () => import("../views/forgotpassword.vue")
   }, 
   // Auth

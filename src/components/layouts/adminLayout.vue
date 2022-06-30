@@ -21,4 +21,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+  body {
+    background-color: white !important;
+  }
+</style>
