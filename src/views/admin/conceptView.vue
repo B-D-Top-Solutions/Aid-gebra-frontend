@@ -70,7 +70,7 @@
             </p>
           </div>
           <div class="card-footer">
-						Explaination:
+						Explanation:
 						<p class="card-text p-2" v-html="question.explaination"></p>
 					</div>
         </div>
