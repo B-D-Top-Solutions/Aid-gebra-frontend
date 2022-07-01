@@ -132,7 +132,7 @@
             </p>
           </div>
           <div class="card-footer">
-						Explaination:
+						Explanation:
                 <div style="margin-left: -1rem;">
                   <QuillEditor
                     v-if="question.explaination"
