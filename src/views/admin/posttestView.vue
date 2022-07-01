@@ -144,7 +144,7 @@
           <div class="form mb-3">
             <label for="">Question</label>
             <QuillEditor
-              v-if="questionModel.text"
+              :key="modalQ"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.text"
@@ -155,7 +155,7 @@
 					<div class="form mb-3">
             <label for="">Choice A</label>
             <QuillEditor
-              v-if="questionModel.choiceA"
+              :key="modalA"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceA"
@@ -166,7 +166,7 @@
 					<div class="form mb-3">
             <label for="">Choice B</label>
             <QuillEditor
-              v-if="questionModel.choiceB"
+              :key="modalB"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceB"
@@ -177,7 +177,7 @@
 					<div class="form mb-3">
             <label for="">Choice C</label>
             <QuillEditor
-              v-if="questionModel.choiceD"
+              :key="modalC"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceC"
@@ -188,7 +188,7 @@
 					<div class="form mb-3">
             <label for="">Choice D</label>
             <QuillEditor
-              v-if="questionModel.choiceD"
+              :key="modalD"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceD"
@@ -260,13 +260,26 @@ export default {
 				choiceB: '',
 				choiceC: '',
 				choiceD: '',
-			}
+      },
+      modalQ: 1,
+      modalA: 1,
+      modalB: 1,
+      modalC: 1,
+      modalD: 1,
     };
 	},
 	mounted() {
 		this.getPosttest();
 	},
-	methods: {
+  methods: {
+    forceRerender() {
+      this.modalQ += 1;
+      this.modalA += 1;
+      this.modalB += 1;
+      this.modalC += 1;
+      this.modalD += 1;
+      console.log('rerendering')
+    },
 		clearModal() {
 			this.questionModel._id = "";
 			this.questionModel.posttestId = "";
@@ -279,6 +292,7 @@ export default {
 			this.questionModel.choiceC = '';
 			this.questionModel.choiceD = '';
       this.isUpdate = false;
+      this.forceRerender();
     },
 		async getPosttest () {
 			try
@@ -344,6 +358,7 @@ export default {
 				this.questionModel.choiceB = data.choiceB.text;
 				this.questionModel.choiceC = data.choiceC.text;
 				this.questionModel.choiceD = data.choiceD.text;
+        this.forceRerender();
       } catch ( error )
       {
         console.log( error );
