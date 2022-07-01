@@ -1,9 +1,9 @@
 <template>
   <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 10">
-    <div class="container d-flex justify-content-between align-items-center">
+    <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'}`">
       <section>
         <img
-          class="d-block w-100 mx-auto"
+          :class="`d-block w-100 mx-auto ${desktop.show ? '' : 'mb-3'}`"
           src="/src/assets/images/logo_dark.png"
           style="max-width: 200px"
         />
@@ -59,6 +59,42 @@
     </div>
   </div>
 </template>
+
+
+<script>
+
+export default {
+  name: "student-navigation",
+  components: {},
+  data(){
+      return {
+          desktop : {
+            show : true
+          }
+      }
+  },
+  methods :{
+      r (condition) {
+          console.log(condition)
+          if(condition == true){
+            this.desktop.show = false 
+          }
+          else{
+            this.desktop.show = true
+          }
+      }
+  },
+  created() {
+
+      this.r(window.matchMedia('(max-width: 600px)').matches)
+
+      window.addEventListener('resize',(e) => {
+          this.r(window.innerWidth <= 600)
+      })
+  }
+};
+</script>
+
 <script setup>
 import store from "../../store";
 import { useRouter } from "vue-router";

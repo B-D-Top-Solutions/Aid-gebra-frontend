@@ -3,9 +3,7 @@
     <div class="col-md p-5 " style="background-color:#ADEFD1;border-radius: 20px 0 0 20px;">
       <h1 class="mb-3 fw-bolder" style="font-size:4em">Sign up</h1><br/><br/>
       <h1 class="mb-5">HELLO TEACHERS</h1>
-      <p>AidGebra is an adaptive learning system designed for Filipino Grade 7 students which takes into account learners' knowledge level to ensure mastery of Algebra fundamentals.
-              <br/><br/>
-      Enhance your algebra skills and monitor your progress!</p>
+      <p>Help your students enhance their algebra skills and monitor their progress!</p>
     </div>
     <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
       <form  @submit="register">

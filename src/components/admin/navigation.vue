@@ -1,49 +1,43 @@
 <template>
   <div class="p-3 bg-main position-sticky shadow top-0">
-    <div class="container d-flex justify-content-between align-items-center">
+    <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'} `">
       <section>
         <RouterLink to="/" class="text-decoration-none">
           <img
-            class="w-100 px-auto mx-2"
-            src="/src/assets/images/logo.png"
+            :class="`d-block w-100 mx-auto ${desktop.show ? '' : 'mb-3'}`"
+            src="/src/assets/images/logo_dark.png"
             style="max-width: 150px"
           />
         </RouterLink>
-        <RouterLink
-          to="/admin/dashboard"
-          class="text-decoration-none text-white border-bottom ml-4"
-          >Dashboard</RouterLink
-        >&nbsp;
-        <RouterLink
-          :to="{ name: 'admin-announcements' }"
-          class="text-decoration-none text-white border-bottom ml-4"
-          >Announcement</RouterLink
-        >&nbsp;
-        <RouterLink
-          :to="{ name: 'admin-classes' }"
-          class="text-decoration-none text-white border-bottom"
-          >Classrooms</RouterLink
-        >&nbsp;
-        <RouterLink
-          :to="{ name: 'admin-lessons' }"
-          class="text-decoration-none text-white border-bottom"
-          >Lessons</RouterLink
-        >&nbsp;
-        <RouterLink
-          :to="{ name: 'admin-allstudents' }"
-          class="text-decoration-none text-white border-bottom"
-          >Monitoring</RouterLink
-        >
       </section>
 
       <section>
         <div class="flex-fill d-flex justify-content-end align-items-center">
-          <div
-            class="rounded-circle overflow-hidden border me-3"
-            style="height: 50px; width: 50px"
+          <RouterLink
+            to="/admin/dashboard"
+            class="text-decoration-none text-white border-bottom me-2"
+            >Dashboard</RouterLink
+          >&nbsp;
+          <RouterLink
+            :to="{ name: 'admin-announcements' }"
+            class="text-decoration-none text-white border-bottom me-2"
+            >Announcement</RouterLink
+          >&nbsp;
+          <RouterLink
+            :to="{ name: 'admin-classes' }"
+            class="text-decoration-none text-white border-bottom me-2"
+            >Classrooms</RouterLink
+          >&nbsp;
+          <RouterLink
+            :to="{ name: 'admin-lessons' }"
+            class="text-decoration-none text-white border-bottom me-2"
+            >Lessons</RouterLink
+          >&nbsp;
+          <RouterLink
+            :to="{ name: 'admin-allstudents' }"
+            class="text-decoration-none text-white border-bottom me-2"
+            >Monitoring</RouterLink
           >
-            <img v-if="avatar" :src="`${avatar}`" class="d-block w-100" />
-          </div>
           <div class="dropdown">
             <div
               class="dropdown-toggle text-light"
@@ -76,6 +70,41 @@
     </div>
   </div>
 </template>
+
+
+<script>
+
+export default {
+  name: "admin-navigation",
+  components: {},
+  data(){
+      return {
+          desktop : {
+            show : true
+          }
+      }
+  },
+  methods :{
+      r (condition) {
+          console.log(condition)
+          if(condition == true){
+            this.desktop.show = false 
+          }
+          else{
+            this.desktop.show = true
+          }
+      }
+  },
+  created() {
+
+      this.r(window.matchMedia('(max-width: 600px)').matches)
+
+      window.addEventListener('resize',(e) => {
+          this.r(window.innerWidth <= 600)
+      })
+  }
+};
+</script>
 <script setup>
 import store from "../../store";
 import { useRouter } from "vue-router";

@@ -8,6 +8,7 @@
         </span>
         <span>
         <img
+          v-if="desktop.show"
             class="d-block w-100 mx-auto"
             src="/src/assets/images/logo.png"
             style="max-width: 200px"
@@ -38,3 +39,35 @@
 </div>
 
 </template>
+
+<script>
+export default {
+    name : 'index',
+    data(){
+        return {
+            desktop : {
+              show : true
+            }
+        }
+    },
+    methods :{
+        r (condition) {
+            console.log(condition)
+            if(condition == true){
+              this.desktop.show = false 
+            }
+            else{
+              this.desktop.show = true
+            }
+        }
+    },
+    created() {
+
+        this.r(window.matchMedia('(max-width: 600px)').matches)
+
+        window.addEventListener('resize',(e) => {
+            this.r(window.innerWidth <= 600)
+        })
+    }
+}
+</script>
