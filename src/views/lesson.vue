@@ -26,7 +26,7 @@
         The following lesson outline was constructed in line with the Department of Education Curriculum Guide and Learning Modules for Grade 7 Mathematics. This is composed of seven (7) lessons with five (5) concepts each.
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr)); grid-gap:15px">
+  <div id="lessoncard">
     <div class="p-3 bg-light rounded ">
         <h3 style="background-color:#ADEFD1" class="p-3">LESSON 1: ALGEBRAIC EXPRESSION</h3>
         <br/>
@@ -67,7 +67,18 @@
 </div>
 
 </template>
+<style scoped>
+    #lessoncard{
+        display:grid;grid-template-columns:1fr 1fr;grid-template-rows: 1fr 1fr; grid-gap:15px
+    }
+    @media only screen and (max-width: 750px) {
+        #lessoncard {
+            grid-template-columns: unset !important;
+            grid-template-rows: unset !important;
+        }
+    }
 
+</style>
 <script>
 export default {
     name : 'index',
