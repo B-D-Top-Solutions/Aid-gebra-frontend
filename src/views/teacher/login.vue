@@ -6,7 +6,7 @@
     </div>
     <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
       <h1 class="mb-5">Welcome, teachers!</h1>
-      <form>
+      <div>
         <div class="form-floating mb-13">
           <input
             type="email"
@@ -31,7 +31,7 @@
         <button class="d-block w-100 btn bg-main text-white mt-4 p-3" type="submit" @click="login">
           SIGN IN
         </button>
-      </form>
+      </div>
       <br />
       <small class="d-flex justify-content-center">
         <span class="text-muted">Don't have an account ? </span> &nbsp;
@@ -78,7 +78,7 @@ async function sendPasswordLink(){
 }
 
 function login(ev) {
-  ev.preventDefault();
+  // ev.preventDefault();
   store.dispatch("login", teacher).then((data) => {
     if (data.status == true) {
       router.push({ name: "teacher-dashboard" });
