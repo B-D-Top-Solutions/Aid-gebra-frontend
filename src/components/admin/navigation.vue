@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 bg-main position-sticky shadow top-0">
+  <div class="p-3 bg-main position-sticky shadow top-0" style="z-index:99">
     <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'} `">
       <section>
         <RouterLink to="/" class="text-decoration-none">
