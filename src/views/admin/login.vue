@@ -32,7 +32,7 @@
         </button>
       </form>
       <br />
-      <small class="d-flex text-light justify-content-center">
+      <small class="d-flex text-maincolor justify-content-center">
         <span class="text-muted">Don't have an account ?</span> &nbsp; Please
         contact the admin.
       </small>
