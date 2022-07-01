@@ -6,7 +6,7 @@
     </div>
     <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
       <h1 class="mb-5">Welcome, teachers!</h1>
-      <form @submit="login">
+      <form>
         <div class="form-floating mb-13">
           <input
             type="email"
@@ -28,7 +28,7 @@
           <label for="floatingPassword">Password</label>
         </div>
         <button class="btn mt-2" @click="sendPasswordLink">Forget Password ?</button>
-        <button class="d-block w-100 btn bg-main text-white mt-4 p-3" type="submit">
+        <button class="d-block w-100 btn bg-main text-white mt-4 p-3" type="submit" @click="login">
           SIGN IN
         </button>
       </form>
