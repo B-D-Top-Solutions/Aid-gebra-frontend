@@ -15,27 +15,27 @@
         <div class="flex-fill d-flex justify-content-end align-items-center">
           <RouterLink
             to="/admin/dashboard"
-            class="text-decoration-none text-white border-bottom me-2"
+            class="text-decoration-none text-white me-2"
             >Dashboard</RouterLink
           >&nbsp;
           <RouterLink
             :to="{ name: 'admin-announcements' }"
-            class="text-decoration-none text-white border-bottom me-2"
+            class="text-decoration-none text-white me-2"
             >Announcement</RouterLink
           >&nbsp;
           <RouterLink
             :to="{ name: 'admin-classes' }"
-            class="text-decoration-none text-white border-bottom me-2"
+            class="text-decoration-none text-white me-2"
             >Classrooms</RouterLink
           >&nbsp;
           <RouterLink
             :to="{ name: 'admin-lessons' }"
-            class="text-decoration-none text-white border-bottom me-2"
+            class="text-decoration-none text-white me-2"
             >Lessons</RouterLink
           >&nbsp;
           <RouterLink
             :to="{ name: 'admin-allstudents' }"
-            class="text-decoration-none text-white border-bottom me-2"
+            class="text-decoration-none text-white me-2"
             >Monitoring</RouterLink
           >
           <div class="dropdown">

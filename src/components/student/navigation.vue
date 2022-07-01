@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 10">
+  <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 99">
     <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'}`">
       <section>
         <img
@@ -12,18 +12,18 @@
       <section class="d-flex align-items-center">
         <RouterLink
           :to="{ name: 'student-dashboard' }"
-          class="text-decoration-none text-white border-bottom me-3"
+          class="text-decoration-none text-white me-3"
           >Dashboard</RouterLink
         >&nbsp;
         <RouterLink
           :to="{ name: 'student-myclass' }"
-          class="text-decoration-none text-white border-bottom me-3"
+          class="text-decoration-none text-white me-3"
           >Classroom</RouterLink
         >
         &nbsp;
         <RouterLink
           :to="{ name: 'student-myprogress' }"
-          class="text-decoration-none text-white border-bottom me-3"
+          class="text-decoration-none text-white me-3"
           >Scores</RouterLink
         >&nbsp;
         <div class="d-flex justify-content-end align-items-center">
