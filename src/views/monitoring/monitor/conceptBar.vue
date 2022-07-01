@@ -1,8 +1,4 @@
 <template>
-  <button @click="exportExcel" class="btn bg-main text-light mb-3">
-    Export Excel
-  </button>
-
   <Bar
     :chart-options="chartOptions"
     :chart-data="chartData"
@@ -14,6 +10,12 @@
     :width="width"
     :height="height"
   />
+
+  <div class="container">
+    <button @click="exportExcel" class="btn bg-main text-light my-3">
+      Export Excel
+    </button>
+  </div>
 </template>
 
 <script>

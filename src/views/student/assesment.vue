@@ -3,7 +3,7 @@
     <div v-if="!startClicked" class="card-body">
       <div class="text-center">
         <h5 class="card-title">Assessment</h5>
-        <p>Get 5 correct answers to complete this assesment.</p>
+        <p>Get 5 correct answers to complete this assessment.</p>
 				<RouterLink 
 					class="btn btn-primary mx-1" 
 					:to="{
@@ -14,7 +14,7 @@
 						Back To Lesson
 				</RouterLink>
         <button v-if="!hideStartBtn" class="btn btn-success mx-1" @click="getConcept()">
-          Start Assesment
+          Start Assessment
         </button>
       </div>
     </div>
@@ -84,31 +84,101 @@
         <h5 class="m-auto">Knowledge Level: {{ knowledgeLevel }}</h5>
 				<small>Score: {{ score }}/5</small>
       </div>
-      <div class="card-body">
+      <div class="card-body" v-if="currentQuestion != null">
         <h5 class="card-title"><small>Type the letter of the answer</small></h5>
         <div class="card my-3">
 					<input type="hidden" v-model="answer.question">
           <div class="card-header d-flex justify-content-between">
-            <div class="">Question: {{ questionCount  }}</div>
+            <div>Question: {{ questionCount  }}</div>
 						<span>Difficulty: {{ currentQuestion.difficulty }}</span>
           </div>
           <div class="card-body">
-          <h5 class="card-title" v-html="currentQuestion.text"></h5>
+          <h5 class="card-title">
+						<div class="card-title" style="margin-left: -1rem;">
+              <QuillEditor
+								v-if="currentQuestion.text"
+								theme="bubble"
+								v-model:content="currentQuestion.text"
+								contentType="html"
+								:toolbar="[]"
+								:readOnly="true"
+								:enable="false"
+              />
+            </div>
+					</h5>
             <p class="card-text">
-							<p class="d-flex"><span>{{ currentQuestion.choiceA.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceA.text  "></span></p>
-							<p class="d-flex"><span>{{ currentQuestion.choiceB.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceB.text  "></span></p>
-							<p class="d-flex"><span>{{ currentQuestion.choiceC.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceC.text  "></span></p>
-							<p class="d-flex"><span>{{ currentQuestion.choiceD.value }}</span>.&nbsp; <span v-html=" currentQuestion.choiceD.text  "></span></p>
+              <p class="d-flex">
+                <p style="">{{ currentQuestion.choiceA.value }}</p>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    theme="bubble"
+                    v-model:content="currentQuestion.choiceA.text"
+                    contentType="html"
+                    :toolbar="[]"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ currentQuestion.choiceB.value }}</span>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    theme="bubble"
+                    v-model:content="currentQuestion.choiceB.text"
+                    contentType="html"
+                    :toolbar="[]"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ currentQuestion.choiceC.value }}</span>.&nbsp; 
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    theme="bubble"
+                    v-model:content="currentQuestion.choiceC.text"
+                    contentType="html"
+                    :toolbar="[]"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
+							<p class="d-flex">
+                <span>{{ currentQuestion.choiceD.value }}</span>.&nbsp;
+                <div style="margin-top: -0.5rem;">
+                  <QuillEditor
+                    theme="bubble"
+                    v-model:content="currentQuestion.choiceD.text"
+                    contentType="html"
+                    :toolbar="[]"
+                    :readOnly="true"
+                    :enable="false"
+                  />
+                </div>
+              </p>
             </p>
 						<input required v-model="answer.answer" class="form-control" type="text" v-if="!isAfterQuestion">
 						<p v-if="isAfterQuestion">
-							<span v-if="isCorrect">CORRECT</span>
-							<span v-if="!isCorrect">INCORRECT</span>
+							<p class="bg-success text-light" v-if="isCorrect">CORRECT</p>
+							<p class="bg-danger text-light" v-if="!isCorrect">INCORRECT</p>
 						</p>
           </div>
 					<div class="card-footer" v-if="isAfterQuestion">
 							Explanation:
-							<p v-html="currentQuestion.explaination"> </p>
+							<div style="margin-left: -1rem;">
+								<QuillEditor
+									v-if="currentQuestion.explaination"
+									theme="bubble"
+									v-model:content="currentQuestion.explaination"
+									contentType="html"
+									:toolbar="[]"
+									:readOnly="true"
+									:enable="false"
+								/>
+              </div>
 					</div>
         </div>
 				<button 
@@ -133,7 +203,14 @@
 import axiosClient from "../../axios";
 import store from "../../store";
 
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
+
 export default {
+  components: {
+    QuillEditor,
+  },
   name: "student-assesment",
   props: ["conceptId", "lessonId"],
   data() {
@@ -354,43 +431,44 @@ export default {
         alert(error);
       }
 		},
-			async getQuestion () {
-				try
-				{
-				// convert prevQuestions to comma separated string
-				const prevQuestions = this.prevQuestions.map( q => q._id ).join( ',' );
+		async getQuestion () {
+			try
+			{
+			// convert prevQuestions to comma separated string
+				const prevQuestions = this.prevQuestions.map( q => q ).join( ',' );
+			
+			// get the difficulty of the question
+			const difficulty = this.difficultyStack[0]
+			
+			const entry = await axiosClient.get(
+				import.meta.env.VITE_SERVER +
+				import.meta.env.VITE_API_CONCEPT_QUESTIONS_ALL_V2 +
+				`?concept=${ this.conceptId }&difficulty=${ difficulty }&exclude=${prevQuestions}`
+			);
 
-				// get the difficulty of the question
-				const difficulty = this.difficultyStack[0]
-				
-        const entry = await axiosClient.get(
-          import.meta.env.VITE_SERVER +
-          import.meta.env.VITE_API_CONCEPT_QUESTIONS_ALL_V2 +
-          `?concept=${ this.conceptId }&difficulty=${ difficulty }`
-        );
+			const res = entry.data;
+			if ( !res.status ) throw res.error;
 
-        const res = entry.data;
-        if ( !res.status ) throw res.error;
+			console.log( res.data )
+			// check if there are results
+			if ( res.data.length === 0 ) {
+				this.noQuestionsFound = true;
+				return;
+			}
 
-				console.log( res.data )
-				// check if there are results
-				if ( res.data.length === 0 ) {
-					this.noQuestionsFound = true;
-					return;
-				}
+			// get random question from the results
+			const randomIndex = Math.floor( Math.random() * res.data.length );
+			
+			this.currentQuestion = res.data[ randomIndex ];
+			this.answer.question = this.currentQuestion._id;
+			this.answer.answer = '';
 
-				// get random question from the results
-				const randomIndex = Math.floor( Math.random() * res.data.length );
-				
-				this.currentQuestion = res.data[ randomIndex ];
-				this.answer.question = this.currentQuestion._id;
-				this.answer.answer = '';
 
-      } catch ( error )
-      {
-        console.log( error );
-        alert( error );
-      }
+		} catch ( error )
+		{
+			console.log( error );
+			alert( error );
+		}
 		},
 		async submitAnswer () {
 			try
@@ -406,7 +484,6 @@ export default {
 
 				const res = req.data;
 				if ( !res.status ) throw res.error;
-				console.log( res );
 				if ( res.correct == 'CORRECT' )
 				{
 					this.difficultyStack.shift();
@@ -430,7 +507,8 @@ export default {
 		},
 		async nextQuestion () {
 			this.isAfterQuestion = false;
-			this.prevQuestions.push( this.currentQuestion._id );
+			this.prevQuestions = [...this.prevQuestions, this.currentQuestion._id]
+			this.currentQuestion = null;
 			await this.getQuestion();
 
 			if ( this.difficultyStack.length == 0 )

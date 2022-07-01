@@ -11,7 +11,16 @@
       </div>
       <div class="card-body">
         <div class="card-text">
-          <p v-html="material"></p>
+          <!-- <div v-html="material" class="ql-editor"></div> -->
+          <QuillEditor
+            v-if="material"
+            theme="bubble"
+            v-model:content="material"
+            contentType="html"
+            :toolbar="[]"
+            :readOnly="true"
+            :enable="false"
+          />
         </div>
       </div>
       <div class="card-footer text-center">
@@ -41,8 +50,13 @@
 <script>
 import axiosClient from "../../axios";
 import store from "../../store";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 
 export default {
+  components: {
+    QuillEditor,
+  },
   props: ["conceptId", "lessonId"],
   data() {
     return {
