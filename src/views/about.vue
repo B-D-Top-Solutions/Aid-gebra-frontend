@@ -22,7 +22,8 @@
 </div>
 
 <div class="container mt-5">
-  <div class="p-5" style="background-image:url('/src/assets/images/bg.png');background-size:cover;">
+  <!-- <div class="p-5" style="background-image:url('/src/assets/images/bg.png');background-size:cover;"> -->
+  <div class="p-5" style="background-color:#ADEFD1">
     <h1 class="mb-3">About Us</h1>
     <p>
         AidGebra is an adaptive learning system designed to help Filipino Grade 7 students to learn and master Algebra fundamentals. 
