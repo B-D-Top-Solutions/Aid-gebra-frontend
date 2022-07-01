@@ -33,6 +33,11 @@ const routes = [
     name : "public_changepassword",
     component : () => import("../views/forgotpassword.vue")
   }, 
+  {
+    path : "/lessons",
+    name : "public_lessons",
+    component : () => import("../views/lesson.vue")
+  }, 
   // Auth
   {
     path: "/auth",
