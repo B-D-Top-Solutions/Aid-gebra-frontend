@@ -36,7 +36,7 @@
 										<span class="card-title">{{ concept.correctAnswers }}</span>
 									</td>
 									<td>
-										<span class="card-title">{{ concept.mastery }}</span>
+										<span class="card-title">{{ concept.mastery == 'MASTERED' ? 'MASTERED' : 'NOT MASTERED'  }}</span>
 									</td>
 								</tr>
 							</tbody>
