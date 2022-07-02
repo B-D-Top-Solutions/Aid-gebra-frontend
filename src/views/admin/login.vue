@@ -28,7 +28,7 @@
           <label for="floatingPassword">Password</label>
         </div>
         <button class="p-3 d-block w-100 btn bg-main text-white mt-4" type="submit">
-          SIGN IN
+          LOG IN
         </button>
       </form>
       <br />

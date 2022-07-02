@@ -50,7 +50,7 @@
 
   <div v-if="!isLoading" class="row p-4">
     <div class="col-6">
-      <div class="card">
+      <div class="card" style="min-height: 200px;">
         <div class="card-body">
           <h5 class="card-title">Pre-Test</h5>
           <h6 class="card-subtitle mb-2 text-muted">Manage Pre-Test</h6>
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="col-6">
-      <div class="card">
+      <div class="card" style="min-height: 200px;">
         <div class="card-body">
           <h5 class="card-title">Post Test</h5>
           <h6 class="card-subtitle mb-2 text-muted">Manage Post Test</h6>
