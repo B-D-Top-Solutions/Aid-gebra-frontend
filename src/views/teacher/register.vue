@@ -127,6 +127,7 @@ function register(ev) {
   store.dispatch("register", teacher).then((data) => {
     console.log(data);
     if (data.status == true) {
+      alert("Registered successfully, Please verify your email.")
       router.push({ name: "teacher-dashboard" });
     } else {
       console.log(data.error);
