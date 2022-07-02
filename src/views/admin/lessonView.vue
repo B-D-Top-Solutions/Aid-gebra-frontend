@@ -67,7 +67,7 @@
         <div class="card-body">
           <h5 class="card-title">Post Test</h5>
           <h6 class="card-subtitle mb-2 text-muted">Manage Post Test</h6>
-          <p class="card-text">Set up 20 questions to determine if the student has completed the lesson.</p>
+          <p class="card-text">Set up 20 questions to determine the concept mastery of students.</p>
           <center>
             <RouterLink v-if="concepts.length >= 5" :to="{ name: 'admin-posttest-view', params: { lessonId: lessonId } }" class="btn bg-main text-light">View</RouterLink>
           </center>
@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 
   <div class="modal fade" id="class_modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
