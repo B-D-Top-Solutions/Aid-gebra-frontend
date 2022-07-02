@@ -246,14 +246,14 @@
             <label for="floatingSelect">Answer</label>
           </div>
 					<div class="form mb-3" >
-            <label for="">Explaination</label>
+            <label for="">Explanation</label>
             <QuillEditor
               :key="modalEx"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.explaination"
               contentType="html"
-              placeholder="Enter Explaination"
+              placeholder="Enter Explanation"
             />
 					</div>
         </div>
