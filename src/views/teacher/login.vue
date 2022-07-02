@@ -27,9 +27,9 @@
           />
           <label for="floatingPassword">Password</label>
         </div>
-        <button class="btn mt-2" @click="sendPasswordLink">Forget Password ?</button>
+        <button class="btn mt-2" @click="sendPasswordLink">Forgot Password ?</button>
         <button class="d-block w-100 btn bg-main text-white mt-4 p-3" type="submit" @click="login">
-          SIGN IN
+          LOG IN
         </button>
       </div>
       <br />
