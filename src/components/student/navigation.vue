@@ -1,12 +1,21 @@
 <template>
   <div class="p-3 bg-main position-sticky shadow top-0" style="z-index: 99">
-    <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'}`">
+    <div
+      :class="`container d-flex justify-content-between align-items-center ${
+        desktop.show ? '' : 'flex-column'
+      }`"
+    >
       <section>
-        <img
-          :class="`d-block w-100 mx-auto ${desktop.show ? '' : 'mb-3'}`"
-          src="/src/assets/images/logo_dark.png"
-          style="max-width: 200px"
-        />
+        <RouterLink
+          :to="{ name: 'student-dashboard' }"
+          class="text-decoration-none"
+        >
+          <img
+            :class="`d-block w-100 mx-auto ${desktop.show ? '' : 'mb-3'}`"
+            src="/src/assets/images/logo_dark.png"
+            style="max-width: 200px"
+          />
+        </RouterLink>
       </section>
 
       <section class="d-flex align-items-center">
@@ -60,38 +69,34 @@
   </div>
 </template>
 
-
 <script>
-
 export default {
   name: "student-navigation",
   components: {},
-  data(){
-      return {
-          desktop : {
-            show : true
-          }
-      }
+  data() {
+    return {
+      desktop: {
+        show: true,
+      },
+    };
   },
-  methods :{
-      r (condition) {
-          console.log(condition)
-          if(condition == true){
-            this.desktop.show = false 
-          }
-          else{
-            this.desktop.show = true
-          }
+  methods: {
+    r(condition) {
+      console.log(condition);
+      if (condition == true) {
+        this.desktop.show = false;
+      } else {
+        this.desktop.show = true;
       }
+    },
   },
   created() {
+    this.r(window.matchMedia("(max-width: 600px)").matches);
 
-      this.r(window.matchMedia('(max-width: 600px)').matches)
-
-      window.addEventListener('resize',(e) => {
-          this.r(window.innerWidth <= 600)
-      })
-  }
+    window.addEventListener("resize", (e) => {
+      this.r(window.innerWidth <= 600);
+    });
+  },
 };
 </script>
 
