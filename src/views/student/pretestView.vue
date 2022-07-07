@@ -171,7 +171,6 @@ export default {
 				const res = entry.data;
 				if ( !res.status ) throw res.error;
 
-				console.log( res );
 
 				this.student = res.data;
 
@@ -197,7 +196,6 @@ export default {
 				if(res.data.length > 0) {
 					this.completedPretest = true;
 					this.pretestResult = res.data[ 0 ];
-					console.log( this.pretestResult );
 					this.isLoading = false;
 					return
 				}
@@ -251,7 +249,6 @@ export default {
 				const res = entry.data;
 				if ( !res.status ) throw res.error;
 
-				console.log( res.data )
 
 				// check if res has 20 items
 				if ( res.data.length !== 20 )
@@ -282,7 +279,6 @@ export default {
 				// check if any values in answer is null
 				for ( let i = 0; i < this.answers.length; i++ )
 				{
-					console.log( this.answers[ i ] );
 					if ( this.answers[ i ] == null )
 					{
 						throw "Please fill in all answers";
@@ -318,7 +314,6 @@ export default {
 
 				const res = entry.data;
 				if ( res.status == false ) throw res.error;
-				console.log( res.data );
 
 				this.pretestResult = res.data;
 				this.completedPretest = true;
