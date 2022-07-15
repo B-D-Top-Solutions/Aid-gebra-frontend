@@ -74,12 +74,13 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      class : []
     }
   },
   mounted() {
     auth("admin");
-    this.concepts()
+    this.loadClass()
   },
   methods : {
     exportExcel () {
@@ -93,12 +94,30 @@ export default {
           ]
         });
     },
-    async concepts() {
+    async loadClass(){
         try{
             const entry =  await axios
             .get(
                 import.meta.env.VITE_SERVER+
-                "/api/v2/graph/question/answers/incorrectly",
+                "/api/classes"
+            )
+
+            const res = entry.data
+            console.log("CLASSES")
+            console.log(res)
+            if(!res.status) throw res.error
+        }
+        catch(error){
+            // alert(error)
+        }
+    },
+    async concepts(classId) {
+        try{
+            if(!classId) throw "Please select class"
+            const entry =  await axios
+            .get(
+                import.meta.env.VITE_SERVER+
+                "/api/v2/graph/question/answers/incorrectly?class="+classId,
             )
 
             const res = entry.data
@@ -110,7 +129,7 @@ export default {
             this.chartData.datasets[0].data = res.data.map(e => e.inCorrectAnswers)
         }
         catch(error){
-            alert(error)
+            // alert(error)
         }
     }
   }

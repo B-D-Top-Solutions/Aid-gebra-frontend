@@ -23,7 +23,7 @@
 
 <div class="container mt-5">
   <div class="rounded bg-light p-3 text-center mb-3">
-        The following lesson outline was constructed in line with the Department of Education Curriculum Guide and Learning Modules for Grade 7 Mathematics. This is composed of seven (7) lessons with five (5) concepts each.
+        The following lesson outline was constructed in line with the Department of Education Curriculum Guide and Learning Modules for Grade 7 Mathematics. This is composed of four (4) lessons with five (5) concepts each.
   </div>
 
   <div id="lessoncard">
