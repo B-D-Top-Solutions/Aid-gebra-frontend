@@ -71,7 +71,7 @@
 				<small>Attempt: {{ lastestResult.attemptNumber }}</small>
       </div>
       <div class="card-body">
-        <h5 class="card-title"><small>Verdict: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
+        <h5 class="card-title"><small>Remark: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
 						<small>You may change the lecture to SET B for more detailed explainations</small>
 						<table class="table table-hover table-striped">
 							<thead>
@@ -99,7 +99,7 @@
 										<span class="card-title">{{ concept.correctAnswers }}</span>
 									</td>
 									<td>
-										<span class="card-title">{{ concept.mastery == 'MASTERED' ? 'MASTERED' : 'NOT MASTERED' }}</span>
+										<span class="card-title">{{ concept.mastery == 'MASTERED' ? 'MASTERED' : 'UNMASTERED' }}</span>
 									</td>
 									<td>
 									<select class="form-control" v-model="conceptLecture[concept.conceptId]">

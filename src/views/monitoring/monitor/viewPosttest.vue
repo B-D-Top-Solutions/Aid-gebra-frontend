@@ -12,7 +12,7 @@
 				<small>Attempt: {{ testResult.attemptNumber }}</small>
       </div>
       <div class="card-body">
-        <h5 class="card-title"><small>Verdict: {{ testResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
+        <h5 class="card-title"><small>Remark: {{ testResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
 						<table class="table table-hover table-striped">
 							<thead>
 								<tr>
@@ -36,7 +36,7 @@
 										<span class="card-title">{{ concept.correctAnswers }}</span>
 									</td>
 									<td>
-										<span class="card-title">{{ concept.mastery == 'MASTERED' ? 'MASTERED' : 'NOT MASTERED'  }}</span>
+										<span class="card-title">{{ concept.mastery == 'MASTERED' ? 'MASTERED' : 'UNMASTERED'  }}</span>
 									</td>
 								</tr>
 							</tbody>
