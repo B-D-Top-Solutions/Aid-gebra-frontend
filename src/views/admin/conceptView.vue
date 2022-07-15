@@ -180,7 +180,7 @@
           <div class="form mb-3">
             <label for="">Question</label>
             <QuillEditor
-              v-if="questionModel.text"
+              :key="modalQ"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.text"
@@ -191,7 +191,7 @@
 					<div class="form mb-3">
             <label for="">Choice A</label>
             <QuillEditor
-              v-if="questionModel.choiceA"
+              :key="modalA"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceA"
@@ -202,7 +202,7 @@
 					<div class="form mb-3">
             <label for="">Choice B</label>
             <QuillEditor
-              v-if="questionModel.choiceB"
+              :key="modalB"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceB"
@@ -213,7 +213,7 @@
 					<div class="form mb-3">
             <label for="">Choice C</label>
             <QuillEditor
-              v-if="questionModel.choiceC"
+              :key="modalC"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceC"
@@ -224,7 +224,7 @@
 					<div class="form mb-3">
             <label for="">Choice D</label>
             <QuillEditor
-              v-if="questionModel.choiceD"
+              :key="modalD"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.choiceD"
@@ -245,15 +245,15 @@
             </select>
             <label for="floatingSelect">Answer</label>
           </div>
-					<div class="form mb-3">
-            <label for="">Explaination</label>
+					<div class="form mb-3" >
+            <label for="">Explanation</label>
             <QuillEditor
-              v-if="questionModel.explaination"
+              :key="modalEx"
               theme="snow"
               toolbar="full"
               v-model:content="questionModel.explaination"
               contentType="html"
-              placeholder="Enter Explaination"
+              placeholder="Enter Explanation"
             />
 					</div>
         </div>
@@ -301,14 +301,29 @@ export default {
 				choiceB: '',
 				choiceC: '',
 				choiceD: '',
-			}
+      },
+      modalQ: 1,
+      modalA: 1,
+      modalB: 1,
+      modalC: 1,
+      modalD: 1,
+      modalEx: 1,
     };
 	},
 	mounted() {
 		this.getConcept();
 		this.getQuestions();
 	},
-	methods: {
+  methods: {
+    forceRerender() {
+      this.modalQ += 1;
+      this.modalA += 1;
+      this.modalB += 1;
+      this.modalC += 1;
+      this.modalD += 1;
+      this.modalEx += 1;
+      console.log('rerendering')
+    },
 		clearModal() {
 			this.questionModel._id = "";
 			this.questionModel.concept = this.conceptId;
@@ -321,6 +336,7 @@ export default {
 			this.questionModel.choiceC = '';
 			this.questionModel.choiceD = '';
       this.isUpdate = false;
+      this.forceRerender();
     },
 		async getConcept () {
 			try
@@ -381,6 +397,7 @@ export default {
 				this.questionModel.choiceC = data.choiceC.text;
         this.questionModel.choiceD = data.choiceD.text;
         console.log(this.questionModel)
+        this.forceRerender();
       } catch ( error )
       {
         console.log( error );

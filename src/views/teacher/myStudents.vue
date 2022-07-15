@@ -40,7 +40,7 @@
         <table class="table">
           <thead style="border: none">
             <tr class="">
-              <th class="text-maincolor">Username</th>
+              <th class="text-maincolor">Fullname</th>
               <th class="text-maincolor">Email</th>
               <th class="text-maincolor">Contact</th>
               <th class="text-maincolor" style="max-width: 150px">Status</th>
@@ -50,13 +50,15 @@
           <tbody>
             <tr v-for="e in list" v-bind:key="e._id">
               <td>
-                <small>{{ e.fullname }}</small>
+                <small
+                  >{{ e.lastname }}, {{ e.firstname }} {{ e.middlename }}</small
+                >
               </td>
               <td>
                 <small>{{ e.email }}</small>
               </td>
               <td>
-                <small>{{ e.contact }}</small>
+                <small>{{ `09${e.contact}` }}</small>
               </td>
               <td>
                 <span
@@ -190,6 +192,9 @@ export default {
             _id: e._id,
             email: e.email,
             fullname: e.fullname,
+            firstname: e.firstname,
+            middlename: e.middlename,
+            lastname: e.lastname,
             contact: e.contact,
             status: e.status,
           });

@@ -2,7 +2,7 @@
   <div class="p-3 bg-main position-sticky shadow top-0" style="z-index:99">
     <div :class="`container d-flex justify-content-between align-items-center ${desktop.show ? '' : 'flex-column'} `">
       <section>
-        <RouterLink to="/" class="text-decoration-none">
+        <RouterLink to="/admin/dashboard" class="text-decoration-none">
           <img
             :class="`d-block w-100 mx-auto ${desktop.show ? '' : 'mb-3'}`"
             src="/src/assets/images/logo_dark.png"

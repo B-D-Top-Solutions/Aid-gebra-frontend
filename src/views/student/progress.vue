@@ -46,7 +46,7 @@
   <!-- Row end -->
   <div v-if="!isLoading" class="row m-auto mt-5">
     <!-- Pretests -->
-    <div class="col-6">
+    <div class="col-md-6">
       <h5>Pretest</h5>
 
       <table class="table">
@@ -107,7 +107,7 @@
     </div>
     <!-- Pretests end -->
     <!-- Posttests -->
-    <div class="col-6">
+    <div class="col-md-6">
       <h5>Posttest</h5>
 
       <table class="table">

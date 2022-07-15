@@ -8,7 +8,7 @@
 				<small>Attempt: {{ lastestResult.attemptNumber }}</small>
       </div>
       <div class="card-body">
-        <h5 class="card-title"><small>Verdict: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
+        <h5 class="card-title"><small>Remark: {{ lastestResult.isPassed ? 'PASSED' : 'FAILED' }}</small></h5>
 						<table class="table table-hover table-striped">
 							<thead>
 								<tr>
