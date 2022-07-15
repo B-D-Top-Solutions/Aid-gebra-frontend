@@ -1,5 +1,11 @@
 <template>
+  <select class="form-control"  v-model="selectedClass" @change="concepts">
+    <option value="" selected>Please select Class</option>
+    <option v-for="e in classes" v-bind:key="e._id" :value="e._id">[{{e.code}}] {{e.name}}</option>
+  </select>
+
   <Bar
+    v-if="!loading"
     :chart-options="chartOptions"
     :chart-data="chartData"
     :chart-id="chartId"
@@ -98,10 +104,13 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
       },
+      classes : [],
+      selectedClass : "",
+      loading : false
     };
   },
   mounted() {
-    this.concepts();
+    this.loadClass();
   },
   methods: {
     exportExcel() {
@@ -115,14 +124,38 @@ export default {
         ],
       });
     },
+
+    async loadClass(){
+        try{
+            const entry =  await axiosClient
+            .get(
+                import.meta.env.VITE_SERVER+
+                "/api/classes"
+            )
+
+            const res = entry.data
+            console.log("CLASSES")
+            console.log(res)
+            if(!res.status) throw res.error
+            this.classes = res.data
+        }
+        catch(error){
+            alert(error)
+        }
+    },
     async concepts() {
-      try {
-        const entry = await axiosClient.get(
-          import.meta.env.VITE_SERVER +
-            "/api/v2/graph/concept/answers/incorrectly"
-        );
+      try{
+        console.log("/api/v2/graph/concept/answers/incorrectly?class="+this.selectedClass)
+          if(!this.selectedClass) return
+          this.loading=true
+          const entry =  await axiosClient
+          .get(
+              import.meta.env.VITE_SERVER+
+              "/api/v2/graph/concept/answers/incorrectly?class="+this.selectedClass,
+          )
 
         const res = entry.data;
+        this.loading=false
         console.log("GRAPH");
         console.log(res);
         if (!res.status) throw res.error;
