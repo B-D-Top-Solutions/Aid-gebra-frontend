@@ -57,7 +57,10 @@
           <tbody>
             <tr v-for="e in studentsList" v-bind:key="e._id">
               <td>
-                <small>{{ e.fullname }}</small>
+                <small
+                  >{{ e?.lastname }}, {{ e?.firstname }}
+                  {{ e?.middlename }}
+                </small>
               </td>
               <td>
                 <span
