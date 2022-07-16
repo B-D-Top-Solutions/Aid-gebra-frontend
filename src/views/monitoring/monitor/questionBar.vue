@@ -123,7 +123,7 @@ export default {
             const entry =  await axiosClient
             .get(
                 import.meta.env.VITE_SERVER+
-                "/api/classes"
+                "/api/v2/classes"
             )
 
             const res = entry.data
