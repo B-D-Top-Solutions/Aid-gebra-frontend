@@ -1,12 +1,19 @@
 <template>
   <div class="row rounded pt-5">
-    <div class="col-md p-5 " style="background-color:#ADEFD1;border-radius: 20px 0 0 20px;">
-      <h1 class="mb-3 fw-bolder" style="font-size:4em">Sign up</h1><br/><br/>
+    <div
+      class="col-md p-5"
+      style="background-color: #adefd1; border-radius: 20px 0 0 20px"
+    >
+      <h1 class="mb-3 fw-bolder" style="font-size: 4em">Sign up</h1>
+      <br /><br />
       <h1 class="mb-5">HELLO TEACHERS</h1>
-      <p>Help your students enhance their algebra skills and monitor their progress!</p>
+      <p>
+        Help your students enhance their algebra skills and monitor their
+        progress!
+      </p>
     </div>
-    <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0;">
-      <form  @submit="register">
+    <div class="col-md p-5 bg-light" style="border-radius: 0 20px 20px 0">
+      <form @submit="register">
         <div class="form-floating mb-3">
           <input
             type="email"
@@ -86,7 +93,10 @@
           />
           <label for="floatingPassword1">Confirm Password</label>
         </div>
-        <button type="submit" class="p-3 d-block w-100 btn bg-main text-white mt-4">
+        <button
+          type="submit"
+          class="p-3 d-block w-100 btn bg-main text-white mt-4"
+        >
           REGISTER
         </button>
       </form>
@@ -127,12 +137,14 @@ function register(ev) {
   store.dispatch("register", teacher).then((data) => {
     console.log(data);
     if (data.status == true) {
-      alert("Registered successfully, Please verify your email that is sent to your email.")
+      alert(
+        "Registered successfully, Please verify your email that is sent to your email."
+      );
       router.push({ name: "teacher-dashboard" });
     } else {
       console.log(data.error);
 
-      alert(data.error);
+      alert(JSON.stringify(data.error.message));
     }
   });
 }
