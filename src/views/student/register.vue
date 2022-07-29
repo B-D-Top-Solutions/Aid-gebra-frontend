@@ -145,7 +145,7 @@ function register(ev) {
       );
       router.push({ name: "student-dashboard" });
     } else {
-      alert(JSON.stringify(data.error.message));
+      alert(data?.error || JSON.stringify(data.error.message));
     }
   });
 }
