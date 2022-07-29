@@ -144,7 +144,7 @@ function register(ev) {
     } else {
       console.log(data.error);
 
-      alert(JSON.stringify(data.error.message));
+      alert(data?.error || JSON.stringify(data.error.message));
     }
   });
 }
