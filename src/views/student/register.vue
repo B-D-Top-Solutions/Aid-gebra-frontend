@@ -139,6 +139,8 @@ function register(ev) {
   ev.preventDefault();
 
   store.dispatch("register", student).then((data) => {
+      console.log(data)
+
     if (data.status == true) {
       alert(
         "Registered successfully, Please verify your email that is sent to your email."
